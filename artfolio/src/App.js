@@ -42,6 +42,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        {this.props.location === "/" ? <Redirect to="/home" /> : null}
         <Route path="/home" component={Header} />
         <Route path="/login" component={Login} />
         <Route
@@ -61,7 +62,6 @@ class App extends React.Component {
           component={_ => {
             return (
               <>
-                {console.log(this.state)}
                 {this.state.modalSrc ? (
                   this.state.device === "mobile" ? (
                     <Redirect to="/mobile/home" />
