@@ -13,6 +13,26 @@ body {
     background: rgb(23, 28, 37);
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #e4e4e4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #6d6d6d;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
@@ -21,4 +41,5 @@ code {
 @import './variables.less';
 @import './navbar.less';
 @import './grid.less';
+@import './modal.less';
 @import './footer.less';

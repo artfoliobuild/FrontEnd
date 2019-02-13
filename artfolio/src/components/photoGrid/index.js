@@ -7,7 +7,7 @@ export default function PhotoGrid(props) {
     }
     return (
         <div className="photo-grid">{images.map((image, i) => {
-            return <img className={`photo-grid_image`} key={`${image[0]}-${i}`} src={image[1]} alt="car" />
+            return <img onClick={_ => props.handleClick(image[1])} className={`photo-grid_image`} key={`${image[0]}-${i}`} src={image[1]} alt="car" />
         })}</div>
     )
 }

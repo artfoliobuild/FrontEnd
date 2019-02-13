@@ -9,6 +9,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #171c25;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e4e4e4;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6d6d6d;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -19,6 +35,8 @@ code {
   column-gap: 0px;
 }
 .photo-grid_image {
+  cursor: pointer;
+  user-select: none;
   width: 100% !important;
   height: auto !important;
   object-fit: cover;
@@ -50,4 +68,84 @@ code {
     -webkit-column-count: 1;
     column-count: 1;
   }
+}
+.modal {
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 935px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: black;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.modal_image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.modal_image_container {
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  min-height: 450px;
+  max-height: 700px;
+  min-width: calc(100% - 335px);
+}
+.modal_post {
+  background: white;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+.modal_artist {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(335px - 40px);
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+}
+.modal_artist_pic {
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  width: 45px;
+}
+.modal_comments {
+  max-width: calc(335px - 40px);
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  overflow-y: auto;
+  word-wrap: break-word;
+}
+.modal_icons {
+  padding: 10px 0 0 0;
+}
+.modal_icons svg {
+  margin-right: 14px;
+}
+.modal_icons svg:nth-child(4) {
+  margin-right: 0;
+  float: right;
+}
+.modal_date {
+  padding: 10px 0;
+  font-size: 10px;
+  color: #999;
+}
+.modal input {
+  position: absolute;
+  bottom: 0;
+  font-size: 0.95rem;
+  padding: 1rem 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+.modal input:focus {
+  outline: none;
 }
