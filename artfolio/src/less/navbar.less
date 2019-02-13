@@ -12,6 +12,7 @@
     top: 0;
 
     &_profile {
+        position: relative;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -21,9 +22,44 @@
             margin-bottom: 1rem;
             width: 200px;
             height: 200px;
-            box-shadow: 0 0 0 2px cyan,
-                0 0 0 4px red;
+            box-shadow: 0 0 0 2px @clr-3d2,
+                0 0 0 4px @clr-3d1;
             border-radius: 50%;
+            z-index: 4;
+        }
+
+        &:before,
+        &:after {
+            border-radius: 50%;
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 200px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            opacity: .8;
+        }
+
+        &:after {
+            background: @clr-3d1;
+            z-index: 3;
+        }
+
+        &:before {
+            background: @clr-3d1;
+            z-index: 2;
+        }
+
+        &:hover {
+            &:before {
+                animation: glitch 3500ms cubic-bezier(.25, .46, .45, .94) both infinite
+            }
+
+            &:after {
+                animation: glitch 3500ms cubic-bezier(.25, .46, .45, .94) reverse both infinite
+            }
         }
     }
 
@@ -57,5 +93,31 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
+    }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(-50%, 0)
+    }
+
+    20% {
+        transform: translate(calc(-50% - 8px), 5px)
+    }
+
+    40% {
+        transform: translate(calc(-50% - 8px), -5px)
+    }
+
+    60% {
+        transform: translate(calc(-50% + 5px), 8px)
+    }
+
+    80% {
+        transform: translate(calc(-50% + 5px), -8px)
+    }
+
+    to {
+        transform: translate(-50%, 0)
     }
 }
