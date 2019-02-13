@@ -2,6 +2,7 @@ import React from 'react';
 
 import PhotoGrid from "./components/photoGrid"
 import Modal from "./components/modal"
+import Header from "./components/header"
 
 function importAll(r) {
   let images = {};
@@ -29,6 +30,7 @@ class App extends React.Component {
   render() {
     return (
       <div className={`App${this.state.scroll ? ' noscroll' : ''}`}>
+        <Header />
         {this.state.modalSrc ? <Modal close={this.close} src={this.state.modalSrc} artist={this.state.artist} /> : null}
         <PhotoGrid handleClick={this.handleClick} images={images} />
       </div>

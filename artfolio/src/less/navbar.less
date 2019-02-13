@@ -1,0 +1,61 @@
+.header {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: oldlace;
+    background: @clr-dark;
+    width: 100%;
+    padding: 2rem;
+    top: 0;
+
+    &_profile {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        &_img {
+            user-select: none;
+            margin-bottom: 1rem;
+            width: 200px;
+            height: 200px;
+            box-shadow: 0 0 0 2px cyan,
+                0 0 0 4px red;
+            border-radius: 50%;
+        }
+    }
+
+    &_bio {
+        max-width: 300px;
+    }
+
+
+    &_title {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+
+        &_h2 {
+            padding-bottom: 1rem;
+            display: inline-block;
+            border-bottom: 1px solid rgba(238, 238, 238, 0.479);
+        }
+    }
+
+    .left-slash {
+        color: @clr-3d2;
+    }
+
+    .right-slash {
+        color: @clr-3d1;
+    }
+
+    &_menu {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+    }
+}

@@ -2,15 +2,16 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .close {
     cursor: pointer;
     user-select: none;
     position: absolute;
-    top: 0.5rem;
-    right: 1rem;
+    top: 1.25rem;
+    right: 1.65rem;
+    background: @clr-dark;
 }
 
 .modal {
@@ -44,7 +45,7 @@
     }
 
     &_post {
-        background: white;
+        background: @clr-white;
         padding: 0 20px;
         display: flex;
         flex-direction: column;
