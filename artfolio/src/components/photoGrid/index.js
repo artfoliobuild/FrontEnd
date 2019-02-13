@@ -2,10 +2,6 @@ import React from 'react';
 
 import LazyLoad from 'react-lazyload';
 
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-
-import Gallery from 'react-grid-gallery';
-
 export default function PhotoGrid(props) {
     const images = [];
     // const gallery = [];

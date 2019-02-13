@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 
 import PhotoGrid from "./components/photoGrid"
 import Modal from "./components/modal"
@@ -13,8 +14,8 @@ function importAll(r) {
 const images = importAll(require.context('./images', false));
 
 class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       artist: "Jose Valenzuela",
       modalSrc: null
@@ -30,10 +31,15 @@ class App extends React.Component {
   render() {
     return (
       <div className={`App${this.state.scroll ? ' noscroll' : ''}`}>
-        <Header />
-        {this.state.modalSrc ? <Modal close={this.close} src={this.state.modalSrc} artist={this.state.artist} /> : null}
-        <PhotoGrid handleClick={this.handleClick} images={images} />
-      </div>
+        <Route path="/" component={Header} />
+        <Route path="/home" component={_ => {
+          return (<>
+            {this.state.modalSrc ? <Modal close={this.close} src={this.state.modalSrc} artist={this.state.artist} /> : null}
+            <PhotoGrid handleClick={this.handleClick} images={images} />
+          </>)
+        }}>
+        </Route>
+      </div >
     );
   }
 }
