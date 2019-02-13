@@ -11,13 +11,17 @@ export default function Modal(props) {
             </div>
             <div className="modal">
                 <div className="modal_image_container"><img className="modal_image" src={props.src} alt="car" /></div>
+                <div className="modal_artist_small">
+                    <img className="modal_artist_small_pic" src={image} alt="artist" />
+                    {props.artist}
+                </div>
                 <div className="modal_post">
                     <div className="modal_artist">
                         <img className="modal_artist_pic" src={image} alt="artist" />
                         {props.artist}
                     </div>
                     <div className="modal_comments">
-                        <b>yes_way_jose.jpg</b>
+                        <b>yes_way_jose.jpg </b>
                         Gtfo<br />
                         📷-me<br />
                         Car owner: @carlosdaman96<br />
