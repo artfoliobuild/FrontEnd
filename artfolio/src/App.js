@@ -42,7 +42,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.props.location === "/" ? <Redirect to="/home" /> : null}
+        {this.props.location.pathname === "/" ? <Redirect to="/home" /> : null}
         <Route path="/home" component={Header} />
         <Route path="/login" component={Login} />
         <Route
