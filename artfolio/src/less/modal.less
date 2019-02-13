@@ -12,8 +12,13 @@
     user-select: none;
     position: absolute;
     top: 1.25rem;
-    right: 1.65rem;
+    right: 1.85rem;
     background: @clr-dark;
+
+    @media (max-width: 1024px) {
+        top: 0.5rem;
+        right: 1rem;
+    }
 }
 
 .modal {

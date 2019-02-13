@@ -183,8 +183,14 @@ code {
   user-select: none;
   position: absolute;
   top: 1.25rem;
-  right: 1.65rem;
+  right: 1.85rem;
   background: #171c25;
+}
+@media (max-width: 1024px) {
+  .close {
+    top: 0.5rem;
+    right: 1rem;
+  }
 }
 .modal {
   z-index: 200;
