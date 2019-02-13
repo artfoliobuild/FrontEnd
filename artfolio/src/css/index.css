@@ -28,6 +28,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+.noscroll {
+  overflow-x: hidden;
+  max-height: 100vh;
+}
 .photo-grid {
   width: 100%;
   line-height: 0;
@@ -73,7 +77,7 @@ code {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(0, 0, 0, 0.3);
 }
 .close {
   cursor: pointer;

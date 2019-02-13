@@ -20,14 +20,15 @@ class App extends React.Component {
     }
   }
   handleClick = src => {
-    this.setState({ modalSrc: src });
+    this.setState({ modalSrc: src, scroll: true });
   }
-  close = _ => {
-    this.setState({ modalSrc: null });
+  close = e => {
+    e.stopPropagation();
+    this.setState({ modalSrc: null, scroll: false });
   }
   render() {
     return (
-      <div className="App">
+      <div className={`App${this.state.scroll ? ' noscroll' : ''}`}>
         {this.state.modalSrc ? <Modal close={this.close} src={this.state.modalSrc} artist={this.state.artist} /> : null}
         <PhotoGrid handleClick={this.handleClick} images={images} />
       </div>

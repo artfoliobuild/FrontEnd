@@ -5,8 +5,10 @@ import { FiShare, FiX } from 'react-icons/fi';
 export default function Modal(props) {
     const image = require('../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg');
     return (
-        <div className="fullscreen">
-            <div onClick={props.close}><FiX className="close" size="2rem" color="white" /></div>
+        <>
+            <div className="fullscreen" onClick={props.close}>
+                <div onClick={props.close}><FiX className="close" size="2rem" color="white" /></div>
+            </div>
             <div className="modal">
                 <div className="modal_image_container"><img className="modal_image" src={props.src} alt="car" /></div>
                 <div className="modal_post">
@@ -40,6 +42,6 @@ export default function Modal(props) {
                     <input type="text" placeholder="Add a comment..." />
                 </div>
             </div>
-        </div>
+        </>
     )
 }
