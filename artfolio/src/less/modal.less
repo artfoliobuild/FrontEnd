@@ -1,8 +1,10 @@
 .fullscreen {
     position: fixed;
+    top: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.6);
+    z-index: 100;
 }
 
 .close {
@@ -15,6 +17,7 @@
 }
 
 .modal {
+    z-index: 200;
     font-size: 0.9rem;
     width: 100%;
     max-width: 935px;

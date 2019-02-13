@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FiMenu } from 'react-icons/fi';
+// import { FiMenu } from 'react-icons/fi';
 
 const image = require('../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg');
 
