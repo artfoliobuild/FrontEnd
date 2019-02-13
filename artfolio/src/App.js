@@ -22,10 +22,13 @@ class App extends React.Component {
   handleClick = src => {
     this.setState({ modalSrc: src });
   }
+  close = _ => {
+    this.setState({ modalSrc: null });
+  }
   render() {
     return (
       <div className="App">
-        {this.state.modalSrc ? <Modal src={this.state.modalSrc} artist={this.state.artist} /> : null}
+        {this.state.modalSrc ? <Modal close={this.close} src={this.state.modalSrc} artist={this.state.artist} /> : null}
         <PhotoGrid handleClick={this.handleClick} images={images} />
       </div>
     );

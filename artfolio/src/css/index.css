@@ -69,6 +69,19 @@ code {
     column-count: 1;
   }
 }
+.fullscreen {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0);
+}
+.close {
+  cursor: pointer;
+  user-select: none;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+}
 .modal {
   font-size: 0.9rem;
   width: 100%;
