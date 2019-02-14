@@ -76,11 +76,13 @@ class App extends React.Component {
             return (
               <>
                 {this.state.modalSrc ? (
-                  <Modal
-                    close={this.close}
-                    src={this.state.modalSrc}
-                    artist={this.state.artist}
-                  />
+                  this.state.device === "mobile" ? null : (
+                    <Modal
+                      close={this.close}
+                      src={this.state.modalSrc}
+                      artist={this.state.artist}
+                    />
+                  )
                 ) : null}
                 <PhotoGrid
                   device={this.state.device}
