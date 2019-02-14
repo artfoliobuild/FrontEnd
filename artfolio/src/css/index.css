@@ -133,6 +133,13 @@ a {
     transform: translate(-50%, 0);
   }
 }
+.form_container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .login {
   font-family: 'Source Sans Pro', sans-serif;
   display: flex;
@@ -143,7 +150,7 @@ a {
   max-width: 450px;
   min-width: 300px;
   width: 50%;
-  margin: 25% auto;
+  margin: auto;
   padding: 0 1.5rem 1rem;
   color: #fffbf5;
 }
@@ -178,6 +185,58 @@ a {
 }
 .login_button,
 .login_signup {
+  display: block;
+  width: 90%;
+  cursor: pointer;
+  user-select: none;
+  background: #fffbf5;
+  border: none;
+}
+.signup {
+  font-family: 'Source Sans Pro', sans-serif;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  max-width: 450px;
+  min-width: 300px;
+  width: 50%;
+  margin: auto;
+  padding: 0 1.5rem 1rem;
+  color: #fffbf5;
+}
+.signup_input,
+.signup_button,
+.signup_login {
+  font-size: 1rem;
+  color: #171c25;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  margin: 0.25rem 0;
+  padding: 1rem 1rem;
+}
+.signup_input {
+  border: 1px solid rgba(255, 251, 245, 0.3);
+  text-align: center;
+  width: 90%;
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.signup_input::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.signup_input:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.signup_input:focus {
+  background: #fffbf5;
+  outline: none;
+  width: 100%;
+}
+.signup_button,
+.signup_login {
   display: block;
   width: 90%;
   cursor: pointer;

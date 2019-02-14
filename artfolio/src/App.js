@@ -1,11 +1,12 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import PhotoGrid from "./components/photoGrid";
 import Modal from "./components/modal";
 import MobileModal from "./components/mobileModal";
 import Header from "./components/header";
 import Login from "./components/login";
+import SignUp from "./components/signup";
 
 function importAll(r) {
   let images = {};
@@ -57,6 +58,7 @@ class App extends React.Component {
           component={_ => <Header ready={this.state.ready} />}
         />
         <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
         <Route
           path="/mobile"
           component={props => {
