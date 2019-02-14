@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
+import Dashboard from "./components/dashboard";
 import PhotoGrid from "./components/photoGrid";
 import Modal from "./components/modal";
 import MobileModal from "./components/mobileModal";
@@ -14,6 +15,13 @@ function importAll(r) {
   return images;
 }
 
+const bio = (
+  <>
+    <p>🐾TEXAS STATE UNIVERSITY 20' 🐾</p>
+    <p>Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍</p>
+  </>
+);
+
 const images = importAll(require.context("./images", false));
 
 class App extends React.Component {
@@ -23,7 +31,10 @@ class App extends React.Component {
       artist: "Jose Valenzuela",
       modalSrc: null,
       device: null,
-      ready: false
+      ready: false,
+      bio: bio,
+      firstName: "Jose",
+      lastName: "Valenzuela"
     };
   }
   componentDidMount() {
@@ -52,10 +63,18 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
+        <Route path="/dashboard" component={Dashboard} />
         <Route
           exact
           path="/"
-          component={_ => <Header ready={this.state.ready} />}
+          component={_ => (
+            <Header
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              bio={this.state.bio}
+              ready={this.state.ready}
+            />
+          )}
         />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />

@@ -13,16 +13,11 @@ export default function Header(props) {
       </div>
       <div className="header_title">
         <h2 className="header_title_h2">
-          Jose <span className="left-slash">/</span>
-          <span className="right-slash">/</span> Valenzuela
+          {props.firstName} <span className="left-slash">/</span>
+          <span className="right-slash">/</span> {props.lastName}
         </h2>
       </div>
-      <div className="header_bio">
-        <p>🐾TEXAS STATE UNIVERSITY 20' 🐾</p>
-        <p>
-          Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍
-        </p>
-      </div>
+      <div className="header_bio">{props.bio}</div>
     </div>
   );
 }
