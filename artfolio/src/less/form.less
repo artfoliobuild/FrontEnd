@@ -1,0 +1,62 @@
+.login {
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    max-width: 450px;
+    min-width: 300px;
+    width: 50%;
+    margin: 25% auto;
+    padding: 0 1.5rem 1rem;
+    color: @clr-white;
+
+    &_title {}
+
+    &_input,
+    &_button,
+    &_signup {
+        font-size: 1rem;
+        color: @clr-dark;
+        background: fade(@clr-white, 10%);
+        border: none;
+        border-radius: 3px;
+        margin: 0.25rem 0;
+        padding: 1rem 1rem;
+    }
+
+    &_input {
+        border: 1px solid fade(@clr-white, 30%);
+        text-align: center;
+        width: 90%;
+        transition: 250ms width ease-in-out,
+            250ms background ease-in-out;
+
+        &::placeholder {
+            font-size: 1rem;
+            color: white;
+        }
+
+        &:hover {
+            background: fade(@clr-white, 30%);
+        }
+
+        &:focus {
+            background: @clr-white;
+            outline: none;
+            width: 100%;
+        }
+
+    }
+
+    &_button,
+    &_signup {
+        display: block;
+        width: 90%;
+        cursor: pointer;
+        user-select: none;
+        background: @clr-white;
+        border: none;
+    }
+}
