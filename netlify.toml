@@ -1,0 +1,4 @@
+[build]
+base = "artfolio/"
+publish = "artfolio/build"
+command = "yarn build"
