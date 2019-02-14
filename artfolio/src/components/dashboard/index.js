@@ -19,21 +19,33 @@ export default class Dashboard extends React.Component {
   };
   render() {
     return (
-      <div className="">
+      <div className="dashboard">
+        <h1 className="dashboard_title">Dashboard</h1>
         <input
           style={{ display: "none" }}
           onChange={this.fileSelectedHandler}
           type="file"
           ref={fileInput => (this.fileInput = fileInput)}
         />
-        <button onClick={_ => this.fileInput.click()}>Pick File</button>
-        <button
-          style={{ display: this.state.file ? "inline" : "none" }}
-          onClick={this.fileUploadHandler}
-        >
-          Upload File
-        </button>
-        <span>{this.state.file ? this.state.file.name : null}</span>
+        <div className="dashboard_uploadButtons">
+          <button
+            className="dashboard_pickFile"
+            style={{ display: "block" }}
+            onClick={_ => this.fileInput.click()}
+          >
+            Pick File
+          </button>
+          <button
+            className="dashboard_uploadFile"
+            style={{ display: this.state.file ? "block" : "none" }}
+            onClick={this.fileUploadHandler}
+          >
+            Upload File
+          </button>
+        </div>
+        <span className="dashboard_fileName">
+          {this.state.file ? this.state.file.name : null}
+        </span>
       </div>
     );
   }
