@@ -39,7 +39,7 @@ export default function PhotoGrid(props) {
   }
   const click = src => {
     props.checkScreenSize();
-    if (props.device === "mobile") props.history.push("/mobile");
+    props.history.push("/mobile");
     props.handleClick(src);
   };
   return (
