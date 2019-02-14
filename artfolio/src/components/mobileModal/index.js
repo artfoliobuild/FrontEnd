@@ -4,7 +4,7 @@ import { FiShare } from "react-icons/fi";
 
 import Error404 from "../Error404";
 
-export default function mobile_modal(props) {
+export default function MobileModal(props) {
   const image = require("../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
   if (props.src) {
     return (
