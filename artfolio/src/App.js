@@ -26,19 +26,19 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
-    if (window.innerWidth <= 420) this.setState({ device: "mobile" });
-    if (window.innerWidth <= 1024 && window.innerWidth > 420)
-      this.setState({ device: "tablet" });
-    if (window.innerWidth > 1024) this.setState({ device: "desktop" });
+    this.checkScreenSize();
     this.setState({ ready: true });
   }
   handleClick = src => {
+    this.checkScreenSize();
+    this.setState({ modalSrc: src, scroll: true });
+    if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
+  };
+  checkScreenSize = _ => {
     if (window.innerWidth <= 420) this.setState({ device: "mobile" });
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
       this.setState({ device: "tablet" });
     if (window.innerWidth > 1024) this.setState({ device: "desktop" });
-    this.setState({ modalSrc: src, scroll: true });
-    if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
   close = e => {
     e.stopPropagation();
@@ -59,7 +59,7 @@ class App extends React.Component {
         <Route path="/login" component={Login} />
         <Route
           path="/mobile"
-          component={_ => {
+          component={props => {
             return (
               <MobileModal
                 close={this.close}
@@ -72,7 +72,7 @@ class App extends React.Component {
         <Route
           exact
           path="/"
-          component={_ => {
+          component={props => {
             return (
               <>
                 {this.state.modalSrc ? (
@@ -86,7 +86,13 @@ class App extends React.Component {
                     />
                   )
                 ) : null}
-                <PhotoGrid handleClick={this.handleClick} images={images} />
+                <PhotoGrid
+                  device={this.state.device}
+                  checkScreenSize={this.checkScreenSize}
+                  history={props.history}
+                  handleClick={this.handleClick}
+                  images={images}
+                />
               </>
             );
           }}
