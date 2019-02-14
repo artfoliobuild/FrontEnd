@@ -21,7 +21,8 @@ class App extends React.Component {
     this.state = {
       artist: "Jose Valenzuela",
       modalSrc: null,
-      device: null
+      device: null,
+      ready: false
     };
   }
   componentDidMount() {
@@ -29,6 +30,7 @@ class App extends React.Component {
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
       this.setState({ device: "tablet" });
     if (window.innerWidth > 1024) this.setState({ device: "desktop" });
+    this.setState({ ready: true });
   }
   handleClick = src => {
     this.setState({ modalSrc: src, scroll: true });
@@ -41,12 +43,18 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div className="App">
-        {this.props.location.pathname === "/" ? <Redirect to="/home" /> : null}
-        <Route path="/home" component={Header} />
+      <div
+        className="App"
+        style={{ visibility: this.state.ready ? "visible" : "hidden" }}
+      >
+        <Route
+          exact
+          path="/"
+          component={_ => <Header ready={this.state.ready} />}
+        />
         <Route path="/login" component={Login} />
         <Route
-          path="/mobile/home"
+          path="/mobile"
           component={_ => {
             return (
               <MobileModal
@@ -58,13 +66,14 @@ class App extends React.Component {
           }}
         />
         <Route
-          path="/home"
+          exact
+          path="/"
           component={_ => {
             return (
               <>
                 {this.state.modalSrc ? (
                   this.state.device === "mobile" ? (
-                    <Redirect to="/mobile/home" />
+                    <Redirect to="/mobile" />
                   ) : (
                     <Modal
                       close={this.close}

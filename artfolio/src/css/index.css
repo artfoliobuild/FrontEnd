@@ -141,6 +141,7 @@ a {
   justify-content: center;
   text-align: center;
   max-width: 450px;
+  min-width: 300px;
   width: 50%;
   margin: 25% auto;
   padding: 0 1.5rem 1rem;
@@ -504,7 +505,27 @@ a {
   border: none;
   border-top: 1px solid #eee;
   padding: 1rem 20px;
+  background: #fffbf5;
+  width: 100%;
 }
 .mobile_modal input:focus {
   outline: none;
+}
+.error-404 {
+  padding: 0 5%;
+  color: #fffbf5;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  width: 100%;
+  transform: translateY(-50%);
+}
+.home-button {
+  font-size: 1.5rem;
+  display: block;
+  width: 100%;
+  color: #fffbf5;
+  text-decoration: underline;
+  margin-top: 1rem;
 }
