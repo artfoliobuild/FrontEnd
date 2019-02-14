@@ -33,6 +33,10 @@ class App extends React.Component {
     this.setState({ ready: true });
   }
   handleClick = src => {
+    if (window.innerWidth <= 420) this.setState({ device: "mobile" });
+    if (window.innerWidth <= 1024 && window.innerWidth > 420)
+      this.setState({ device: "tablet" });
+    if (window.innerWidth > 1024) this.setState({ device: "desktop" });
     this.setState({ modalSrc: src, scroll: true });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
