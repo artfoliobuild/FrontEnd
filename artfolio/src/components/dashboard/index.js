@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import UploadFile from "../uploadFile";
+import EditSiteText from "../editSiteText";
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -11,10 +12,11 @@ export default class Dashboard extends React.Component {
   }
   render() {
     return (
-      <div className="dashboard">
+      <section className="dashboard">
         <h1 className="dashboard_title">Dashboard</h1>
         <UploadFile />
-      </div>
+        <EditSiteText />
+      </section>
     );
   }
 }

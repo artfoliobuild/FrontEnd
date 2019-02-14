@@ -329,6 +329,33 @@ a {
 .dashboard_fileName {
   width: 100%;
 }
+.editSiteText {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.editSiteText_title {
+  width: 100%;
+}
+.editSiteText_selections {
+  display: flex;
+  flex-direction: row;
+  background: rgba(255, 251, 245, 0.2);
+}
+.editSiteText_selections_option {
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+.editSiteText_selections_option:hover {
+  background: rgba(255, 251, 245, 0.1);
+}
+.editSiteText_selections_option-active {
+  background: rgba(255, 251, 245, 0.2);
+}
+.editSiteText_selections_option-active:hover {
+  background: rgba(255, 251, 245, 0.2);
+}
 .fullscreen {
   position: fixed;
   top: 0;
