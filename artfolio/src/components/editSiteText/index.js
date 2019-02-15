@@ -1,11 +1,14 @@
 import React from "react";
 import axios from "axios";
 
+import EditSiteTextArea from "../editSiteTextArea";
+
 export default class EditSiteText extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: []
+      options: [],
+      active: null
     };
   }
   componentDidMount() {
@@ -25,14 +28,16 @@ export default class EditSiteText extends React.Component {
       e.classList.remove("editSiteText_selections_option-active");
     });
     e.target.classList.add("editSiteText_selections_option-active");
+    this.setState({ active: e.target.dataset.name });
   };
   render() {
     return (
       <div className="editSiteText">
-        <h2 className="editSiteText_title">Edit Site Text</h2>
+        <h3 className="editSiteText_title">Edit Site Text</h3>
         <div className="editSiteText_selections">
           <div
             className="editSiteText_selections_option"
+            data-name="siteName"
             onClick={this.handleSelectOption}
             ref={option => (this.option1 = option)}
           >
@@ -40,6 +45,7 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
+            data-name="yourName"
             onClick={this.handleSelectOption}
             ref={option => (this.option2 = option)}
           >
@@ -47,6 +53,7 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
+            data-name="bio"
             onClick={this.handleSelectOption}
             ref={option => (this.option3 = option)}
           >
@@ -54,6 +61,7 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
+            data-name="bgColor"
             onClick={this.handleSelectOption}
             ref={option => (this.option4 = option)}
           >
@@ -61,11 +69,15 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
+            data-name="hlColor"
             onClick={this.handleSelectOption}
             ref={option => (this.option5 = option)}
           >
             Highlight Color
           </div>
+        </div>
+        <div>
+          <EditSiteTextArea type={this.state.active} />
         </div>
       </div>
     );

@@ -196,7 +196,6 @@ a {
   cursor: pointer;
   user-select: none;
   background: #fffbf5;
-  border: none;
 }
 .signup {
   font-family: 'Source Sans Pro', sans-serif;
@@ -248,7 +247,6 @@ a {
   cursor: pointer;
   user-select: none;
   background: #fffbf5;
-  border: none;
 }
 .photo-grid {
   width: 100%;
@@ -332,7 +330,7 @@ a {
 }
 .editSiteText {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
 }
 .editSiteText_title {
@@ -360,6 +358,76 @@ a {
 .editSiteText_form {
   width: 100%;
   background: black;
+}
+.editSiteForm {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 1rem auto;
+}
+.editSiteForm_textarea {
+  width: 90%;
+  margin-bottom: 1rem;
+  resize: none;
+  font-size: 1.25rem;
+  color: #171c25;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.3);
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.editSiteForm_textarea::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.editSiteForm_textarea:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.editSiteForm_textarea:focus {
+  background: #fffbf5;
+  outline: none;
+  width: 100%;
+}
+.editSiteForm_input {
+  font-size: 1rem;
+  color: #171c25;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.3);
+  text-align: center;
+  width: 90%;
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.editSiteForm_input::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.editSiteForm_input:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.editSiteForm_input:focus {
+  background: #fffbf5;
+  outline: none;
+  width: 100%;
+}
+.editSiteForm_button {
+  padding: 0.25rem 0.75rem;
+  margin: 0 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.6);
+  background: rgba(255, 251, 245, 0.1);
+  color: #fffbf5;
+  transition: 100ms background ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.editSiteForm_button:hover {
+  background: rgba(255, 251, 245, 0.3);
 }
 .fullscreen {
   position: fixed;

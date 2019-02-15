@@ -19,7 +19,7 @@ export default class UploadFile extends React.Component {
   render() {
     return (
       <div className="dashboard_uploadContainer">
-        <h2 className="dashboard_uploadTitle">Change Profile Picture</h2>
+        <h3 className="dashboard_uploadTitle">Change Profile Picture</h3>
         <input
           style={{ display: "none" }}
           onChange={this.fileSelectedHandler}
