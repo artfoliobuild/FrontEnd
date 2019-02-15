@@ -25,6 +25,12 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+::selection {
+  background: #c8bbff;
+}
+::-moz-selection {
+  background: #c8bbff;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -287,12 +293,17 @@ a {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 1rem;
+  padding: 1rem 0;
   color: #fffbf5;
   text-align: center;
 }
 .dashboard_title {
   width: 100%;
+}
+.dashboard_uploadContainer {
+  width: 100%;
+  border-top: 1px solid rgba(255, 251, 245, 0.1);
+  border-bottom: 1px solid rgba(255, 251, 245, 0.1);
 }
 .dashboard_uploadButtons {
   display: flex;
@@ -302,18 +313,53 @@ a {
 .dashboard_pickFile,
 .dashboard_uploadFile {
   padding: 0.25rem 0.75rem;
-  margin: 1rem;
+  margin: 0 1rem 1rem;
   border: 1px solid rgba(255, 251, 245, 0.6);
   background: rgba(255, 251, 245, 0.1);
   color: #fffbf5;
   transition: 100ms background ease-in-out;
+  cursor: pointer;
+  user-select: none;
 }
 .dashboard_pickFile:hover,
 .dashboard_uploadFile:hover {
   background: rgba(255, 251, 245, 0.3);
 }
 .dashboard_fileName {
+  display: inline-block;
   width: 100%;
+  margin-bottom: 1rem;
+}
+.editSiteText {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.editSiteText_title {
+  width: 100%;
+}
+.editSiteText_selections {
+  display: flex;
+  flex-direction: row;
+  background: rgba(255, 251, 245, 0.2);
+}
+.editSiteText_selections_option {
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+.editSiteText_selections_option:hover {
+  background: rgba(255, 251, 245, 0.1);
+}
+.editSiteText_selections_option-active {
+  background: rgba(255, 251, 245, 0.2);
+}
+.editSiteText_selections_option-active:hover {
+  background: rgba(255, 251, 245, 0.2);
+}
+.editSiteText_form {
+  width: 100%;
+  background: black;
 }
 .fullscreen {
   position: fixed;
