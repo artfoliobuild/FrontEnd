@@ -366,7 +366,8 @@ a {
   width: 100%;
   margin: 1rem auto;
 }
-.editSiteForm_textarea {
+.editSiteForm_textarea,
+.editSiteForm_input {
   width: 90%;
   margin-bottom: 1rem;
   resize: none;
@@ -379,42 +380,23 @@ a {
   border: 1px solid rgba(255, 251, 245, 0.3);
   transition: 250ms width ease-in-out, 250ms background ease-in-out;
 }
-.editSiteForm_textarea::placeholder {
+.editSiteForm_textarea::placeholder,
+.editSiteForm_input::placeholder {
   font-size: 1rem;
   color: white;
 }
-.editSiteForm_textarea:hover {
+.editSiteForm_textarea:hover,
+.editSiteForm_input:hover {
   background: rgba(255, 251, 245, 0.3);
 }
-.editSiteForm_textarea:focus {
+.editSiteForm_textarea:focus,
+.editSiteForm_input:focus {
   background: #fffbf5;
   outline: none;
   width: 100%;
 }
 .editSiteForm_input {
-  font-size: 1rem;
-  color: #171c25;
-  background: rgba(255, 251, 245, 0.1);
-  border: none;
-  border-radius: 3px;
-  margin-bottom: 1rem;
-  padding: 1rem 1rem;
-  border: 1px solid rgba(255, 251, 245, 0.3);
   text-align: center;
-  width: 90%;
-  transition: 250ms width ease-in-out, 250ms background ease-in-out;
-}
-.editSiteForm_input::placeholder {
-  font-size: 1rem;
-  color: white;
-}
-.editSiteForm_input:hover {
-  background: rgba(255, 251, 245, 0.3);
-}
-.editSiteForm_input:focus {
-  background: #fffbf5;
-  outline: none;
-  width: 100%;
 }
 .editSiteForm_button {
   padding: 0.25rem 0.75rem;
