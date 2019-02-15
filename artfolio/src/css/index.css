@@ -588,11 +588,6 @@ a {
   border: none;
   border-top: 1px solid #eee;
 }
-@media (max-width: 1024px) {
-  .modal input {
-    display: none;
-  }
-}
 .modal input:focus {
   outline: none;
 }
