@@ -172,6 +172,7 @@ a {
   padding: 1rem 1rem;
 }
 .login_input {
+  color: #fffbf5;
   border: 1px solid rgba(255, 251, 245, 0.3);
   text-align: center;
   width: 90%;
@@ -185,6 +186,7 @@ a {
   background: rgba(255, 251, 245, 0.3);
 }
 .login_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
@@ -223,6 +225,7 @@ a {
   padding: 1rem 1rem;
 }
 .signup_input {
+  color: #fffbf5;
   border: 1px solid rgba(255, 251, 245, 0.3);
   text-align: center;
   width: 90%;
@@ -236,6 +239,7 @@ a {
   background: rgba(255, 251, 245, 0.3);
 }
 .signup_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
