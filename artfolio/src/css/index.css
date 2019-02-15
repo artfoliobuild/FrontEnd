@@ -356,6 +356,10 @@ a {
 .editSiteText_selections_option-active:hover {
   background: rgba(255, 251, 245, 0.2);
 }
+.editSiteText_form {
+  width: 100%;
+  background: black;
+}
 .fullscreen {
   position: fixed;
   top: 0;

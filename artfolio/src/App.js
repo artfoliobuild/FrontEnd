@@ -1,6 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
+import axios from "axios";
+
 import Dashboard from "./components/dashboard";
 import PhotoGrid from "./components/photoGrid";
 import Modal from "./components/modal";
@@ -28,6 +30,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      posts: [],
       artist: "Jose Valenzuela",
       modalSrc: null,
       device: null,
@@ -38,6 +41,15 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
+    axios
+      // .get("https://lit-depths-68153.herokuapp.com/posts")
+      .get("http://localhost:9000/posts")
+      .then(res => {
+        this.setState({ posts: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
@@ -63,6 +75,7 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
+        {console.log(this.state.posts)}
         <Route path="/dashboard" component={Dashboard} />
         <Route
           exact
