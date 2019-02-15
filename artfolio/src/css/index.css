@@ -172,6 +172,7 @@ a {
   padding: 1rem 1rem;
 }
 .login_input {
+  color: #fffbf5;
   border: 1px solid rgba(255, 251, 245, 0.3);
   text-align: center;
   width: 90%;
@@ -185,6 +186,7 @@ a {
   background: rgba(255, 251, 245, 0.3);
 }
 .login_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
@@ -196,7 +198,6 @@ a {
   cursor: pointer;
   user-select: none;
   background: #fffbf5;
-  border: none;
 }
 .signup {
   font-family: 'Source Sans Pro', sans-serif;
@@ -224,6 +225,7 @@ a {
   padding: 1rem 1rem;
 }
 .signup_input {
+  color: #fffbf5;
   border: 1px solid rgba(255, 251, 245, 0.3);
   text-align: center;
   width: 90%;
@@ -237,6 +239,7 @@ a {
   background: rgba(255, 251, 245, 0.3);
 }
 .signup_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
@@ -248,7 +251,6 @@ a {
   cursor: pointer;
   user-select: none;
   background: #fffbf5;
-  border: none;
 }
 .photo-grid {
   width: 100%;
@@ -332,7 +334,7 @@ a {
 }
 .editSiteText {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
 }
 .editSiteText_title {
@@ -360,6 +362,58 @@ a {
 .editSiteText_form {
   width: 100%;
   background: black;
+}
+.editSiteForm {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 1rem auto;
+}
+.editSiteForm_textarea,
+.editSiteForm_input {
+  width: 90%;
+  margin-bottom: 1rem;
+  resize: none;
+  font-size: 1.25rem;
+  color: #171c25;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.3);
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.editSiteForm_textarea::placeholder,
+.editSiteForm_input::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.editSiteForm_textarea:hover,
+.editSiteForm_input:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.editSiteForm_textarea:focus,
+.editSiteForm_input:focus {
+  background: #fffbf5;
+  outline: none;
+  width: 100%;
+}
+.editSiteForm_input {
+  text-align: center;
+}
+.editSiteForm_button {
+  padding: 0.25rem 0.75rem;
+  margin: 0 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.6);
+  background: rgba(255, 251, 245, 0.1);
+  color: #fffbf5;
+  transition: 100ms background ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.editSiteForm_button:hover {
+  background: rgba(255, 251, 245, 0.3);
 }
 .fullscreen {
   position: fixed;
@@ -537,11 +591,6 @@ a {
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
-}
-@media (max-width: 1024px) {
-  .modal input {
-    display: none;
-  }
 }
 .modal input:focus {
   outline: none;

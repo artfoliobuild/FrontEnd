@@ -11,6 +11,8 @@ import Header from "./components/header";
 import Login from "./components/login";
 import SignUp from "./components/signup";
 
+import * as secrets from "./secrets";
+
 function importAll(r) {
   let images = {};
   r.keys().map((item, index) => (images[item.replace("./", "")] = r(item)));
@@ -31,6 +33,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       posts: [],
+      user: null,
       artist: "Jose Valenzuela",
       modalSrc: null,
       device: null,
@@ -41,10 +44,11 @@ class App extends React.Component {
     };
   }
   componentDidMount() {
+    // get all posts
     axios
-      // .get("https://lit-depths-68153.herokuapp.com/posts")
-      .get("http://localhost:9000/posts")
+      .get(secrets.TEMP_POSTS)
       .then(res => {
+        console.log(res.data);
         this.setState({ posts: res.data });
       })
       .catch(err => {
@@ -53,6 +57,19 @@ class App extends React.Component {
     this.checkScreenSize();
     this.setState({ ready: true });
   }
+  addUser = user => {
+    // add a user
+    // axios
+    //   .post(secrets.TEMP_USERS, {})
+    //   .then(res => {
+    //     console.log(res.data);
+    //     this.setState({ user: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    console.log(user);
+  };
   handleClick = src => {
     this.checkScreenSize();
     this.setState({ modalSrc: src, scroll: true });
@@ -75,7 +92,6 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
-        {console.log(this.state.posts)}
         <Route path="/dashboard" component={Dashboard} />
         <Route
           exact
@@ -90,7 +106,10 @@ class App extends React.Component {
           )}
         />
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
+        <Route
+          path="/signup"
+          component={_ => <SignUp addUser={this.addUser} />}
+        />
         <Route
           path="/mobile"
           component={props => {

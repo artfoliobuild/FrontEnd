@@ -5,21 +5,62 @@ export default class UploadFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: null,
+      all: null
     };
   }
+  componentDidMount() {
+    axios
+      .get("http://localhost:9000/posts")
+      .then(res => {
+        this.setState({ all: res.data });
+      })
+      .catch(err => console.log(err));
+  }
   fileSelectedHandler = e => {
-    this.setState({ file: e.target.files[0] });
+    var reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      _ => {
+        this.setState({ file: reader.result });
+      },
+      false
+    );
+
+    if (e) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    // this.setState({ file: e.target.files[0] });
   };
   fileUploadHandler = _ => {
-    const fd = new FormData();
-    fd.append("image", this.state.file, this.state.file.name);
-    console.log(fd);
+    axios
+      .post("http://localhost:9000/posts", {
+        description: "shrimpcx",
+        likes: 0,
+        image: this.state.file,
+        user_id: 0
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+    // axios
+    //   .put(`http://localhost:9000/users/${this.props.userId}`, {
+    //     description: "shrimpcx",
+    //     likes: 0,
+    //     image: this.state.file,
+    //     user_id: 0
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => console.log(err));
   };
   render() {
     return (
       <div className="dashboard_uploadContainer">
-        <h2 className="dashboard_uploadTitle">Change Profile Picture</h2>
+        <h3 className="dashboard_uploadTitle">Change Profile Picture</h3>
         <input
           style={{ display: "none" }}
           onChange={this.fileSelectedHandler}
@@ -45,6 +86,12 @@ export default class UploadFile extends React.Component {
         <span className="dashboard_fileName">
           {this.state.file ? this.state.file.name : null}
         </span>
+        <img src={this.state.file} />
+        {/* {this.state.all
+          ? this.state.all.map(img => {
+              return <img src={img.image} />;
+            })
+          : null} */}
       </div>
     );
   }
