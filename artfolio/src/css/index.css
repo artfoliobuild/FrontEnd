@@ -302,7 +302,6 @@ a {
 }
 .dashboard_uploadContainer {
   width: 100%;
-  padding: 2rem;
   border-top: 1px solid rgba(255, 251, 245, 0.1);
   border-bottom: 1px solid rgba(255, 251, 245, 0.1);
 }
@@ -327,7 +326,9 @@ a {
   background: rgba(255, 251, 245, 0.3);
 }
 .dashboard_fileName {
+  display: inline-block;
   width: 100%;
+  margin-bottom: 1rem;
 }
 .editSiteText {
   display: flex;
