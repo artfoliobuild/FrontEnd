@@ -32,15 +32,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
       user: null,
       artist: "Jose Valenzuela",
+      firstName: "Jose",
+      lastName: "Valenzuela",
+      bio: bio,
+      posts: [],
       modalSrc: null,
       device: null,
-      ready: false,
-      bio: bio,
-      firstName: "Jose",
-      lastName: "Valenzuela"
+      ready: false
     };
   }
   componentDidMount() {
@@ -68,7 +68,18 @@ class App extends React.Component {
     //   .catch(err => {
     //     console.log(err);
     //   });
-    console.log(user);
+  };
+  findUser = user => {
+    // find a user
+    // axios
+    //   .get(secrets.TEMP_USERS+`/${user.user}`)
+    //   .then(res => {
+    //     console.log(res.data);
+    //     this.setState({ user: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
   handleClick = src => {
     this.checkScreenSize();
@@ -105,7 +116,10 @@ class App extends React.Component {
             />
           )}
         />
-        <Route path="/login" component={Login} />
+        <Route
+          path="/login"
+          component={_ => <LogIn findUser={this.findUser} />}
+        />
         <Route
           path="/signup"
           component={_ => <SignUp addUser={this.addUser} />}
