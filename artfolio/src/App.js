@@ -118,7 +118,7 @@ class App extends React.Component {
         />
         <Route
           path="/login"
-          component={_ => <LogIn findUser={this.findUser} />}
+          component={_ => <Login findUser={this.findUser} />}
         />
         <Route
           path="/signup"
