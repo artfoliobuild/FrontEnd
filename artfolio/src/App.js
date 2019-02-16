@@ -48,7 +48,6 @@ class App extends React.Component {
     axios
       .get(secrets.TEMP_POSTS)
       .then(res => {
-        console.log(res.data);
         this.setState({ posts: res.data });
       })
       .catch(err => {
@@ -157,6 +156,7 @@ class App extends React.Component {
                   history={props.history}
                   handleClick={this.handleClick}
                   images={images}
+                  dbImages={this.state.posts}
                 />
               </>
             );

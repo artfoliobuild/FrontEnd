@@ -4,28 +4,29 @@ import LazyLoad from "react-lazyload";
 
 export default function PhotoGrid(props) {
   const images = [];
-  let type;
+  const realImages = [];
   for (let image in props.images) {
-    if (props.images[image].search("1080x608") !== -1) {
-      type = "1080x608";
-    } else if (props.images[image].search("608x1080") !== -1) {
-      type = "608x1080";
-    } else if (props.images[image].search("1080x1350") !== -1) {
-      type = "1080x1350";
-    } else if (props.images[image].search("1080x720") !== -1) {
-      type = "1080x720";
-    } else if (props.images[image].search("1080x1080") !== -1) {
-      type = "1080x1080";
-    } else {
-      type = "1080x608";
-    }
-    images.push([image, props.images[image], type]);
+    images.push([image, props.images[image]]);
   }
-  const click = src => {
+  const click = image => {
     props.checkScreenSize();
     if (props.device === "mobile") props.history.push("/mobile");
-    props.handleClick(src);
+    // props.handleClick(image.image || image);
+    props.handleClick(image);
   };
+  for (let i in props.dbImages) {
+    const image = props.dbImages[i];
+    realImages.push(
+      <LazyLoad key={`image-${image.id}`} height={60} offset={100} once>
+        <img
+          onClick={_ => click(image)}
+          className="photo-grid_image"
+          src={image.image}
+          alt="post"
+        />
+      </LazyLoad>
+    );
+  }
   return (
     <div className="photo-grid">
       {images.map((image, i) => {
@@ -33,13 +34,14 @@ export default function PhotoGrid(props) {
           <LazyLoad key={`${image[0]}-${i}`} height={60} offset={100} once>
             <img
               onClick={_ => click(image[1])}
-              className={`photo-grid_image type-${image[2]}`}
+              className="photo-grid_image"
               src={image[1]}
               alt="car"
             />
           </LazyLoad>
         );
       })}
+      {realImages}
     </div>
   );
 }

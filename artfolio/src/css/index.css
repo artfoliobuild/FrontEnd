@@ -62,10 +62,12 @@ a {
   user-select: none;
   margin-bottom: 1rem;
   width: 200px;
+  min-width: 200px;
   height: 200px;
   box-shadow: 0 0 0 2px cyan, 0 0 0 4px red;
   border-radius: 50%;
   z-index: 4;
+  object-fit: cover;
 }
 .header_profile:before,
 .header_profile:after {
@@ -440,8 +442,9 @@ a {
 .modal {
   z-index: 200;
   font-size: 0.9rem;
-  width: 100%;
+  width: 80%;
   max-width: 935px;
+  min-width: 365px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -586,11 +589,18 @@ a {
   }
 }
 .modal input {
+  position: absolute;
   bottom: 0;
   font-size: 0.95rem;
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
+  background: #fffbf5;
+}
+@media (max-width: 1024px) {
+  .modal input {
+    position: relative;
+  }
 }
 .modal input:focus {
   outline: none;
@@ -599,7 +609,6 @@ a {
   .modal {
     flex-wrap: wrap;
     max-width: 800px;
-    padding: 0 5%;
   }
 }
 .mobile_modal {
