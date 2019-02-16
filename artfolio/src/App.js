@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 
 import axios from "axios";
 
@@ -10,6 +10,7 @@ import MobileModal from "./components/mobileModal";
 import Header from "./components/header";
 import Login from "./components/login";
 import SignUp from "./components/signup";
+import AddPhoto from "./components/addPhoto";
 
 import * as secrets from "./secrets";
 
@@ -46,45 +47,63 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(secrets.TEMP_POSTS)
+      .get(secrets.POSTS)
       .then(res => {
-        this.setState({ posts: res.data });
+        let user = JSON.parse(localStorage.getItem("user"));
+        this.setState({ posts: res.data, user });
       })
       .catch(err => {
         console.log(err);
       });
     this.checkScreenSize();
+
     this.setState({ ready: true });
   }
   addUser = user => {
     // add a user
-    // axios
-    //   .post(secrets.TEMP_USERS, {})
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.setState({ user: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(secrets.REGISTER, user)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ user: res.data });
+        localStorage.setItem("user", JSON.stringify(res.data));
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   findUser = user => {
     // find a user
-    // axios
-    //   .get(secrets.TEMP_USERS+`/${user.user}`)
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.setState({ user: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(secrets.LOGIN, user)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ user: res.data });
+        localStorage.setItem("user", JSON.stringify(res.data));
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  addPost = post => {
+    axios
+      .post(secrets.POSTS, post)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ user: res.data });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   handleClick = src => {
     this.checkScreenSize();
     this.setState({ modalSrc: src, scroll: true });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
+  yes;
   checkScreenSize = _ => {
     if (window.innerWidth <= 420) this.setState({ device: "mobile" });
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
@@ -111,6 +130,7 @@ class App extends React.Component {
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               bio={this.state.bio}
+              user={this.state.user}
               ready={this.state.ready}
             />
           )}
@@ -158,6 +178,7 @@ class App extends React.Component {
                   images={images}
                   dbImages={this.state.posts}
                 />
+                <AddPhoto addPost={this.addPost} />
               </>
             );
           }}
@@ -167,4 +188,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -17,8 +17,8 @@ export default class LogIn extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.findUser({
-      user: this.state.user,
-      pass: this.state.pass
+      username: this.state.user,
+      password: this.state.pass
     });
   };
   signUp = e => {

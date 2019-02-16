@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 
+import * as secrets from "../../secrets";
+
 export default class UploadFile extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ export default class UploadFile extends React.Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:9000/posts")
+      .get(secrets.POSTS)
       .then(res => {
         this.setState({ all: res.data });
       })
@@ -35,7 +37,8 @@ export default class UploadFile extends React.Component {
   };
   fileUploadHandler = _ => {
     axios
-      .post("http://localhost:9000/posts", {
+      .post(secrets.POSTS, {
+        id: this.state.all.length + 1,
         description: "shrimpcx",
         likes: 0,
         image: this.state.file,

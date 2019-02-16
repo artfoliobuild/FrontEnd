@@ -6,6 +6,8 @@ export default class SignUp extends React.Component {
     super(props);
     this.state = {
       email: "",
+      fName: "",
+      lName: "",
       user: "",
       pass: ""
     };
@@ -18,9 +20,11 @@ export default class SignUp extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.addUser({
-      email: this.state.email,
-      user: this.state.user,
-      pass: this.state.pass
+      password: this.state.pass,
+      username: this.state.user,
+      Firstname: this.state.fName,
+      Lastname: this.state.lName,
+      email: this.state.email
     });
   };
   logIn = e => {
@@ -37,6 +41,24 @@ export default class SignUp extends React.Component {
             data-name="email"
             placeholder="Email"
             value={this.state.email}
+            onChange={this.handleChange}
+            required
+          />
+          <input
+            className="signup_input"
+            type="text"
+            data-name="fName"
+            placeholder="First Name"
+            value={this.state.fName}
+            onChange={this.handleChange}
+            required
+          />
+          <input
+            className="signup_input"
+            type="text"
+            data-name="lName"
+            placeholder="Last Name"
+            value={this.state.lName}
             onChange={this.handleChange}
             required
           />

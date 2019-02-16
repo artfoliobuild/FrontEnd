@@ -1,0 +1,25 @@
+.addPhoto {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(@clr-white, 0.4);
+    color: @clr-black;
+    cursor: pointer;
+    user-select: none;
+    transition: 100ms transform ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &_icon {
+        font-size: 3.5rem;
+        font-weight: bold;
+    }
+}

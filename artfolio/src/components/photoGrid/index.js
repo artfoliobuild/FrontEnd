@@ -41,7 +41,7 @@ export default function PhotoGrid(props) {
           </LazyLoad>
         );
       })}
-      {realImages}
+      {/* {realImages} */}
     </div>
   );
 }

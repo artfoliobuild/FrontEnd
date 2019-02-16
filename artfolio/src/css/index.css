@@ -292,6 +292,29 @@ a {
     height: calc(100vw / 2);
   }
 }
+.addPhoto {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  transition: 100ms transform ease-in-out;
+}
+.addPhoto:hover {
+  transform: scale(1.1);
+}
+.addPhoto_icon {
+  font-size: 3.5rem;
+  font-weight: bold;
+}
 .dashboard {
   display: flex;
   flex-direction: row;
