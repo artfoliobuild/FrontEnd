@@ -38,11 +38,10 @@ export default class UploadFile extends React.Component {
   fileUploadHandler = _ => {
     axios
       .post(secrets.POSTS, {
-        id: this.state.all.length + 1,
         description: "shrimpcx",
         likes: 0,
         image: this.state.file,
-        user_id: 0
+        user_id: 3
       })
       .then(res => {
         console.log(res);

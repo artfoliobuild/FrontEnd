@@ -12,6 +12,7 @@ import Header from "./components/header";
 import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
+import ComposePost from "./components/composePost";
 
 import * as secrets from "./secrets";
 
@@ -50,18 +51,19 @@ class App extends React.Component {
     axios
       .get(secrets.POSTS)
       .then(res => {
-        let user = JSON.parse(localStorage.getItem("user"));
+        let user = localStorage.getItem("user");
         this.setState({ posts: res.data, user });
       })
       .catch(err => {
         console.log(err);
       });
     this.checkScreenSize();
-
     this.setState({ ready: true });
   }
-  verifyUser = _ => {
-    const user = JSON.parse(localStorage.getItem("user"));
+  verifyUser = user => {
+    if (!user) {
+      user = localStorage.getItem("user");
+    }
     let message = null;
     JWT.verify(user, secrets.secret, (err, decoded) => {
       message = decoded;
@@ -74,7 +76,7 @@ class App extends React.Component {
       .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", res.data);
         this.props.history.push("/");
       })
       .catch(err => {
@@ -87,7 +89,7 @@ class App extends React.Component {
       .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", res.data);
         this.props.history.push("/");
       })
       .catch(err => {
@@ -96,15 +98,7 @@ class App extends React.Component {
   };
   addPhoto = post => {
     console.log(this.verifyUser());
-    // axios
-    //   .post(secrets.POSTS, post)
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.setState({ user: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    this.props.history.push("/new");
   };
   handleClick = src => {
     this.checkScreenSize();
@@ -139,6 +133,7 @@ class App extends React.Component {
               lastName={this.state.lastName}
               bio={this.state.bio}
               user={this.state.user}
+              verifyUser={this.verifyUser}
               ready={this.state.ready}
             />
           )}
@@ -190,6 +185,17 @@ class App extends React.Component {
               </>
             );
           }}
+        />
+        <Route
+          exact
+          path="/new"
+          component={props => (
+            <ComposePost
+              history={props.history}
+              verifyUser={this.verifyUser}
+              user={this.state.user}
+            />
+          )}
         />
       </div>
     );

@@ -16,16 +16,17 @@ export default function PhotoGrid(props) {
   };
   for (let i in props.dbImages) {
     const image = props.dbImages[i];
-    realImages.push(
-      <LazyLoad key={`image-${image.id}`} height={60} offset={100} once>
-        <img
-          onClick={_ => click(image)}
-          className="photo-grid_image"
-          src={image.image}
-          alt="post"
-        />
-      </LazyLoad>
-    );
+    if (image.image.includes("data:image/"))
+      realImages.push(
+        <LazyLoad key={`image-${image.id}`} height={60} offset={100} once>
+          <img
+            onClick={_ => click(image)}
+            className="photo-grid_image"
+            src={image.image}
+            alt="post"
+          />
+        </LazyLoad>
+      );
   }
   return (
     <div className="photo-grid">
@@ -41,7 +42,7 @@ export default function PhotoGrid(props) {
           </LazyLoad>
         );
       })}
-      {/* {realImages} */}
+      {realImages}
     </div>
   );
 }
