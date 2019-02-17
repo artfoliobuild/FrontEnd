@@ -1,7 +1,8 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 
 import axios from "axios";
+import JWT from "jsonwebtoken";
 
 import Dashboard from "./components/dashboard";
 import PhotoGrid from "./components/photoGrid";
@@ -10,6 +11,8 @@ import MobileModal from "./components/mobileModal";
 import Header from "./components/header";
 import Login from "./components/login";
 import SignUp from "./components/signup";
+import AddPhoto from "./components/addPhoto";
+import ComposePost from "./components/composePost";
 
 import * as secrets from "./secrets";
 
@@ -46,10 +49,10 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(secrets.TEMP_POSTS)
+      .get(secrets.POSTS)
       .then(res => {
-        console.log(res.data);
-        this.setState({ posts: res.data });
+        let user = localStorage.getItem("user");
+        this.setState({ posts: res.data, user });
       })
       .catch(err => {
         console.log(err);
@@ -57,35 +60,52 @@ class App extends React.Component {
     this.checkScreenSize();
     this.setState({ ready: true });
   }
+  verifyUser = user => {
+    if (!user) {
+      user = localStorage.getItem("user");
+    }
+    let message = null;
+    JWT.verify(user, secrets.secret, (err, decoded) => {
+      message = decoded;
+    });
+    return message;
+  };
   addUser = user => {
     // add a user
-    // axios
-    //   .post(secrets.TEMP_USERS, {})
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.setState({ user: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(secrets.REGISTER, user)
+      .then(res => {
+        this.setState({ user: res.data });
+        localStorage.setItem("user", res.data);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
   findUser = user => {
     // find a user
-    // axios
-    //   .get(secrets.TEMP_USERS+`/${user.user}`)
-    //   .then(res => {
-    //     console.log(res.data);
-    //     this.setState({ user: res.data });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios
+      .post(secrets.LOGIN, user)
+      .then(res => {
+        this.setState({ user: res.data });
+        localStorage.setItem("user", res.data);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  addPhoto = post => {
+    console.log(this.verifyUser());
+    this.props.history.push("/new");
   };
   handleClick = src => {
     this.checkScreenSize();
     this.setState({ modalSrc: src, scroll: true });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
+  yes;
   checkScreenSize = _ => {
     if (window.innerWidth <= 420) this.setState({ device: "mobile" });
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
@@ -112,6 +132,8 @@ class App extends React.Component {
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               bio={this.state.bio}
+              user={this.state.user}
+              verifyUser={this.verifyUser}
               ready={this.state.ready}
             />
           )}
@@ -157,14 +179,27 @@ class App extends React.Component {
                   history={props.history}
                   handleClick={this.handleClick}
                   images={images}
+                  dbImages={this.state.posts}
                 />
+                <AddPhoto addPhoto={this.addPhoto} />
               </>
             );
           }}
+        />
+        <Route
+          exact
+          path="/new"
+          component={props => (
+            <ComposePost
+              history={props.history}
+              verifyUser={this.verifyUser}
+              user={this.state.user}
+            />
+          )}
         />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

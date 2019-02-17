@@ -62,10 +62,12 @@ a {
   user-select: none;
   margin-bottom: 1rem;
   width: 200px;
+  min-width: 200px;
   height: 200px;
   box-shadow: 0 0 0 2px cyan, 0 0 0 4px red;
   border-radius: 50%;
   z-index: 4;
+  object-fit: cover;
 }
 .header_profile:before,
 .header_profile:after {
@@ -118,6 +120,11 @@ a {
   align-items: center;
   cursor: pointer;
   user-select: none;
+}
+.header_login {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 @keyframes glitch {
   0% {
@@ -290,6 +297,129 @@ a {
     height: calc(100vw / 2);
   }
 }
+.addPhoto {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 251, 245, 0.4);
+  color: #171c25;
+  cursor: pointer;
+  user-select: none;
+  transition: 100ms transform ease-in-out;
+}
+.addPhoto:hover {
+  transform: scale(1.1);
+}
+.addPhoto_icon {
+  font-size: 3.5rem;
+  font-weight: bold;
+}
+.composePost {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem 0;
+  color: #fffbf5;
+  text-align: center;
+}
+.composePost_uploadTitle {
+  width: 100%;
+}
+.composePost_uploadContainer {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 251, 245, 0.1);
+}
+.composePost_uploadButtons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.composePost_pickFile,
+.composePost_uploadFile,
+.composePost_button {
+  padding: 0.25rem 0.75rem;
+  margin: 0 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.6);
+  background: rgba(255, 251, 245, 0.1);
+  color: #fffbf5;
+  transition: 100ms background ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.composePost_pickFile:hover,
+.composePost_uploadFile:hover,
+.composePost_button:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.composePost_fileName {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.composePost_picture {
+  width: 100%;
+  max-width: 500px;
+  object-fit: contain;
+}
+.composePost_input {
+  font-size: 1rem;
+  color: #171c25;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  margin: 0.25rem 0;
+  padding: 1rem 1rem;
+}
+.composePost_form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  max-width: 450px;
+  min-width: 300px;
+  width: 50%;
+  margin: auto;
+  padding: 0 1.5rem 1rem;
+  color: #fffbf5;
+}
+.composePost_input {
+  position: relative;
+  top: -5px;
+  font-family: 'Source Sans Pro', sans-serif;
+  width: 100%;
+  margin-bottom: 1rem;
+  resize: none;
+  font-size: 1.25rem;
+  color: #fffbf5;
+  background: rgba(255, 251, 245, 0.1);
+  padding: 1rem 1rem;
+  border-radius: 3px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.composePost_input::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.composePost_input:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.composePost_input:focus {
+  color: #171c25;
+  background: #fffbf5;
+  outline: none;
+  width: 100%;
+}
 .dashboard {
   display: flex;
   flex-direction: row;
@@ -440,8 +570,9 @@ a {
 .modal {
   z-index: 200;
   font-size: 0.9rem;
-  width: 100%;
+  width: 80%;
   max-width: 935px;
+  min-width: 365px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -586,11 +717,18 @@ a {
   }
 }
 .modal input {
+  position: absolute;
   bottom: 0;
   font-size: 0.95rem;
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
+  background: #fffbf5;
+}
+@media (max-width: 1024px) {
+  .modal input {
+    position: relative;
+  }
 }
 .modal input:focus {
   outline: none;
@@ -599,7 +737,6 @@ a {
   .modal {
     flex-wrap: wrap;
     max-width: 800px;
-    padding: 0 5%;
   }
 }
 .mobile_modal {

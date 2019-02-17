@@ -24,8 +24,9 @@
 .modal {
     z-index: 200;
     font-size: 0.9rem;
-    width: 100%;
+    width: 80%;
     max-width: 935px;
+    min-width: 365px;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -172,11 +173,17 @@
     }
 
     input {
+        position: absolute;
         bottom: 0;
         font-size: 0.95rem;
         padding: 1rem 0;
         border: none;
         border-top: 1px solid #eee;
+        background: @clr-white;
+
+        @media (max-width: 1024px) {
+            position: relative;
+        }
     }
 
     input:focus {
@@ -186,6 +193,5 @@
     @media (max-width:1024px) {
         flex-wrap: wrap;
         max-width: 800px;
-        padding: 0 5%;
     }
 }
