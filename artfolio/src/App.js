@@ -2,6 +2,7 @@ import React from "react";
 import { Route, withRouter } from "react-router-dom";
 
 import axios from "axios";
+import JWT from "jsonwebtoken";
 
 import Dashboard from "./components/dashboard";
 import PhotoGrid from "./components/photoGrid";
@@ -59,12 +60,19 @@ class App extends React.Component {
 
     this.setState({ ready: true });
   }
+  verifyUser = _ => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    let message = null;
+    JWT.verify(user, secrets.secret, (err, decoded) => {
+      message = decoded;
+    });
+    return message;
+  };
   addUser = user => {
     // add a user
     axios
       .post(secrets.REGISTER, user)
       .then(res => {
-        console.log(res.data);
         this.setState({ user: res.data });
         localStorage.setItem("user", JSON.stringify(res.data));
         this.props.history.push("/");
@@ -78,7 +86,6 @@ class App extends React.Component {
     axios
       .post(secrets.LOGIN, user)
       .then(res => {
-        console.log(res.data);
         this.setState({ user: res.data });
         localStorage.setItem("user", JSON.stringify(res.data));
         this.props.history.push("/");
@@ -87,16 +94,17 @@ class App extends React.Component {
         console.log(err);
       });
   };
-  addPost = post => {
-    axios
-      .post(secrets.POSTS, post)
-      .then(res => {
-        console.log(res.data);
-        this.setState({ user: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  addPhoto = post => {
+    console.log(this.verifyUser());
+    // axios
+    //   .post(secrets.POSTS, post)
+    //   .then(res => {
+    //     console.log(res.data);
+    //     this.setState({ user: res.data });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
   handleClick = src => {
     this.checkScreenSize();
@@ -178,7 +186,7 @@ class App extends React.Component {
                   images={images}
                   dbImages={this.state.posts}
                 />
-                <AddPhoto addPost={this.addPost} />
+                <AddPhoto addPhoto={this.addPhoto} />
               </>
             );
           }}

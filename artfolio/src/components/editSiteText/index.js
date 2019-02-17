@@ -37,22 +37,6 @@ export default class EditSiteText extends React.Component {
         <div className="editSiteText_selections">
           <div
             className="editSiteText_selections_option"
-            data-name="siteName"
-            onClick={this.handleSelectOption}
-            ref={option => (this.option1 = option)}
-          >
-            Site Name
-          </div>
-          <div
-            className="editSiteText_selections_option"
-            data-name="yourName"
-            onClick={this.handleSelectOption}
-            ref={option => (this.option2 = option)}
-          >
-            Your Name
-          </div>
-          <div
-            className="editSiteText_selections_option"
             data-name="bio"
             onClick={this.handleSelectOption}
             ref={option => (this.option3 = option)}

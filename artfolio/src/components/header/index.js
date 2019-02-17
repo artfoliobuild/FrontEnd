@@ -10,9 +10,9 @@ export default function Header(props) {
       style={{ visibility: props.ready ? "visible" : "hidden" }}
     >
       <div className="header_login">
-        {/* {(props.user && "logged in as, " + props.user.username) || (
+        {(props.user && "logged in as, " + props.user.username) || (
           <Link to="/login">login</Link>
-        )} */}
+        )}
       </div>
       <div className="header_profile">
         <img className="header_profile_img" src={image} alt="profile" />
