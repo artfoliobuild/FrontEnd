@@ -13,6 +13,7 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
+import Error404 from "./components/Error404";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
@@ -148,7 +149,13 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
-        <Route path="/dashboard" component={Dashboard} />
+        <Route
+          exact
+          path="/dashboard"
+          component={_ => (
+            <Dashboard user={this.state.user} verifyUser={this.verifyUser} />
+          )}
+        />
         <Route
           exact
           path="/"
