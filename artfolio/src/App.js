@@ -43,8 +43,9 @@ class App extends React.Component {
       bio: bio,
       posts: [],
       modalSrc: null,
-      imageId: null,
+      post: null,
       device: null,
+      loginErr: null,
       ready: false
     };
   }
@@ -98,19 +99,33 @@ class App extends React.Component {
         this.props.history.push("/");
       })
       .catch(err => {
-        console.log(err);
+        this.setState({
+          loginErr:
+            "There was an issue logging in. Check username/password or sign up if you haven't"
+        });
       });
   };
   addPhoto = post => {
     console.log(this.verifyUser());
     this.props.history.push("/new");
   };
+  getPosts = postId => {
+    axios
+      .get(BACKEND + "/posts/" + postId)
+      .then(res => {
+        const newPosts = [...this.state.posts, res.data];
+        this.setState({ posts: newPosts });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   handleClick = image => {
     this.checkScreenSize();
     this.setState({
       modalSrc: image.image || image,
       scroll: true,
-      imageId: image.id
+      post: image
     });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
@@ -123,7 +138,11 @@ class App extends React.Component {
   };
   close = e => {
     e.stopPropagation();
-    this.setState({ modalSrc: null, scroll: false });
+    this.setState({
+      modalSrc: null,
+      scroll: false,
+      post: null
+    });
     if (this.state.device !== "mobile") document.body.style.overflow = "auto";
   };
   render() {
@@ -149,7 +168,9 @@ class App extends React.Component {
         />
         <Route
           path="/login"
-          component={_ => <Login findUser={this.findUser} />}
+          component={_ => (
+            <Login err={this.state.loginErr} findUser={this.findUser} />
+          )}
         />
         <Route
           path="/signup"
@@ -162,7 +183,7 @@ class App extends React.Component {
               <MobileModal
                 close={this.close}
                 src={this.state.modalSrc}
-                imageId={this.state.imageId}
+                post={this.state.post}
                 artist={this.state.artist}
                 user={this.state.user}
                 verifyUser={this.verifyUser}
@@ -181,7 +202,7 @@ class App extends React.Component {
                     <Modal
                       close={this.close}
                       src={this.state.modalSrc}
-                      imageId={this.state.imageId}
+                      post={this.state.post}
                       artist={this.state.artist}
                       user={this.state.user}
                       verifyUser={this.verifyUser}
@@ -209,6 +230,7 @@ class App extends React.Component {
               history={props.history}
               verifyUser={this.verifyUser}
               user={this.state.user}
+              getPosts={this.getPosts}
             />
           )}
         />
