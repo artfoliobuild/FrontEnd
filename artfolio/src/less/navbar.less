@@ -22,11 +22,13 @@
             user-select: none;
             margin-bottom: 1rem;
             width: 200px;
+            min-width: 200px;
             height: 200px;
             box-shadow: 0 0 0 2px @clr-3d2,
                 0 0 0 4px @clr-3d1;
             border-radius: 50%;
             z-index: 4;
+            object-fit: cover;
         }
 
         &:before,
@@ -94,6 +96,12 @@
         align-items: center;
         cursor: pointer;
         user-select: none;
+    }
+
+    &_login {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
     }
 }
 
