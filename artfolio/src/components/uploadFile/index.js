@@ -3,6 +3,8 @@ import axios from "axios";
 
 // import * as secrets from "../../secrets";
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+
 export default class UploadFile extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,7 @@ export default class UploadFile extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(process.env.REACT_APP_BACKEND + "/posts")
+      .get(BACKEND + "/posts")
       // .get(secrets.POSTS)
       .then(res => {
         this.setState({ all: res.data });
@@ -38,7 +40,7 @@ export default class UploadFile extends React.Component {
   };
   fileUploadHandler = _ => {
     axios
-      .post(process.env.REACT_APP_BACKEND + "/posts", {
+      .post(BACKEND + "/posts", {
         // .post(secrets.POSTS, {
         description: "shrimpcx",
         likes: 0,

@@ -16,6 +16,9 @@ import ComposePost from "./components/composePost";
 
 // import * as secrets from "./secrets";
 
+const BACKEND = process.env.REACT_APP_BACKEND;
+const SECRET = process.env.REACT_APP_SECRET;
+
 function importAll(r) {
   let images = {};
   r.keys().map((item, index) => (images[item.replace("./", "")] = r(item)));
@@ -49,7 +52,7 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(process.env.REACT_APP_BACKEND + "/posts")
+      .get(BACKEND + "/posts")
       // .get(secrets.POSTS)
       .then(res => {
         let user = localStorage.getItem("user");
@@ -66,7 +69,7 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, process.env.REACT_APP_SECRET, (err, decoded) => {
+    JWT.verify(user, SECRET, (err, decoded) => {
       message = decoded;
     });
     return message;
@@ -75,7 +78,7 @@ class App extends React.Component {
     // add a user
     axios({
       method: "post",
-      url: process.env.REACT_APP_BACKEND + "/register",
+      url: BACKEND + "/register",
       data: user
     })
       // .post(secrets.REGISTER, user)
@@ -91,7 +94,7 @@ class App extends React.Component {
   findUser = user => {
     // find a user
     axios
-      .post(process.env.REACT_APP_BACKEND + "/login", user)
+      .post(BACKEND + "/login", user)
       // .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
