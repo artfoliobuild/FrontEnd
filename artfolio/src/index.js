@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, HashRouter } from "react-router-dom";
 import "./css/index.css";
 import App from "./App";
+require("dotenv").config();
 
 ReactDOM.render(
   <Router>

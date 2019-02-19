@@ -13,7 +13,7 @@ export default class UploadFile extends React.Component {
   }
   componentDidMount() {
     axios
-      .get(process.env.BACKEND + "/posts")
+      .get(process.env.REACT_APP_BACKEND + "/posts")
       // .get(secrets.POSTS)
       .then(res => {
         this.setState({ all: res.data });
@@ -38,7 +38,7 @@ export default class UploadFile extends React.Component {
   };
   fileUploadHandler = _ => {
     axios
-      .post(process.env.BACKEND + "/posts", {
+      .post(process.env.REACT_APP_BACKEND + "/posts", {
         // .post(secrets.POSTS, {
         description: "shrimpcx",
         likes: 0,

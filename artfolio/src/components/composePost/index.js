@@ -42,7 +42,7 @@ class ComposePost extends Component {
   fileUploadHandler = _ => {
     if (this.state.description && this.state.file) {
       axios
-        .post(process.env.BACKEND + "/posts", {
+        .post(process.env.REACT_APP_BACKEND + "/posts", {
           // .post(secrets.POSTS, {
           description: this.state.description,
           likes: 0,
