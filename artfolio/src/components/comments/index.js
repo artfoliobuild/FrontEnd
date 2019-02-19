@@ -2,10 +2,12 @@ import React from "react";
 
 import Comment from "../comment";
 
-const Comments = () => {
+const Comments = props => {
   return (
     <div>
-      <Comment />
+      {props.comments.map(comment => {
+        return <Comment comment={comment} />;
+      })}
     </div>
   );
 };
