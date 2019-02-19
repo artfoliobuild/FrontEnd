@@ -49,7 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(BACKEND + "/posts")
+      .get(process.env.BACKEND + "/posts")
       // .get(secrets.POSTS)
       .then(res => {
         let user = localStorage.getItem("user");
@@ -74,7 +74,7 @@ class App extends React.Component {
   addUser = user => {
     // add a user
     axios
-      .post(BACKEND + "register", user)
+      .post(process.env.BACKEND + "register", user)
       // .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
@@ -88,7 +88,7 @@ class App extends React.Component {
   findUser = user => {
     // find a user
     axios
-      .post(BACKEND + "/login", user)
+      .post(process.env.BACKEND + "/login", user)
       // .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
