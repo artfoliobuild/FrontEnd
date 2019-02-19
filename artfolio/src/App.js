@@ -66,7 +66,7 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, secrets.secret, (err, decoded) => {
+    JWT.verify(user, process.env.SECRET, (err, decoded) => {
       message = decoded;
     });
     return message;
