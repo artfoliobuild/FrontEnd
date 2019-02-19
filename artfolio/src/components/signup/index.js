@@ -28,9 +28,6 @@ export default class SignUp extends React.Component {
       admin: true
     });
   };
-  logIn = e => {
-    e.preventDefault();
-  };
   render() {
     return (
       <div className="form_container">
@@ -88,13 +85,9 @@ export default class SignUp extends React.Component {
           >
             Sign Up
           </button>
-          <button
-            onSubmit={this.logIn}
-            onClick={this.logIn}
-            className="signup_login"
-          >
-            <Link to="/login">Log In</Link>
-          </button>
+          <Link className="signup_loginContainer" to="/login">
+            <div className="signup_login">Log In</div>
+          </Link>
         </form>
       </div>
     );
