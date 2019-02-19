@@ -25,7 +25,7 @@ function importAll(r) {
 
 const bio = (
   <>
-    <p>🐾TEXAS STATE UNIVERSITY 20' 🐾</p>
+    <p>🐾TEXAS STATE UNIVERSITY 20&#39; 🐾</p>
     <p>Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍</p>
   </>
 );
@@ -51,15 +51,10 @@ class App extends React.Component {
   }
   componentDidMount() {
     // get all posts
-    axios
-      .get(BACKEND + "/posts")
-      .then(res => {
-        let user = localStorage.getItem("user");
-        this.setState({ posts: res.data, user });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    axios.get(BACKEND + "/posts").then(res => {
+      let user = localStorage.getItem("user");
+      this.setState({ posts: res.data, user });
+    });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
@@ -68,7 +63,7 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, "this is not my secret!", (err, decoded) => {
+    JWT.verify(user, SECRET, (err, decoded) => {
       message = decoded;
     });
     return message;
@@ -79,15 +74,11 @@ class App extends React.Component {
       method: "post",
       url: BACKEND + "/register",
       data: user
-    })
-      .then(res => {
-        this.setState({ user: res.data });
-        localStorage.setItem("user", res.data);
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(res => {
+      this.setState({ user: res.data });
+      localStorage.setItem("user", res.data);
+      this.props.history.push("/");
+    });
   };
   findUser = user => {
     // find a user
@@ -105,20 +96,14 @@ class App extends React.Component {
         });
       });
   };
-  addPhoto = post => {
-    console.log(this.verifyUser());
+  addPhoto = _ => {
     this.props.history.push("/new");
   };
   getPosts = postId => {
-    axios
-      .get(BACKEND + "/posts/" + postId)
-      .then(res => {
-        const newPosts = [...this.state.posts, res.data];
-        this.setState({ posts: newPosts });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    axios.get(BACKEND + "/posts/" + postId).then(res => {
+      const newPosts = [...this.state.posts, res.data];
+      this.setState({ posts: newPosts });
+    });
   };
   handleClick = image => {
     this.checkScreenSize();
@@ -137,13 +122,21 @@ class App extends React.Component {
     if (window.innerWidth > 1024) this.setState({ device: "desktop" });
   };
   close = e => {
-    e.stopPropagation();
     this.setState({
       modalSrc: null,
       scroll: false,
       post: null
     });
     if (this.state.device !== "mobile") document.body.style.overflow = "auto";
+  };
+  closeRefresh = e => {
+    this.close();
+    axios.get(BACKEND + "/posts").then(res => {
+      let user = localStorage.getItem("user");
+      this.setState({ posts: res.data, user });
+    });
+    this.checkScreenSize();
+    this.setState({ ready: true });
   };
   signOut = _ => {
     localStorage.clear();
@@ -187,12 +180,14 @@ class App extends React.Component {
             return (
               <MobileModal
                 close={this.close}
+                closeRefresh={this.closeRefresh}
                 history={props.history}
                 src={this.state.modalSrc}
                 post={this.state.post}
                 artist={this.state.artist}
                 user={this.state.user}
                 verifyUser={this.verifyUser}
+                getPosts={this.getPosts}
               />
             );
           }}
@@ -207,12 +202,14 @@ class App extends React.Component {
                   this.state.device === "mobile" ? null : (
                     <Modal
                       close={this.close}
+                      closeRefresh={this.closeRefresh}
                       history={props.history}
                       src={this.state.modalSrc}
                       post={this.state.post}
                       artist={this.state.artist}
                       user={this.state.user}
                       verifyUser={this.verifyUser}
+                      getPosts={this.getPosts}
                     />
                   )
                 ) : null}
@@ -224,7 +221,11 @@ class App extends React.Component {
                   images={images}
                   dbImages={this.state.posts}
                 />
-                <AddPhoto addPhoto={this.addPhoto} />
+                {this.verifyUser(this.state.user) ? (
+                  this.verifyUser(this.state.user).admin ? (
+                    <AddPhoto addPhoto={this.addPhoto} />
+                  ) : null
+                ) : null}
               </>
             );
           }}
