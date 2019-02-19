@@ -43,6 +43,7 @@ class App extends React.Component {
       bio: bio,
       posts: [],
       modalSrc: null,
+      imageId: null,
       device: null,
       ready: false
     };
@@ -104,9 +105,13 @@ class App extends React.Component {
     console.log(this.verifyUser());
     this.props.history.push("/new");
   };
-  handleClick = src => {
+  handleClick = image => {
     this.checkScreenSize();
-    this.setState({ modalSrc: src, scroll: true });
+    this.setState({
+      modalSrc: image.image || image,
+      scroll: true,
+      imageId: image.id
+    });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
   yes;
@@ -157,7 +162,10 @@ class App extends React.Component {
               <MobileModal
                 close={this.close}
                 src={this.state.modalSrc}
+                imageId={this.state.imageId}
                 artist={this.state.artist}
+                user={this.state.user}
+                verifyUser={this.verifyUser}
               />
             );
           }}
@@ -173,7 +181,10 @@ class App extends React.Component {
                     <Modal
                       close={this.close}
                       src={this.state.modalSrc}
+                      imageId={this.state.imageId}
                       artist={this.state.artist}
+                      user={this.state.user}
+                      verifyUser={this.verifyUser}
                     />
                   )
                 ) : null}

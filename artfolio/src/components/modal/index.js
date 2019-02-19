@@ -1,10 +1,12 @@
 import React from "react";
+import axios from "axios";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { FiShare, FiX } from "react-icons/fi";
 
 import Comments from "../comments";
 
 const image = require("../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 export default class Modal extends React.Component {
   constructor(props) {
@@ -17,6 +19,16 @@ export default class Modal extends React.Component {
     this.setState({
       [e.target.dataset.name]: e.target.value
     });
+  };
+  handleMessage = e => {
+    e.preventDefault();
+    axios.post(BACKEND + "/comments", {
+      content: this.state.comment,
+      user_id: this.props.verifyUser(this.props.user).id,
+      avatar: this.props.verifyUser(this.props.user).avatar || image,
+      post_id: this.props.imageId
+    });
+    this.setState({ comment: "" });
   };
   render() {
     return (
@@ -79,13 +91,15 @@ export default class Modal extends React.Component {
             </div>
             <div className="modal_likes">42 likes</div>
             <div className="modal_date">FEBRUARY 2</div>
-            <input
-              type="text"
-              value={this.state.comment}
-              data-name="comment"
-              onChange={this.handleChange}
-              placeholder="Add a comment..."
-            />
+            <form onSubmit={this.handleMessage}>
+              <input
+                type="text"
+                value={this.state.comment}
+                data-name="comment"
+                placeholder="Add a comment..."
+                onChange={this.handleChange}
+              />
+            </form>
           </div>
         </div>
       </div>
