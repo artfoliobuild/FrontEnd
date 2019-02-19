@@ -74,7 +74,7 @@ class App extends React.Component {
   addUser = user => {
     // add a user
     axios
-      .post(process.env.BACKEND + "register", user)
+      .post(process.env.BACKEND + "/register", user)
       // .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
