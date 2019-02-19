@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { FiShare } from "react-icons/fi";
 
+import Comments from "../comments";
 import Error404 from "../Error404";
 
 export default function MobileModal(props) {
@@ -26,26 +27,31 @@ export default function MobileModal(props) {
           <div className="mobile_modal_likes">42 likes</div>
           <div className="mobile_modal_date">FEBRUARY 2</div>
           <div className="mobile_modal_comments">
-            <b>yes_way_jose.jpg </b>
-            Gtfo
-            <br />
-            📷-me
-            <br />
-            Car owner: @carlosdaman96
-            <br />
-            <b>shrimpcx</b> Okay :(
-            <br />
-            <b>yes_way_jose.jpg</b> @shrimpcx not you bb👀
-            <br />
-            <b>yes_way_jose.jpg</b>
-            #photography #photo #photos #photographer #igphoto #welit
-            #toomuchsauce #dontgetlostinthesauce #photooftheday #igsanmarcos
-            #events #electronicmedia #changes #limitless #igdaily #photogram
-            #mustang_freakzz #mustang #ecoboostmustang #ecobeast #ecoboost
-            <br />
-            <b>6zj6</b>
-            🌸🌸🌸🌸🌸🌸🌸 ┏━━╮┏┓┏┓╭━┓┏━┓ ┃┏╮┃┃┃┃┃┃╭┛┃┗┓ ┃┃┃╰┛┃┃┃┃╰┓┃┗┓
-            ┗┛╰━━┛┗┛╰━┛┗━┛ Big Like 🌸🌸🌸🌸🌸🌸🌸
+            {props.src.description || (
+              <>
+                <b>yes_way_jose.jpg </b>
+                Gtfo
+                <br />
+                📷-me
+                <br />
+                Car owner: @carlosdaman96
+                <br />
+                <b>shrimpcx</b> Okay :(
+                <br />
+                <b>yes_way_jose.jpg</b> @shrimpcx not you bb👀
+                <br />
+                <b>yes_way_jose.jpg</b>
+                #photography #photo #photos #photographer #igphoto #welit
+                #toomuchsauce #dontgetlostinthesauce #photooftheday #igsanmarcos
+                #events #electronicmedia #changes #limitless #igdaily #photogram
+                #mustang_freakzz #mustang #ecoboostmustang #ecobeast #ecoboost
+                <br />
+                <b>6zj6</b>
+                🌸🌸🌸🌸🌸🌸🌸 ┏━━╮┏┓┏┓╭━┓┏━┓ ┃┏╮┃┃┃┃┃┃╭┛┃┗┓ ┃┃┃╰┛┃┃┃┃╰┓┃┗┓
+                ┗┛╰━━┛┗┛╰━┛┗━┛ Big Like 🌸🌸🌸🌸🌸🌸🌸
+                <Comments />
+              </>
+            )}
           </div>
         </div>
         <input type="text" placeholder="Add a comment..." />

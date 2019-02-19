@@ -2,6 +2,8 @@ import React from "react";
 import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
 import { FiShare, FiX } from "react-icons/fi";
 
+import Comments from "../comments";
+
 export default function Modal(props) {
   const image = require("../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
   return (
@@ -53,6 +55,7 @@ export default function Modal(props) {
                 ┗┛╰━━┛┗┛╰━┛┗━┛ Big Like 🌸🌸🌸🌸🌸🌸🌸
               </>
             )}
+            <Comments />
           </div>
           <div className="modal_icons">
             <FaRegHeart size="24px" />
