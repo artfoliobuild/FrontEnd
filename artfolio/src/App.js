@@ -49,7 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(process.env.BACKEND + "/posts")
+      .get(process.env.REACT_APP_BACKEND + "/posts")
       // .get(secrets.POSTS)
       .then(res => {
         let user = localStorage.getItem("user");
@@ -66,15 +66,18 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, process.env.SECRET, (err, decoded) => {
+    JWT.verify(user, process.env.REACT_APP_SECRET, (err, decoded) => {
       message = decoded;
     });
     return message;
   };
   addUser = user => {
     // add a user
-    axios
-      .post(process.env.BACKEND + "/register", user)
+    axios({
+      method: "post",
+      url: process.env.REACT_APP_BACKEND + "/register",
+      data: user
+    })
       // .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
@@ -88,7 +91,7 @@ class App extends React.Component {
   findUser = user => {
     // find a user
     axios
-      .post(process.env.BACKEND + "/login", user)
+      .post(process.env.REACT_APP_BACKEND + "/login", user)
       // .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
