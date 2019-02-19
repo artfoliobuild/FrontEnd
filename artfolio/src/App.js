@@ -14,7 +14,7 @@ import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
 
-import * as secrets from "./secrets";
+// import * as secrets from "./secrets";
 
 function importAll(r) {
   let images = {};
@@ -49,7 +49,8 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     axios
-      .get(secrets.POSTS)
+      .get(BACKEND + "/posts")
+      // .get(secrets.POSTS)
       .then(res => {
         let user = localStorage.getItem("user");
         this.setState({ posts: res.data, user });
@@ -73,7 +74,8 @@ class App extends React.Component {
   addUser = user => {
     // add a user
     axios
-      .post(secrets.REGISTER, user)
+      .post(BACKEND + "register", user)
+      // .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
         localStorage.setItem("user", res.data);
@@ -86,7 +88,8 @@ class App extends React.Component {
   findUser = user => {
     // find a user
     axios
-      .post(secrets.LOGIN, user)
+      .post(BACKEND + "/login", user)
+      // .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
         localStorage.setItem("user", res.data);

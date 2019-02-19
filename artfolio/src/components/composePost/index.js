@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import axios from "axios";
 
-import * as secrets from "../../secrets";
+// import * as secrets from "../../secrets";
 
 class ComposePost extends Component {
   constructor(props) {
@@ -42,7 +42,8 @@ class ComposePost extends Component {
   fileUploadHandler = _ => {
     if (this.state.description && this.state.file) {
       axios
-        .post(secrets.POSTS, {
+        .post(BACKEND + "/posts", {
+          // .post(secrets.POSTS, {
           description: this.state.description,
           likes: 0,
           image: this.state.file,
