@@ -21,8 +21,6 @@
     padding: 0 1.5rem 1rem;
     color: @clr-white;
 
-    &_title {}
-
     &_input,
     &_button,
     &_signup {
@@ -36,6 +34,7 @@
     }
 
     &_input {
+        color: @clr-white;
         border: 1px solid fade(@clr-white, 30%);
         text-align: center;
         width: 90%;
@@ -52,6 +51,7 @@
         }
 
         &:focus {
+            color: @clr-dark;
             background: @clr-white;
             outline: none;
             width: 100%;
@@ -66,7 +66,6 @@
         cursor: pointer;
         user-select: none;
         background: @clr-white;
-        border: none;
     }
 }
 
@@ -84,8 +83,6 @@
     padding: 0 1.5rem 1rem;
     color: @clr-white;
 
-    &_title {}
-
     &_input,
     &_button,
     &_login {
@@ -99,6 +96,7 @@
     }
 
     &_input {
+        color: @clr-white;
         border: 1px solid fade(@clr-white, 30%);
         text-align: center;
         width: 90%;
@@ -115,6 +113,7 @@
         }
 
         &:focus {
+            color: @clr-dark;
             background: @clr-white;
             outline: none;
             width: 100%;
@@ -129,6 +128,5 @@
         cursor: pointer;
         user-select: none;
         background: @clr-white;
-        border: none;
     }
 }

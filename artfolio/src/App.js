@@ -1,12 +1,21 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 
+import axios from "axios";
+import JWT from "jsonwebtoken";
+
+import Dashboard from "./components/dashboard";
 import PhotoGrid from "./components/photoGrid";
 import Modal from "./components/modal";
 import MobileModal from "./components/mobileModal";
 import Header from "./components/header";
 import Login from "./components/login";
 import SignUp from "./components/signup";
+import AddPhoto from "./components/addPhoto";
+import ComposePost from "./components/composePost";
+
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
+const SECRET = process.env.REACT_APP_SECRET;
 
 function importAll(r) {
   let images = {};
@@ -14,27 +23,93 @@ function importAll(r) {
   return images;
 }
 
+const bio = (
+  <>
+    <p>🐾TEXAS STATE UNIVERSITY 20' 🐾</p>
+    <p>Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍</p>
+  </>
+);
+
 const images = importAll(require.context("./images", false));
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       artist: "Jose Valenzuela",
+      firstName: "Jose",
+      lastName: "Valenzuela",
+      bio: bio,
+      posts: [],
       modalSrc: null,
       device: null,
       ready: false
     };
   }
   componentDidMount() {
+    // get all posts
+    axios
+      .get(BACKEND + "/posts")
+      .then(res => {
+        let user = localStorage.getItem("user");
+        this.setState({ posts: res.data, user });
+      })
+      .catch(err => {
+        console.log(err);
+      });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
+  verifyUser = user => {
+    if (!user) {
+      user = localStorage.getItem("user");
+    }
+    let message = null;
+    JWT.verify(user, "this is not my secret!", (err, decoded) => {
+      message = decoded;
+    });
+    return message;
+  };
+  addUser = user => {
+    // add a user
+    axios({
+      method: "post",
+      url: BACKEND + "/register",
+      data: user
+    })
+      .then(res => {
+        this.setState({ user: res.data });
+        localStorage.setItem("user", res.data);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  findUser = user => {
+    // find a user
+    axios
+      .post(BACKEND + "/login", user)
+      .then(res => {
+        this.setState({ user: res.data });
+        localStorage.setItem("user", res.data);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  addPhoto = post => {
+    console.log(this.verifyUser());
+    this.props.history.push("/new");
+  };
   handleClick = src => {
     this.checkScreenSize();
     this.setState({ modalSrc: src, scroll: true });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
+  yes;
   checkScreenSize = _ => {
     if (window.innerWidth <= 420) this.setState({ device: "mobile" });
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
@@ -52,13 +127,29 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
+        <Route path="/dashboard" component={Dashboard} />
         <Route
           exact
           path="/"
-          component={_ => <Header ready={this.state.ready} />}
+          component={_ => (
+            <Header
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              bio={this.state.bio}
+              user={this.state.user}
+              verifyUser={this.verifyUser}
+              ready={this.state.ready}
+            />
+          )}
         />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
+        <Route
+          path="/login"
+          component={_ => <Login findUser={this.findUser} />}
+        />
+        <Route
+          path="/signup"
+          component={_ => <SignUp addUser={this.addUser} />}
+        />
         <Route
           path="/mobile"
           component={props => {
@@ -92,14 +183,27 @@ class App extends React.Component {
                   history={props.history}
                   handleClick={this.handleClick}
                   images={images}
+                  dbImages={this.state.posts}
                 />
+                <AddPhoto addPhoto={this.addPhoto} />
               </>
             );
           }}
+        />
+        <Route
+          exact
+          path="/new"
+          component={props => (
+            <ComposePost
+              history={props.history}
+              verifyUser={this.verifyUser}
+              user={this.state.user}
+            />
+          )}
         />
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
