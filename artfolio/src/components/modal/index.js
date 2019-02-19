@@ -31,19 +31,12 @@ export default class Modal extends React.Component {
       [e.target.dataset.name]: e.target.value
     });
   };
-  checkLoad = func => {
-    if (
-      this.props.verifyUser(this.props.user) &&
-      this.props.verifyUser(this.props.user).id
-    ) {
-      return func;
-    } else {
-      this.props.history.push("/login");
-    }
+  checkLoad = _ => {
+    return this.props.user;
   };
   handleMessage = e => {
     e.preventDefault();
-    this.checkLoad(
+    if (this.checkLoad())
       axios
         .post(BACKEND + "/comments", {
           content: this.state.comment,
@@ -53,15 +46,15 @@ export default class Modal extends React.Component {
         })
         .then(res => {
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-            this.setState({ comments: res.data.comments });
+            this.setState({ comments: res.data.comments, comment: "" });
           });
-        }),
-      this.setState({ comment: "" })
-    );
+        });
+    else this.props.history.push("/login");
   };
   handleEdit = e => {
     e.preventDefault();
-    this.checkLoad(
+
+    if (this.checkLoad())
       axios
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.edit,
@@ -70,12 +63,16 @@ export default class Modal extends React.Component {
         })
         .then(oRes => {
           axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
-            this.setState({ post: res.data, comments: res.data.comments });
+            this.setState({
+              post: res.data,
+              comments: res.data.comments,
+              comment: "",
+              edit: ""
+            });
           });
         })
-        .catch(err => console.log(err)),
-      this.setState({ comment: "", edit: "" })
-    );
+        .catch(err => console.log(err));
+    else this.props.history.push("/login");
   };
   handleDelete = e => {
     e.preventDefault();
