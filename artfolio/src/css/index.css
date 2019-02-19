@@ -123,8 +123,8 @@ a {
 }
 .header_login {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0.35rem;
+  right: 0.5rem;
 }
 @keyframes glitch {
   0% {
@@ -830,6 +830,19 @@ a {
 }
 .mobile_modal input:focus {
   outline: none;
+}
+.comment {
+  display: flex;
+  align-items: center;
+  margin: 0.125rem 0;
+}
+.comment_avatar {
+  width: 20px;
+  border-radius: 50%;
+}
+.comment_user {
+  font-weight: 700;
+  margin: 0 0.25rem;
 }
 .error-404 {
   padding: 0 5%;
