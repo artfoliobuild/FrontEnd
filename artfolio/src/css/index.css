@@ -592,6 +592,95 @@ a {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  background: rgba(0, 0, 0, 0);
+}
+.modal_edit,
+.modal_delete {
+  z-index: 300;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+  background: #171c25;
+  color: #fffbf5;
+  text-align: center;
+}
+.modal_edit_textarea,
+.modal_delete_textarea {
+  font-family: 'Source Sans Pro', sans-serif;
+  width: 80%;
+  margin-bottom: 1rem;
+  resize: none;
+  font-size: 1.25rem;
+  color: #fffbf5;
+  background: rgba(255, 251, 245, 0.1);
+  border: none;
+  border-radius: 3px;
+  padding: 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.3);
+  transition: 250ms width ease-in-out, 250ms background ease-in-out;
+}
+.modal_edit_textarea::placeholder,
+.modal_delete_textarea::placeholder {
+  font-size: 1rem;
+  color: white;
+}
+.modal_edit_textarea:hover,
+.modal_delete_textarea:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.modal_edit_textarea:focus,
+.modal_delete_textarea:focus {
+  background: #fffbf5;
+  color: #171c25;
+  outline: none;
+  width: 90%;
+}
+.modal_edit_button,
+.modal_delete_button {
+  padding: 0.25rem 0.75rem;
+  margin: 0 1rem 1rem;
+  border: 1px solid rgba(255, 251, 245, 0.6);
+  background: rgba(255, 251, 245, 0.1);
+  color: #fffbf5;
+  transition: 100ms background ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.modal_edit_button:hover,
+.modal_delete_button:hover {
+  background: rgba(255, 251, 245, 0.3);
+}
+.modal_edit_button_cancel,
+.modal_delete_button_cancel,
+.modal_edit_button_delete,
+.modal_delete_button_delete {
+  font-size: 1rem;
+  color: #171c25;
+  border-radius: 3px;
+  margin: 0.25rem 0;
+  padding: 1rem 1rem;
+  display: block;
+  width: 90%;
+  cursor: pointer;
+  user-select: none;
+}
+.modal_edit_button_delete,
+.modal_delete_button_delete {
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  background: rgba(255, 0, 0, 0.7);
+  color: white;
+}
+.modal_edit_button_cancel,
+.modal_delete_button_cancel {
+  background: rgba(255, 251, 245, 0.3);
+  color: white;
 }
 .modal_image {
   max-width: 100%;
@@ -636,13 +725,11 @@ a {
   }
 }
 .modal_artist {
-  background: #fffbf5;
   display: flex;
   flex-direction: row;
   align-items: center;
   width: calc(335px - 40px);
   height: 60px;
-  border-bottom: 1px solid #eee;
 }
 .modal_artist_pic {
   margin-right: 0.5rem;
@@ -666,7 +753,6 @@ a {
   align-items: center;
   width: calc(335px - 40px);
   padding: 20px;
-  border-bottom: 1px solid #eee;
 }
 .modal_artist_small_pic {
   margin-right: 0.5rem;
@@ -708,9 +794,22 @@ a {
 .modal_icons svg {
   margin-right: 14px;
 }
-.modal_icons svg:nth-child(4) {
+.modal_icons_right {
   margin-right: 0;
+  margin-left: 14px;
   float: right;
+}
+.modal_icons_right svg {
+  margin-right: 0;
+  margin-left: 14px;
+}
+.modal_icons_right svg:nth-child(2) {
+  color: #ff0000;
+  opacity: 0.8;
+}
+.modal_icons_icon {
+  cursor: pointer;
+  user-select: none;
 }
 @media (max-width: 1024px) {
   .modal_icons {
@@ -731,11 +830,13 @@ a {
 .modal input {
   position: absolute;
   bottom: 0;
-  font-size: 0.95rem;
+  width: 101%;
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
   background: #fffbf5;
+  background: rgba(0, 0, 0, 0);
+  font-size: 0.95rem;
 }
 @media (max-width: 1024px) {
   .modal input {
