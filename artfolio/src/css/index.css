@@ -125,6 +125,22 @@ a {
   position: absolute;
   top: 0.35rem;
   right: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 40px;
+  color: #fffbf5;
+}
+.header_login_button {
+  position: relative;
+  top: 5px;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+.header_login_button_icon {
+  cursor: pointer;
+  user-select: none;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 @keyframes glitch {
   0% {

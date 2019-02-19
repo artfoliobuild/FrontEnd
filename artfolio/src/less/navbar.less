@@ -102,6 +102,24 @@
         position: absolute;
         top: 0.35rem;
         right: 0.5rem;
+        display: flex;
+        justify-content: flex-end;
+        min-width: 40px;
+        color: @clr-white;
+
+        &_button {
+            position: relative;
+            top: 5px;
+            display: inline-block;
+            margin-left: 0.5rem;
+
+            &_icon {
+                cursor: pointer;
+                user-select: none;
+                width: 1.25rem;
+                height: 1.25rem;
+            }
+        }
     }
 }
 

@@ -145,6 +145,10 @@ class App extends React.Component {
     });
     if (this.state.device !== "mobile") document.body.style.overflow = "auto";
   };
+  signOut = _ => {
+    localStorage.clear();
+    this.setState({ user: null });
+  };
   render() {
     return (
       <div
@@ -162,6 +166,7 @@ class App extends React.Component {
               bio={this.state.bio}
               user={this.state.user}
               verifyUser={this.verifyUser}
+              signOut={this.signOut}
               ready={this.state.ready}
             />
           )}
@@ -182,6 +187,7 @@ class App extends React.Component {
             return (
               <MobileModal
                 close={this.close}
+                history={props.history}
                 src={this.state.modalSrc}
                 post={this.state.post}
                 artist={this.state.artist}
@@ -201,6 +207,7 @@ class App extends React.Component {
                   this.state.device === "mobile" ? null : (
                     <Modal
                       close={this.close}
+                      history={props.history}
                       src={this.state.modalSrc}
                       post={this.state.post}
                       artist={this.state.artist}
