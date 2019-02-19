@@ -34,6 +34,97 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    background: rgba(0, 0, 0, 0);
+
+    &_edit,
+    &_delete {
+        z-index: 300;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        padding: 1rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        transform: translate(-50%, -50%);
+        background: @clr-dark;
+        color: @clr-white;
+        text-align: center;
+
+        &_textarea {
+            font-family: 'Source Sans Pro',
+                sans-serif;
+            width: 80%;
+            margin-bottom: 1rem;
+            resize: none;
+            font-size: 1.25rem;
+            color: @clr-white;
+            background: fade(@clr-white, 10%);
+            border: none;
+            border-radius: 3px;
+            padding: 1rem 1rem;
+            border: 1px solid fade(@clr-white, 30%);
+            transition: 250ms width ease-in-out,
+                250ms background ease-in-out;
+
+            &::placeholder {
+                font-size: 1rem;
+                color: white;
+            }
+
+            &:hover {
+                background: rgba(@clr-white, 30%);
+            }
+
+            &:focus {
+                background: @clr-white;
+                color: @clr-dark;
+                outline: none;
+                width: 90%;
+            }
+        }
+
+        &_button {
+            padding: 0.25rem 0.75rem;
+            margin: 0 1rem 1rem;
+            border: 1px solid rgba(@clr-white, .6);
+            background: rgba(@clr-white, 0.1);
+            color: @clr-white;
+            transition: 100ms background ease-in-out;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                background: rgba(@clr-white, 0.3);
+            }
+        }
+
+        &_button_cancel,
+        &_button_delete {
+            font-size: 1rem;
+            color: @clr-dark;
+            border-radius: 3px;
+            margin: 0.25rem 0;
+            padding: 1rem 1rem;
+            display: block;
+            width: 90%;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        &_button_delete {
+            border: 1px solid rgba(@clr-3d1, 30%);
+            background: rgba(@clr-3d1, 70%);
+            color: white;
+        }
+
+        &_button_cancel {
+            background: rgba(@clr-white, 30%);
+            color: white;
+        }
+    }
 
     &_image {
         max-width: 100%;
@@ -78,13 +169,11 @@
     }
 
     &_artist {
-        background: @clr-white;
         display: flex;
         flex-direction: row;
         align-items: center;
         width: calc(335px - 40px);
         height: 60px;
-        border-bottom: 1px solid #eee;
 
         &_pic {
             margin-right: 0.5rem;
@@ -108,7 +197,6 @@
         align-items: center;
         width: calc(335px - 40px);
         padding: 20px;
-        border-bottom: 1px solid #eee;
 
         &_pic {
             margin-right: 0.5rem;
@@ -151,9 +239,26 @@
             margin-right: 14px;
         }
 
-        svg:nth-child(4) {
+        &_right {
             margin-right: 0;
+            margin-left: 14px;
             float: right;
+
+            svg {
+                margin-right: 0;
+                margin-left: 14px;
+            }
+
+            svg:nth-child(2) {
+                color: rgba(@clr-3d1);
+                opacity: 0.8;
+            }
+        }
+
+
+        &_icon {
+            cursor: pointer;
+            user-select: none;
         }
 
         @media (max-width: 1024px) {
@@ -175,11 +280,13 @@
     input {
         position: absolute;
         bottom: 0;
-        font-size: 0.95rem;
+        width: 101%;
         padding: 1rem 0;
         border: none;
         border-top: 1px solid #eee;
         background: @clr-white;
+        background: rgba(0, 0, 0, 0);
+        font-size: 0.95rem;
 
         @media (max-width: 1024px) {
             position: relative;

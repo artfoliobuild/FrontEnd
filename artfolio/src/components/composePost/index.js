@@ -25,18 +25,22 @@ class ComposePost extends Component {
     });
   };
   fileSelectedHandler = e => {
-    const reader = new FileReader();
-    const name = e.target.files[0].name;
-    reader.addEventListener(
-      "load",
-      _ => {
-        this.setState({ file: reader.result, name });
-      },
-      false
-    );
+    if (this.props.verifyUser(this.props.user)) {
+      const reader = new FileReader();
+      const name = e.target.files[0].name;
+      reader.addEventListener(
+        "load",
+        _ => {
+          this.setState({ file: reader.result, name });
+        },
+        false
+      );
 
-    if (e) {
-      reader.readAsDataURL(e.target.files[0]);
+      if (e) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    } else {
+      this.props.history.push("/login");
     }
   };
   fileUploadHandler = _ => {
@@ -50,6 +54,7 @@ class ComposePost extends Component {
         })
         .then(res => {
           this.props.history.push("/");
+          this.props.getPosts(res.data);
         })
         .catch(err => {
           console.log(err);

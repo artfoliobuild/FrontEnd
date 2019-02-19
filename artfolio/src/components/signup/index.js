@@ -9,7 +9,8 @@ export default class SignUp extends React.Component {
       fName: "",
       lName: "",
       user: "",
-      pass: ""
+      pass: "",
+      err: null
     };
   }
   handleChange = e => {
@@ -19,23 +20,29 @@ export default class SignUp extends React.Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addUser({
-      password: this.state.pass,
-      username: this.state.user,
-      Firstname: this.state.fName,
-      Lastname: this.state.lName,
-      email: this.state.email,
-      admin: true
-    });
-  };
-  logIn = e => {
-    e.preventDefault();
+    if (this.state.user && this.state.pass) {
+      this.props.addUser({
+        password: this.state.pass,
+        username: this.state.user,
+        Firstname: this.state.fName,
+        Lastname: this.state.lName,
+        email: this.state.email,
+        admin: true
+      });
+    } else {
+      this.setState({ err: "Please fill out all forms" });
+    }
   };
   render() {
     return (
       <div className="form_container">
         <form onSubmit={this.handleSubmit} className="signup">
           <h2 className="signup_title">Sign Up</h2>
+          {this.state.err && (
+            <div className="login_error">
+              <div className="login_error_text">{this.state.err}</div>
+            </div>
+          )}
           <input
             className="signup_input"
             type="email"
@@ -88,13 +95,9 @@ export default class SignUp extends React.Component {
           >
             Sign Up
           </button>
-          <button
-            onSubmit={this.logIn}
-            onClick={this.logIn}
-            className="signup_login"
-          >
-            <Link to="/login">Log In</Link>
-          </button>
+          <Link className="signup_loginContainer" to="/login">
+            <div className="signup_login">Log In</div>
+          </Link>
         </form>
       </div>
     );

@@ -13,6 +13,7 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
+import Error404 from "./components/Error404";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
@@ -25,7 +26,7 @@ function importAll(r) {
 
 const bio = (
   <>
-    <p>🐾TEXAS STATE UNIVERSITY 20' 🐾</p>
+    <p>🐾TEXAS STATE UNIVERSITY 20&#39; 🐾</p>
     <p>Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍</p>
   </>
 );
@@ -43,21 +44,18 @@ class App extends React.Component {
       bio: bio,
       posts: [],
       modalSrc: null,
+      post: null,
       device: null,
+      loginErr: null,
       ready: false
     };
   }
   componentDidMount() {
     // get all posts
-    axios
-      .get(BACKEND + "/posts")
-      .then(res => {
-        let user = localStorage.getItem("user");
-        this.setState({ posts: res.data, user });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    axios.get(BACKEND + "/posts").then(res => {
+      let user = localStorage.getItem("user");
+      this.setState({ posts: res.data, user });
+    });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
@@ -66,7 +64,7 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, "this is not my secret!", (err, decoded) => {
+    JWT.verify(user, SECRET, (err, decoded) => {
       message = decoded;
     });
     return message;
@@ -77,15 +75,11 @@ class App extends React.Component {
       method: "post",
       url: BACKEND + "/register",
       data: user
-    })
-      .then(res => {
-        this.setState({ user: res.data });
-        localStorage.setItem("user", res.data);
-        this.props.history.push("/");
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }).then(res => {
+      this.setState({ user: res.data });
+      localStorage.setItem("user", res.data);
+      this.props.history.push("/");
+    });
   };
   findUser = user => {
     // find a user
@@ -97,16 +91,28 @@ class App extends React.Component {
         this.props.history.push("/");
       })
       .catch(err => {
-        console.log(err);
+        this.setState({
+          loginErr:
+            "There was an issue logging in. Check username/password or sign up if you haven't"
+        });
       });
   };
-  addPhoto = post => {
-    console.log(this.verifyUser());
+  addPhoto = _ => {
     this.props.history.push("/new");
   };
-  handleClick = src => {
+  getPosts = postId => {
+    axios.get(BACKEND + "/posts/" + postId).then(res => {
+      const newPosts = [...this.state.posts, res.data];
+      this.setState({ posts: newPosts });
+    });
+  };
+  handleClick = image => {
     this.checkScreenSize();
-    this.setState({ modalSrc: src, scroll: true });
+    this.setState({
+      modalSrc: image.image || image,
+      scroll: true,
+      post: image
+    });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
   yes;
@@ -117,9 +123,25 @@ class App extends React.Component {
     if (window.innerWidth > 1024) this.setState({ device: "desktop" });
   };
   close = e => {
-    e.stopPropagation();
-    this.setState({ modalSrc: null, scroll: false });
+    this.setState({
+      modalSrc: null,
+      scroll: false,
+      post: null
+    });
     if (this.state.device !== "mobile") document.body.style.overflow = "auto";
+  };
+  closeRefresh = e => {
+    this.close();
+    axios.get(BACKEND + "/posts").then(res => {
+      let user = localStorage.getItem("user");
+      this.setState({ posts: res.data, user });
+    });
+    this.checkScreenSize();
+    this.setState({ ready: true });
+  };
+  signOut = _ => {
+    localStorage.clear();
+    this.setState({ user: null });
   };
   render() {
     return (
@@ -127,7 +149,13 @@ class App extends React.Component {
         className="App"
         style={{ visibility: this.state.ready ? "visible" : "hidden" }}
       >
-        <Route path="/dashboard" component={Dashboard} />
+        <Route
+          exact
+          path="/dashboard"
+          component={_ => (
+            <Dashboard user={this.state.user} verifyUser={this.verifyUser} />
+          )}
+        />
         <Route
           exact
           path="/"
@@ -138,13 +166,16 @@ class App extends React.Component {
               bio={this.state.bio}
               user={this.state.user}
               verifyUser={this.verifyUser}
+              signOut={this.signOut}
               ready={this.state.ready}
             />
           )}
         />
         <Route
           path="/login"
-          component={_ => <Login findUser={this.findUser} />}
+          component={_ => (
+            <Login err={this.state.loginErr} findUser={this.findUser} />
+          )}
         />
         <Route
           path="/signup"
@@ -156,8 +187,14 @@ class App extends React.Component {
             return (
               <MobileModal
                 close={this.close}
+                closeRefresh={this.closeRefresh}
+                history={props.history}
                 src={this.state.modalSrc}
+                post={this.state.post}
                 artist={this.state.artist}
+                user={this.state.user}
+                verifyUser={this.verifyUser}
+                getPosts={this.getPosts}
               />
             );
           }}
@@ -172,8 +209,14 @@ class App extends React.Component {
                   this.state.device === "mobile" ? null : (
                     <Modal
                       close={this.close}
+                      closeRefresh={this.closeRefresh}
+                      history={props.history}
                       src={this.state.modalSrc}
+                      post={this.state.post}
                       artist={this.state.artist}
+                      user={this.state.user}
+                      verifyUser={this.verifyUser}
+                      getPosts={this.getPosts}
                     />
                   )
                 ) : null}
@@ -185,7 +228,11 @@ class App extends React.Component {
                   images={images}
                   dbImages={this.state.posts}
                 />
-                <AddPhoto addPhoto={this.addPhoto} />
+                {this.verifyUser(this.state.user) ? (
+                  this.verifyUser(this.state.user).admin ? (
+                    <AddPhoto addPhoto={this.addPhoto} />
+                  ) : null
+                ) : null}
               </>
             );
           }}
@@ -198,6 +245,7 @@ class App extends React.Component {
               history={props.history}
               verifyUser={this.verifyUser}
               user={this.state.user}
+              getPosts={this.getPosts}
             />
           )}
         />
