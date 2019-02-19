@@ -2,8 +2,7 @@ import React, { Component } from "react";
 
 import axios from "axios";
 
-// import * as secrets from "../../secrets";
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 class ComposePost extends Component {
   constructor(props) {
@@ -44,7 +43,6 @@ class ComposePost extends Component {
     if (this.state.description && this.state.file) {
       axios
         .post(BACKEND + "/posts", {
-          // .post(secrets.POSTS, {
           description: this.state.description,
           likes: 0,
           image: this.state.file,

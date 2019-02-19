@@ -14,9 +14,7 @@ import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
 
-// import * as secrets from "./secrets";
-
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
 
 function importAll(r) {
@@ -53,7 +51,6 @@ class App extends React.Component {
     // get all posts
     axios
       .get(BACKEND + "/posts")
-      // .get(secrets.POSTS)
       .then(res => {
         let user = localStorage.getItem("user");
         this.setState({ posts: res.data, user });
@@ -69,7 +66,7 @@ class App extends React.Component {
       user = localStorage.getItem("user");
     }
     let message = null;
-    JWT.verify(user, SECRET, (err, decoded) => {
+    JWT.verify(user, "this is not my secret!", (err, decoded) => {
       message = decoded;
     });
     return message;
@@ -81,7 +78,6 @@ class App extends React.Component {
       url: BACKEND + "/register",
       data: user
     })
-      // .post(secrets.REGISTER, user)
       .then(res => {
         this.setState({ user: res.data });
         localStorage.setItem("user", res.data);
@@ -95,7 +91,6 @@ class App extends React.Component {
     // find a user
     axios
       .post(BACKEND + "/login", user)
-      // .post(secrets.LOGIN, user)
       .then(res => {
         this.setState({ user: res.data });
         localStorage.setItem("user", res.data);
