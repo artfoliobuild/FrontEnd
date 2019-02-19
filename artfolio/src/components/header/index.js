@@ -10,7 +10,7 @@ export default function Header(props) {
       style={{ visibility: props.ready ? "visible" : "hidden" }}
     >
       <div className="header_login">
-        {props.user ? (
+        {props.user && props.verifyUser(props.user) ? (
           "logged in as, " + props.verifyUser(props.user).username
         ) : (
           <Link to="/login">login</Link>

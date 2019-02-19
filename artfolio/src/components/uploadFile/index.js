@@ -1,9 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-// import * as secrets from "../../secrets";
-
-const BACKEND = process.env.REACT_APP_BACKEND;
+const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 export default class UploadFile extends React.Component {
   constructor(props) {
@@ -36,12 +34,10 @@ export default class UploadFile extends React.Component {
     if (e) {
       reader.readAsDataURL(e.target.files[0]);
     }
-    // this.setState({ file: e.target.files[0] });
   };
   fileUploadHandler = _ => {
     axios
       .post(BACKEND + "/posts", {
-        // .post(secrets.POSTS, {
         description: "shrimpcx",
         likes: 0,
         image: this.state.file,
@@ -51,17 +47,6 @@ export default class UploadFile extends React.Component {
         console.log(res);
       })
       .catch(err => console.log(err));
-    // axios
-    //   .put(`http://localhost:9000/users/${this.props.userId}`, {
-    //     description: "shrimpcx",
-    //     likes: 0,
-    //     image: this.state.file,
-    //     user_id: 0
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-    //   })
-    //   .catch(err => console.log(err));
   };
   render() {
     return (
@@ -93,11 +78,6 @@ export default class UploadFile extends React.Component {
           {this.state.file ? this.state.file.name : null}
         </span>
         <img src={this.state.file} />
-        {/* {this.state.all
-          ? this.state.all.map(img => {
-              return <img src={img.image} />;
-            })
-          : null} */}
       </div>
     );
   }
