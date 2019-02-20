@@ -13,6 +13,9 @@ export default class SignUp extends React.Component {
       err: null
     };
   }
+  componentDidMount() {
+    this.setState({ err: this.props.err });
+  }
   handleChange = e => {
     this.setState({
       [e.target.dataset.name]: e.target.value

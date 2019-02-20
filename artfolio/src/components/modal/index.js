@@ -23,8 +23,10 @@ export default class Modal extends React.Component {
   }
   componentDidMount() {
     axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
+      console.log(res);
       this.setState({ post: res.data, comments: res.data.comments });
     });
+    console.log(this.props.post);
   }
   handleChange = e => {
     this.setState({
@@ -42,7 +44,7 @@ export default class Modal extends React.Component {
           content: this.state.comment,
           user_id: this.props.verifyUser(this.props.user).id,
           username: this.props.verifyUser(this.props.user).username,
-          avatar: this.props.verifyUser(this.props.user).avatar || image,
+          avatar: this.props.verifyUser(this.props.user).avatar,
           post_id: this.state.post.id
         })
         .then(res => {
@@ -60,7 +62,8 @@ export default class Modal extends React.Component {
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.edit,
           likes: this.state.post.likes,
-          image: this.state.post.image
+          image: this.state.post.image,
+          token: this.props.user
         })
         .then(oRes => {
           axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
@@ -68,7 +71,8 @@ export default class Modal extends React.Component {
               post: res.data,
               comments: res.data.comments,
               comment: "",
-              edit: ""
+              edit: "",
+              editing: ""
             });
           });
         })
@@ -77,11 +81,15 @@ export default class Modal extends React.Component {
   };
   handleDelete = e => {
     e.preventDefault();
-    this.checkLoad(
-      axios.delete(BACKEND + "/posts/" + this.state.post.id).then(oRes => {
-        this.props.closeRefresh();
-      })
-    );
+    if (this.checkLoad())
+      axios
+        .delete(BACKEND + "/posts/" + this.state.post.id, {
+          token: this.props.user
+        })
+        .then(oRes => {
+          this.props.closeRefresh();
+        });
+    else this.props.history.push("/login");
   };
   editPost = _ => {
     this.setState(prevState => ({
@@ -115,8 +123,14 @@ export default class Modal extends React.Component {
         </div>
         <div
           className="modal"
-          style={this.state.editing ? { filter: "brightness(50%)" } : null}
-          onClick={this.state.editing ? this.close : null}
+          style={
+            this.state.editing || this.state.deleting
+              ? { filter: "brightness(50%)" }
+              : null
+          }
+          onClick={
+            this.state.editing || this.state.deleting ? this.close : null
+          }
         >
           <div className="modal_image_container">
             <img
@@ -136,7 +150,9 @@ export default class Modal extends React.Component {
             </div>
             <div className="modal_comments">
               <b>{this.props.artist} </b>
-              {this.state.post ? this.state.post.description : <></>}
+              {this.state.post ? (
+                <span>{this.state.post.description}</span>
+              ) : null}
               <Comments comments={this.state.comments} />
             </div>
             <div className="modal_icons">

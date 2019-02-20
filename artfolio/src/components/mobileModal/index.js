@@ -50,7 +50,7 @@ export default class MobileModal extends React.Component {
           content: this.state.comment,
           user_id: this.props.verifyUser(this.props.user).id,
           username: this.props.verifyUser(this.props.user).username,
-          avatar: this.props.verifyUser(this.props.user).avatar || image,
+          avatar: this.props.verifyUser(this.props.user).avatar,
           post_id: this.state.post.id
         })
         .then(res => {
@@ -68,7 +68,8 @@ export default class MobileModal extends React.Component {
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.edit,
           likes: this.state.post.likes,
-          image: this.state.post.image
+          image: this.state.post.image,
+          token: this.props.user
         })
         .then(oRes => {
           axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
@@ -82,9 +83,13 @@ export default class MobileModal extends React.Component {
   handleDelete = e => {
     e.preventDefault();
     this.checkLoad(
-      axios.delete(BACKEND + "/posts/" + this.state.post.id).then(oRes => {
-        this.props.closeRefresh();
-      })
+      axios
+        .delete(BACKEND + "/posts/" + this.state.post.id, {
+          token: this.props.user
+        })
+        .then(oRes => {
+          this.props.closeRefresh();
+        })
     );
   };
   editPost = _ => {
@@ -161,7 +166,9 @@ export default class MobileModal extends React.Component {
                 {this.state.posts ? this.state.posts.created_at : null}
               </div>
               <div className="mobile_modal_comments">
-                {this.state.post ? this.state.post.description : <></>}
+                {this.state.post ? (
+                  <span>{this.state.post.description}</span>
+                ) : null}
                 <Comments comments={this.state.comments} />
               </div>
             </div>
