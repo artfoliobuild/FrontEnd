@@ -49,7 +49,8 @@ export default class MobileModal extends React.Component {
         .post(BACKEND + "/comments", {
           content: this.state.comment,
           user_id: this.props.verifyUser(this.props.user).id,
-          avatar: this.props.verifyUser(this.props.user).avatar || image,
+          username: this.props.verifyUser(this.props.user).username,
+          avatar: this.props.verifyUser(this.props.user).avatar,
           post_id: this.state.post.id
         })
         .then(res => {
@@ -67,7 +68,8 @@ export default class MobileModal extends React.Component {
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.edit,
           likes: this.state.post.likes,
-          image: this.state.post.image
+          image: this.state.post.image,
+          token: this.props.user
         })
         .then(oRes => {
           axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
@@ -81,9 +83,13 @@ export default class MobileModal extends React.Component {
   handleDelete = e => {
     e.preventDefault();
     this.checkLoad(
-      axios.delete(BACKEND + "/posts/" + this.state.post.id).then(oRes => {
-        this.props.closeRefresh();
-      })
+      axios
+        .delete(BACKEND + "/posts/" + this.state.post.id, {
+          token: this.props.user
+        })
+        .then(oRes => {
+          this.props.closeRefresh();
+        })
     );
   };
   editPost = _ => {
@@ -114,8 +120,14 @@ export default class MobileModal extends React.Component {
         <>
           <div
             className="mobile_modal"
-            style={this.state.editing ? { filter: "brightness(50%)" } : null}
-            onClick={this.state.editing ? this.close : null}
+            style={
+              this.state.editing || this.state.deleting
+                ? { filter: "brightness(50%)" }
+                : null
+            }
+            onClick={
+              this.state.editing || this.state.deleting ? this.close : null
+            }
           >
             <div className="mobile_modal_artist">
               <img
@@ -156,9 +168,13 @@ export default class MobileModal extends React.Component {
               <div className="mobile_modal_likes">
                 {this.state.posts ? this.state.posts.likes : 0} likes
               </div>
-              <div className="mobile_modal_date">FEBRUARY 2</div>
+              <div className="mobile_modal_date">
+                {this.state.posts ? this.state.posts.created_at : null}
+              </div>
               <div className="mobile_modal_comments">
-                {this.state.post ? this.state.post.description : <></>}
+                {this.state.post ? (
+                  <span>{this.state.post.description}</span>
+                ) : null}
                 <Comments comments={this.state.comments} />
               </div>
             </div>

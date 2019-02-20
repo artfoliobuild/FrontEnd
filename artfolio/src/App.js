@@ -47,15 +47,17 @@ class App extends React.Component {
       post: null,
       device: null,
       loginErr: null,
+      signUpErr: null,
       ready: false
     };
   }
   componentDidMount() {
     // get all posts
+    let user = localStorage.getItem("user");
     axios.get(BACKEND + "/posts").then(res => {
-      let user = localStorage.getItem("user");
-      this.setState({ posts: res.data, user });
+      this.setState({ posts: res.data });
     });
+    this.setState({ user });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
@@ -75,11 +77,18 @@ class App extends React.Component {
       method: "post",
       url: BACKEND + "/register",
       data: user
-    }).then(res => {
-      this.setState({ user: res.data });
-      localStorage.setItem("user", res.data);
-      this.props.history.push("/");
-    });
+    })
+      .then(res => {
+        this.setState({ user: res.data });
+        localStorage.setItem("user", res.data);
+        this.props.history.push("/");
+      })
+      .catch(err => {
+        this.setState({
+          signUpErr:
+            "There was an issue signing up. Email or username may be taken."
+        });
+      });
   };
   findUser = user => {
     // find a user
@@ -179,7 +188,9 @@ class App extends React.Component {
         />
         <Route
           path="/signup"
-          component={_ => <SignUp addUser={this.addUser} />}
+          component={_ => (
+            <SignUp err={this.state.signUpErr} addUser={this.addUser} />
+          )}
         />
         <Route
           path="/mobile"

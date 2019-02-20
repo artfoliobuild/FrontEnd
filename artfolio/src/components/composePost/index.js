@@ -50,14 +50,14 @@ class ComposePost extends Component {
           description: this.state.description,
           likes: 0,
           image: this.state.file,
-          user_id: this.props.verifyUser(this.props.user).id
+          user_id: this.props.verifyUser(this.props.user).id,
+          token: this.props.user
         })
         .then(res => {
           this.props.history.push("/");
           this.props.getPosts(res.data);
         })
         .catch(err => {
-          console.log(err);
           this.setState({
             err: <div>There was an issue uploading your post</div>
           });
