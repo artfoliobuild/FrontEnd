@@ -120,8 +120,14 @@ export default class MobileModal extends React.Component {
         <>
           <div
             className="mobile_modal"
-            style={this.state.editing ? { filter: "brightness(50%)" } : null}
-            onClick={this.state.editing ? this.close : null}
+            style={
+              this.state.editing || this.state.deleting
+                ? { filter: "brightness(50%)" }
+                : null
+            }
+            onClick={
+              this.state.editing || this.state.deleting ? this.close : null
+            }
           >
             <div className="mobile_modal_artist">
               <img
