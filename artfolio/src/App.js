@@ -52,10 +52,11 @@ class App extends React.Component {
   }
   componentDidMount() {
     // get all posts
+    let user = localStorage.getItem("user");
     axios.get(BACKEND + "/posts").then(res => {
-      let user = localStorage.getItem("user");
-      this.setState({ posts: res.data, user });
+      this.setState({ posts: res.data });
     });
+    this.setState({ user });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
