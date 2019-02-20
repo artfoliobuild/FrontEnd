@@ -41,6 +41,7 @@ export default class Modal extends React.Component {
         .post(BACKEND + "/comments", {
           content: this.state.comment,
           user_id: this.props.verifyUser(this.props.user).id,
+          username: this.props.verifyUser(this.props.user).username,
           avatar: this.props.verifyUser(this.props.user).avatar || image,
           post_id: this.state.post.id
         })
@@ -161,7 +162,9 @@ export default class Modal extends React.Component {
             <div className="modal_likes">
               {this.state.posts ? this.state.posts.likes : 0} likes
             </div>
-            <div className="modal_date">FEBRUARY 2</div>
+            <div className="modal_date">
+              {this.state.posts ? this.state.posts.created_at : null}
+            </div>
             <form onSubmit={this.handleMessage}>
               <input
                 type="text"
