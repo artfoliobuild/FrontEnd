@@ -779,6 +779,7 @@ a {
   overflow-y: auto;
   overflow-x: hidden;
   word-wrap: break-word;
+  white-space: pre-wrap;
 }
 @media (max-width: 1024px) {
   .modal_comments {
@@ -1009,6 +1010,7 @@ a {
   word-wrap: break-word;
   overflow-y: auto;
   padding-bottom: 1rem;
+  white-space: pre-wrap;
 }
 .mobile_modal_icons {
   padding: 10px 0 0 0;
