@@ -193,9 +193,7 @@ export default class MobileModal extends React.Component {
               </div>
               <div className="mobile_modal_date">
                 {this.state.post
-                  ? moment()
-                      .startOf(this.state.post.created_at)
-                      .fromNow()
+                  ? moment(this.state.post.created_at).fromNow()
                   : null}
               </div>
               <div className="mobile_modal_comments">

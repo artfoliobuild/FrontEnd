@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import axios from "axios";
+import moment from "moment";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
@@ -51,7 +52,7 @@ class ComposePost extends Component {
           image: this.state.file,
           user_id: this.props.verifyUser(this.props.user).id,
           token: this.props.user,
-          created_at: Date.now()
+          created_at: moment()
         })
         .then(res => {
           this.props.history.push("/");

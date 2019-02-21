@@ -203,10 +203,9 @@ export default class Modal extends React.Component {
             </div>
             <div className="modal_date">
               {this.state.post
-                ? moment()
-                    .startOf(this.state.post.created_at)
-                    .fromNow()
+                ? moment(this.state.post.created_at).fromNow()
                 : null}
+              {console.log(this.state.post && this.state.post.created_at)}
             </div>
             <form onSubmit={this.handleMessage}>
               <input
