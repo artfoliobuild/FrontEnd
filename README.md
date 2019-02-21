@@ -24,9 +24,8 @@
  - [x ] Routes
  - [x ] Integrate Backend
 
-
 ## Stretch
- - [x ] Google Auth
- - [x ] Modal
+ - [ ] Google Auth
+ - [ ] Redux
  - [x ] Image Upload
- - [x ] Redux
+ - [x ] Modal
