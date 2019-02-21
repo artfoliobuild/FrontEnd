@@ -594,6 +594,17 @@ a {
   flex-wrap: nowrap;
   background: rgba(0, 0, 0, 0);
 }
+.modal_error {
+  position: absolute;
+  top: 1rem;
+  width: 100%;
+  z-index: 4000;
+  font-size: 1.25rem;
+  background: #171c25;
+  text-align: center;
+  color: rgba(255, 0, 0, 0.8);
+  padding: 1rem;
+}
 .modal_edit,
 .modal_delete {
   z-index: 300;
@@ -857,6 +868,12 @@ a {
   width: 100%;
   min-height: 100vh;
   background: #fffbf5;
+}
+.mobile_modal_error {
+  font-size: 1.1rem;
+  text-align: center;
+  color: rgba(255, 0, 0, 0.8);
+  padding: 0.5rem;
 }
 .mobile_modal_edit,
 .mobile_modal_delete {

@@ -36,6 +36,18 @@
     flex-wrap: nowrap;
     background: rgba(0, 0, 0, 0);
 
+    &_error {
+        position: absolute;
+        top: 1rem;
+        width: 100%;
+        z-index: 4000;
+        font-size: 1.25rem;
+        background: @clr-dark;
+        text-align: center;
+        color: rgba(@clr-3d1, 0.8);
+        padding: 1rem;
+    }
+
     &_edit,
     &_delete {
         z-index: 300;

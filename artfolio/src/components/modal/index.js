@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
 import { FiShare, FiX, FiTrash2 } from "react-icons/fi";
 import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import moment from "moment";
 
 import Comments from "../comments";
 
@@ -22,15 +23,15 @@ export default class Modal extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-      console.log(res);
-      this.setState({ post: res.data, comments: res.data.comments });
-    });
-    console.log(this.props.post);
+    if (this.props.post)
+      axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
+        this.setState({ post: res.data, comments: res.data.comments });
+      });
   }
   handleChange = e => {
     this.setState({
-      [e.target.dataset.name]: e.target.value
+      [e.target.dataset.name]: e.target.value,
+      err: null
     });
   };
   checkLoad = _ => {
@@ -45,11 +46,17 @@ export default class Modal extends React.Component {
           user_id: this.props.verifyUser(this.props.user).id,
           username: this.props.verifyUser(this.props.user).username,
           avatar: this.props.verifyUser(this.props.user).avatar,
-          post_id: this.state.post.id
+          post_id: this.state.post.id,
+          token: this.props.user
         })
         .then(res => {
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
             this.setState({ comments: res.data.comments, comment: "" });
+          });
+        })
+        .catch(err => {
+          this.setState({
+            err: <div>There was an issue uploading your comment</div>
           });
         });
     else this.props.history.push("/login");
@@ -76,33 +83,45 @@ export default class Modal extends React.Component {
             });
           });
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+          this.setState({
+            err: <div>There was an issue editing your post</div>
+          })
+        );
     else this.props.history.push("/login");
   };
   handleDelete = e => {
     e.preventDefault();
-    if (this.checkLoad())
+    if (this.checkLoad()) {
       axios
         .delete(BACKEND + "/posts/" + this.state.post.id, {
-          token: this.props.user
+          data: { token: this.props.user }
         })
         .then(oRes => {
-          this.props.closeRefresh();
+          this.props.closeRefresh(this.state.post.id);
+          this.props.history.push("/");
+        })
+        .catch(err => {
+          this.setState({
+            err: <div>There was an issue deleting your post</div>
+          });
         });
-    else this.props.history.push("/login");
+    } else this.props.history.push("/login");
   };
   editPost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: !prevState.editing,
-      deleting: false
+      deleting: false,
+      err: null
     }));
   };
   deletePost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: false,
-      deleting: !prevState.deleting
+      deleting: !prevState.deleting,
+      err: null
     }));
   };
   close = e => {
@@ -110,12 +129,16 @@ export default class Modal extends React.Component {
     this.setState({
       edit: "",
       editing: false,
-      deleting: false
+      deleting: false,
+      err: null
     });
   };
   render() {
     return (
       <div className="scroll">
+        {this.state.err ? (
+          <span className="modal_error">{this.state.err}</span>
+        ) : null}
         <div className="fullscreen" onClick={this.props.close}>
           <div onClick={this.props.close}>
             <FiX className="close" size="32px" color="white" />
@@ -179,7 +202,11 @@ export default class Modal extends React.Component {
               {this.state.posts ? this.state.posts.likes : 0} likes
             </div>
             <div className="modal_date">
-              {this.state.posts ? this.state.posts.created_at : null}
+              {this.state.post
+                ? moment()
+                    .startOf(this.state.post.created_at)
+                    .fromNow()
+                : null}
             </div>
             <form onSubmit={this.handleMessage}>
               <input

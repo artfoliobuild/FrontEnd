@@ -15,7 +15,6 @@ class ComposePost extends Component {
       err: null
     };
   }
-  componentDidMount() {}
   options = token => {
     return { headers: { Authorization: token } };
   };
@@ -51,7 +50,8 @@ class ComposePost extends Component {
           likes: 0,
           image: this.state.file,
           user_id: this.props.verifyUser(this.props.user).id,
-          token: this.props.user
+          token: this.props.user,
+          created_at: Date.now()
         })
         .then(res => {
           this.props.history.push("/");

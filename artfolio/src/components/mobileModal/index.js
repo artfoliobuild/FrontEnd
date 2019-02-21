@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
-import { FiShare, FiX, FiTrash2 } from "react-icons/fi";
+import { FiShare, FiTrash2 } from "react-icons/fi";
 import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import moment from "moment";
 
 import Comments from "../comments";
 import Error404 from "../Error404";
@@ -18,7 +19,8 @@ export default class MobileModal extends React.Component {
       post: null,
       edit: "",
       editing: false,
-      deleting: false
+      deleting: false,
+      err: null
     };
   }
   componentDidMount() {
@@ -29,41 +31,41 @@ export default class MobileModal extends React.Component {
   }
   handleChange = e => {
     this.setState({
-      [e.target.dataset.name]: e.target.value
+      [e.target.dataset.name]: e.target.value,
+      err: null
     });
   };
-  checkLoad = func => {
-    if (
-      this.props.verifyUser(this.props.user) &&
-      this.props.verifyUser(this.props.user).id
-    ) {
-      return func;
-    } else {
-      this.props.history.push("/login");
-    }
+  checkLoad = _ => {
+    return this.props.user;
   };
   handleMessage = e => {
     e.preventDefault();
-    this.checkLoad(
+    if (this.checkLoad())
       axios
         .post(BACKEND + "/comments", {
           content: this.state.comment,
           user_id: this.props.verifyUser(this.props.user).id,
           username: this.props.verifyUser(this.props.user).username,
           avatar: this.props.verifyUser(this.props.user).avatar,
-          post_id: this.state.post.id
+          post_id: this.state.post.id,
+          token: this.props.user
         })
         .then(res => {
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-            this.setState({ comments: res.data.comments });
+            this.setState({ comments: res.data.comments, comment: "" });
           });
-        }),
-      this.setState({ comment: "" })
-    );
+        })
+        .catch(err => {
+          this.setState({
+            err: <div>There was an issue uploading your comment</div>
+          });
+        });
+    else this.props.history.push("/login");
   };
   handleEdit = e => {
     e.preventDefault();
-    this.checkLoad(
+
+    if (this.checkLoad())
       axios
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.edit,
@@ -73,37 +75,54 @@ export default class MobileModal extends React.Component {
         })
         .then(oRes => {
           axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
-            this.setState({ post: res.data, comments: res.data.comments });
+            this.setState({
+              post: res.data,
+              comments: res.data.comments,
+              comment: "",
+              edit: "",
+              editing: ""
+            });
           });
         })
-        .catch(err => console.log(err)),
-      this.setState({ comment: "", edit: "" })
-    );
+        .catch(err =>
+          this.setState({
+            err: <div>There was an issue editing your post</div>
+          })
+        );
+    else this.props.history.push("/login");
   };
   handleDelete = e => {
     e.preventDefault();
-    this.checkLoad(
+    if (this.checkLoad()) {
       axios
         .delete(BACKEND + "/posts/" + this.state.post.id, {
-          token: this.props.user
+          data: { token: this.props.user }
         })
         .then(oRes => {
-          this.props.closeRefresh();
+          this.props.closeRefresh(this.state.post.id);
+          this.props.history.push("/");
         })
-    );
+        .catch(err => {
+          this.setState({
+            err: <div>There was an issue deleting your post</div>
+          });
+        });
+    } else this.props.history.push("/login");
   };
   editPost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: !prevState.editing,
-      deleting: false
+      deleting: false,
+      err: null
     }));
   };
   deletePost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: false,
-      deleting: !prevState.deleting
+      deleting: !prevState.deleting,
+      err: null
     }));
   };
   close = e => {
@@ -111,13 +130,17 @@ export default class MobileModal extends React.Component {
     this.setState({
       edit: "",
       editing: false,
-      deleting: false
+      deleting: false,
+      err: null
     });
   };
   render() {
     if (this.state.post || this.props.src) {
       return (
         <>
+          {this.state.err ? (
+            <span className="mobile_modal_error">{this.state.err}</span>
+          ) : null}
           <div
             className="mobile_modal"
             style={
@@ -169,7 +192,11 @@ export default class MobileModal extends React.Component {
                 {this.state.posts ? this.state.posts.likes : 0} likes
               </div>
               <div className="mobile_modal_date">
-                {this.state.posts ? this.state.posts.created_at : null}
+                {this.state.post
+                  ? moment()
+                      .startOf(this.state.post.created_at)
+                      .fromNow()
+                  : null}
               </div>
               <div className="mobile_modal_comments">
                 {this.state.post ? (
