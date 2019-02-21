@@ -24,19 +24,18 @@ export default class Modal extends React.Component {
   }
   componentDidMount() {
     if (this.props.post)
-      axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-        this.setState({ post: res.data, comments: res.data.comments });
-      });
+      axios
+        .get(BACKEND + "/posts/" + this.props.post.id)
+        .then(res =>
+          this.setState({ post: res.data, comments: res.data.comments })
+        );
   }
-  handleChange = e => {
+  handleChange = e =>
     this.setState({
       [e.target.dataset.name]: e.target.value,
       err: null
     });
-  };
-  checkLoad = _ => {
-    return this.props.user;
-  };
+  checkLoad = _ => this.props.user;
   handleMessage = e => {
     e.preventDefault();
     if (this.checkLoad())
@@ -49,21 +48,22 @@ export default class Modal extends React.Component {
           post_id: this.state.post.id,
           token: this.props.user
         })
-        .then(res => {
-          axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-            this.setState({ comments: res.data.comments, comment: "" });
-          });
-        })
-        .catch(err => {
+        .then(res =>
+          axios
+            .get(BACKEND + "/posts/" + this.props.post.id)
+            .then(res =>
+              this.setState({ comments: res.data.comments, comment: "" })
+            )
+        )
+        .catch(err =>
           this.setState({
             err: <div>There was an issue uploading your comment</div>
-          });
-        });
+          })
+        );
     else this.props.history.push("/login");
   };
   handleEdit = e => {
     e.preventDefault();
-
     if (this.checkLoad())
       axios
         .put(BACKEND + "/posts/" + this.state.post.id, {
@@ -72,17 +72,17 @@ export default class Modal extends React.Component {
           image: this.state.post.image,
           token: this.props.user
         })
-        .then(oRes => {
-          axios.get(BACKEND + "/posts/" + this.state.post.id).then(res => {
+        .then(oRes =>
+          axios.get(BACKEND + "/posts/" + this.state.post.id).then(res =>
             this.setState({
               post: res.data,
               comments: res.data.comments,
               comment: "",
               edit: "",
               editing: ""
-            });
-          });
-        })
+            })
+          )
+        )
         .catch(err =>
           this.setState({
             err: <div>There was an issue editing your post</div>
@@ -101,29 +101,27 @@ export default class Modal extends React.Component {
           this.props.closeRefresh(this.state.post.id);
           this.props.history.push("/");
         })
-        .catch(err => {
+        .catch(err =>
           this.setState({
             err: <div>There was an issue deleting your post</div>
-          });
-        });
+          })
+        );
     } else this.props.history.push("/login");
   };
-  editPost = _ => {
+  editPost = _ =>
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: !prevState.editing,
       deleting: false,
       err: null
     }));
-  };
-  deletePost = _ => {
+  deletePost = _ =>
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: false,
       deleting: !prevState.deleting,
       err: null
     }));
-  };
   close = e => {
     e.stopPropagation();
     this.setState({
@@ -136,9 +134,9 @@ export default class Modal extends React.Component {
   render() {
     return (
       <div className="scroll">
-        {this.state.err ? (
+        {this.state.err && (
           <span className="modal_error">{this.state.err}</span>
-        ) : null}
+        )}
         <div className="fullscreen" onClick={this.props.close}>
           <div onClick={this.props.close}>
             <FiX className="close" size="32px" color="white" />
@@ -173,16 +171,14 @@ export default class Modal extends React.Component {
             </div>
             <div className="modal_comments">
               <b>{this.props.artist} </b>
-              {this.state.post ? (
-                <span>{this.state.post.description}</span>
-              ) : null}
+              {this.state.post && <span>{this.state.post.description}</span>}
               <Comments comments={this.state.comments} />
             </div>
             <div className="modal_icons">
               <FaRegHeart className="modal_icons_icon" size="24px" />
               <FiShare className="modal_icons_icon" size="24px" />
-              {this.props.verifyUser(this.props.user) ? (
-                this.props.verifyUser(this.props.user).admin ? (
+              {this.props.verifyUser(this.props.user) &&
+                (this.props.verifyUser(this.props.user).admin && (
                   <span className="modal_icons_right">
                     <Edit
                       className="modal_icons_icon"
@@ -195,16 +191,13 @@ export default class Modal extends React.Component {
                       onClick={this.deletePost}
                     />
                   </span>
-                ) : null
-              ) : null}
+                ))}
             </div>
             <div className="modal_likes">
               {this.state.posts ? this.state.posts.likes : 0} likes
             </div>
             <div className="modal_date">
-              {this.state.post
-                ? moment(this.state.post.created_at).fromNow()
-                : null}
+              {this.state.post && moment(this.state.post.created_at).fromNow()}
             </div>
             <form onSubmit={this.handleMessage}>
               <input
@@ -217,7 +210,7 @@ export default class Modal extends React.Component {
             </form>
           </div>
         </div>
-        {this.state.editing ? (
+        {this.state.editing && (
           <form className="modal_edit" onSubmit={this.handleEdit}>
             <h2>Edit description</h2>
             <textarea
@@ -228,8 +221,8 @@ export default class Modal extends React.Component {
             />
             <button className="modal_edit_button">Submit</button>
           </form>
-        ) : null}
-        {this.state.deleting ? (
+        )}
+        {this.state.deleting && (
           <form className="modal_delete" onSubmit={this.handleEdit}>
             <h2>Are you sure you want to delete this post?</h2>
             <button
@@ -242,7 +235,7 @@ export default class Modal extends React.Component {
               Cancel
             </div>
           </form>
-        ) : null}
+        )}
       </div>
     );
   }

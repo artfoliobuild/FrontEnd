@@ -13,7 +13,6 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
-import Error404 from "./components/Error404";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
@@ -54,24 +53,20 @@ class App extends React.Component {
   componentDidMount() {
     // get all posts
     let user = localStorage.getItem("user");
-    axios.get(BACKEND + "/posts").then(res => {
-      this.setState({ posts: res.data });
-    });
+    axios
+      .get(BACKEND + "/posts")
+      .then(res => this.setState({ posts: res.data }));
     this.setState({ user });
     this.checkScreenSize();
     this.setState({ ready: true });
   }
   verifyUser = user => {
-    if (!user) {
-      user = localStorage.getItem("user");
-    }
+    if (!user) user = localStorage.getItem("user");
     let message = null;
-    JWT.verify(user, SECRET, (err, decoded) => {
-      message = decoded;
-    });
+    JWT.verify(user, SECRET, (err, decoded) => (message = decoded));
     return message;
   };
-  addUser = user => {
+  addUser = user =>
     // add a user
     axios({
       method: "post",
@@ -83,14 +78,13 @@ class App extends React.Component {
         localStorage.setItem("user", res.data);
         this.props.history.push("/");
       })
-      .catch(err => {
+      .catch(err =>
         this.setState({
           signUpErr:
             "There was an issue signing up. Email or username may be taken."
-        });
-      });
-  };
-  findUser = user => {
+        })
+      );
+  findUser = user =>
     // find a user
     axios
       .post(BACKEND + "/login", user)
@@ -99,22 +93,18 @@ class App extends React.Component {
         localStorage.setItem("user", res.data);
         this.props.history.push("/");
       })
-      .catch(err => {
+      .catch(err =>
         this.setState({
           loginErr:
             "There was an issue logging in. Check username/password or sign up if you haven't"
-        });
-      });
-  };
-  addPhoto = _ => {
-    this.props.history.push("/new");
-  };
-  getPosts = postId => {
+        })
+      );
+  addPhoto = _ => this.props.history.push("/new");
+  getPosts = postId =>
     axios.get(BACKEND + "/posts/" + postId).then(res => {
       const newPosts = [...this.state.posts, res.data];
       this.setState({ posts: newPosts });
     });
-  };
   handleClick = image => {
     this.checkScreenSize();
     this.setState({
@@ -124,7 +114,6 @@ class App extends React.Component {
     });
     if (this.state.device !== "mobile") document.body.style.overflow = "hidden";
   };
-  yes;
   checkScreenSize = _ => {
     if (window.innerWidth <= 420) this.setState({ device: "mobile" });
     if (window.innerWidth <= 1024 && window.innerWidth > 420)
@@ -143,9 +132,7 @@ class App extends React.Component {
     this.close();
     this.checkScreenSize();
     axios.get(BACKEND + "/posts").then(res => {
-      let newPosts = this.state.posts.filter(post => {
-        return post.id !== id;
-      });
+      let newPosts = this.state.posts.filter(post => post.id !== id);
       this.setState({
         posts: newPosts,
         modalSrc: null,
@@ -222,8 +209,8 @@ class App extends React.Component {
           component={props => {
             return (
               <>
-                {this.state.modalSrc ? (
-                  this.state.device === "mobile" ? null : (
+                {this.state.modalSrc &&
+                  (this.state.device !== "mobile" && (
                     <Modal
                       close={this.close}
                       closeRefresh={this.closeRefresh}
@@ -235,8 +222,7 @@ class App extends React.Component {
                       verifyUser={this.verifyUser}
                       getPosts={this.getPosts}
                     />
-                  )
-                ) : null}
+                  ))}
                 <PhotoGrid
                   device={this.state.device}
                   checkScreenSize={this.checkScreenSize}
@@ -245,11 +231,10 @@ class App extends React.Component {
                   images={images}
                   dbImages={this.state.posts}
                 />
-                {this.verifyUser(this.state.user) ? (
-                  this.verifyUser(this.state.user).admin ? (
+                {this.verifyUser(this.state.user) &&
+                  (this.verifyUser(this.state.user).admin && (
                     <AddPhoto addPhoto={this.addPhoto} />
-                  ) : null
-                ) : null}
+                  ))}
               </>
             );
           }}

@@ -24,20 +24,17 @@ export default class MobileModal extends React.Component {
     };
   }
   componentDidMount() {
-    if (this.props.post)
+    this.props.post &&
       axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
         this.setState({ post: res.data, comments: res.data.comments });
       });
   }
-  handleChange = e => {
+  handleChange = e =>
     this.setState({
       [e.target.dataset.name]: e.target.value,
       err: null
     });
-  };
-  checkLoad = _ => {
-    return this.props.user;
-  };
+  checkLoad = _ => this.props.user;
   handleMessage = e => {
     e.preventDefault();
     if (this.checkLoad())
@@ -50,21 +47,20 @@ export default class MobileModal extends React.Component {
           post_id: this.state.post.id,
           token: this.props.user
         })
-        .then(res => {
+        .then(res =>
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
             this.setState({ comments: res.data.comments, comment: "" });
-          });
-        })
-        .catch(err => {
+          })
+        )
+        .catch(err =>
           this.setState({
             err: <div>There was an issue uploading your comment</div>
-          });
-        });
+          })
+        );
     else this.props.history.push("/login");
   };
   handleEdit = e => {
     e.preventDefault();
-
     if (this.checkLoad())
       axios
         .put(BACKEND + "/posts/" + this.state.post.id, {
@@ -102,29 +98,27 @@ export default class MobileModal extends React.Component {
           this.props.closeRefresh(this.state.post.id);
           this.props.history.push("/");
         })
-        .catch(err => {
+        .catch(err =>
           this.setState({
             err: <div>There was an issue deleting your post</div>
-          });
-        });
+          })
+        );
     } else this.props.history.push("/login");
   };
-  editPost = _ => {
+  editPost = _ =>
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: !prevState.editing,
       deleting: false,
       err: null
     }));
-  };
-  deletePost = _ => {
+  deletePost = _ =>
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: false,
       deleting: !prevState.deleting,
       err: null
     }));
-  };
   close = e => {
     e.stopPropagation();
     this.setState({
@@ -135,7 +129,7 @@ export default class MobileModal extends React.Component {
     });
   };
   render() {
-    if (this.state.post || this.props.src) {
+    if (this.state.post || this.props.src)
       return (
         <>
           {this.state.err ? (
@@ -244,6 +238,6 @@ export default class MobileModal extends React.Component {
           ) : null}
         </>
       );
-    } else return <Error404 />;
+    else return <Error404 />;
   }
 }

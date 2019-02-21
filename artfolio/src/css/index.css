@@ -474,6 +474,11 @@ a {
   width: 100%;
   margin-bottom: 1rem;
 }
+.dashboard_picture {
+  width: 100%;
+  max-width: 500px;
+  object-fit: contain;
+}
 .editSiteText {
   display: flex;
   flex-direction: column;
