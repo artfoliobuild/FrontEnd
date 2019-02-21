@@ -15,9 +15,6 @@ class ComposePost extends Component {
       err: null
     };
   }
-  componentDidMount() {
-    console.log();
-  }
   options = token => {
     return { headers: { Authorization: token } };
   };

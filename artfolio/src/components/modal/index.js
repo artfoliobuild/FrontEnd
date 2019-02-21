@@ -23,13 +23,15 @@ export default class Modal extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-      this.setState({ post: res.data, comments: res.data.comments });
-    });
+    if (this.props.post)
+      axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
+        this.setState({ post: res.data, comments: res.data.comments });
+      });
   }
   handleChange = e => {
     this.setState({
-      [e.target.dataset.name]: e.target.value
+      [e.target.dataset.name]: e.target.value,
+      err: null
     });
   };
   checkLoad = _ => {
@@ -50,6 +52,11 @@ export default class Modal extends React.Component {
         .then(res => {
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
             this.setState({ comments: res.data.comments, comment: "" });
+          });
+        })
+        .catch(err => {
+          this.setState({
+            err: <div>There was an issue uploading your comment</div>
           });
         });
     else this.props.history.push("/login");
@@ -76,38 +83,45 @@ export default class Modal extends React.Component {
             });
           });
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+          this.setState({
+            err: <div>There was an issue editing your post</div>
+          })
+        );
     else this.props.history.push("/login");
   };
   handleDelete = e => {
     e.preventDefault();
     if (this.checkLoad()) {
-      let error = false;
       axios
         .delete(BACKEND + "/posts/" + this.state.post.id, {
           data: { token: this.props.user }
         })
-        .then(oRes => {})
+        .then(oRes => {
+          this.props.closeRefresh(this.state.post.id);
+          this.props.history.push("/");
+        })
         .catch(err => {
-          error = true;
+          this.setState({
+            err: <div>There was an issue deleting your post</div>
+          });
         });
-      if (error === false) {
-        this.props.closeRefresh(this.state.post.id);
-      }
     } else this.props.history.push("/login");
   };
   editPost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: !prevState.editing,
-      deleting: false
+      deleting: false,
+      err: null
     }));
   };
   deletePost = _ => {
     this.setState(prevState => ({
       edit: this.state.post.description,
       editing: false,
-      deleting: !prevState.deleting
+      deleting: !prevState.deleting,
+      err: null
     }));
   };
   close = e => {
@@ -115,12 +129,16 @@ export default class Modal extends React.Component {
     this.setState({
       edit: "",
       editing: false,
-      deleting: false
+      deleting: false,
+      err: null
     });
   };
   render() {
     return (
       <div className="scroll">
+        {this.state.err ? (
+          <span className="modal_error">{this.state.err}</span>
+        ) : null}
         <div className="fullscreen" onClick={this.props.close}>
           <div onClick={this.props.close}>
             <FiX className="close" size="32px" color="white" />
