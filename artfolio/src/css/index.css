@@ -483,11 +483,13 @@ a {
   width: 100%;
 }
 .editSiteText_selections {
+  width: 100%;
   display: flex;
   flex-direction: row;
   background: rgba(255, 251, 245, 0.2);
 }
 .editSiteText_selections_option {
+  flex-grow: 1;
   padding: 1rem 0.75rem;
   cursor: pointer;
   user-select: none;
@@ -510,7 +512,7 @@ a {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  margin: 1rem auto;
+  margin: 1rem 0;
 }
 .editSiteForm_textarea,
 .editSiteForm_input {
