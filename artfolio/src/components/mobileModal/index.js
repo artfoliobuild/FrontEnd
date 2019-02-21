@@ -1,8 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
-import { FiShare, FiX, FiTrash2 } from "react-icons/fi";
+import { FiShare, FiTrash2 } from "react-icons/fi";
 import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import moment from "moment";
 
 import Comments from "../comments";
 import Error404 from "../Error404";
@@ -175,7 +176,11 @@ export default class MobileModal extends React.Component {
                 {this.state.posts ? this.state.posts.likes : 0} likes
               </div>
               <div className="mobile_modal_date">
-                {this.state.posts ? this.state.posts.created_at : null}
+                {this.state.post
+                  ? moment()
+                      .startOf(this.state.post.created_at)
+                      .fromNow()
+                  : null}
               </div>
               <div className="mobile_modal_comments">
                 {this.state.post ? (

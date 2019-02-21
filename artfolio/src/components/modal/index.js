@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaRegHeart } from "react-icons/fa";
 import { FiShare, FiX, FiTrash2 } from "react-icons/fi";
 import { ReactComponent as Edit } from "../../images/icons/edit.svg";
+import moment from "moment";
 
 import Comments from "../comments";
 
@@ -183,7 +184,11 @@ export default class Modal extends React.Component {
               {this.state.posts ? this.state.posts.likes : 0} likes
             </div>
             <div className="modal_date">
-              {this.state.post ? this.state.post.created_at : null}
+              {this.state.post
+                ? moment()
+                    .startOf(this.state.post.created_at)
+                    .fromNow()
+                : null}
             </div>
             <form onSubmit={this.handleMessage}>
               <input
