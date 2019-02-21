@@ -45,7 +45,8 @@ export default class MobileModal extends React.Component {
           user_id: this.props.verifyUser(this.props.user).id,
           username: this.props.verifyUser(this.props.user).username,
           avatar: this.props.verifyUser(this.props.user).avatar,
-          post_id: this.state.post.id
+          post_id: this.state.post.id,
+          token: this.props.user
         })
         .then(res => {
           axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
