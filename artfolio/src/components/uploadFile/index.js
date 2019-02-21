@@ -12,42 +12,24 @@ export default class UploadFile extends React.Component {
     };
   }
   componentDidMount() {
-    axios
-      .get(BACKEND + "/posts")
-      // .get(secrets.POSTS)
-      .then(res => {
-        this.setState({ all: res.data });
-      })
-      .catch(err => console.log(err));
+    axios.get(BACKEND + "/posts").then(res => this.setState({ all: res.data }));
   }
   fileSelectedHandler = e => {
-    var reader = new FileReader();
-
+    const reader = new FileReader();
     reader.addEventListener(
       "load",
-      _ => {
-        this.setState({ file: reader.result });
-      },
+      _ => this.setState({ file: reader.result }),
       false
     );
-
-    if (e) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
+    e && reader.readAsDataURL(e.target.files[0]);
   };
-  fileUploadHandler = _ => {
-    axios
-      .post(BACKEND + "/posts", {
-        description: "shrimpcx",
-        likes: 0,
-        image: this.state.file,
-        user_id: 3
-      })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  };
+  fileUploadHandler = _ =>
+    axios.post(BACKEND + "/posts", {
+      description: "shrimpcx",
+      likes: 0,
+      image: this.state.file,
+      user_id: 3
+    });
   render() {
     return (
       <div className="dashboard_uploadContainer">
@@ -74,10 +56,13 @@ export default class UploadFile extends React.Component {
             Upload File
           </button>
         </div>
-        <span className="dashboard_fileName">
-          {this.state.file ? this.state.file.name : null}
-        </span>
-        <img src={this.state.file} />
+        {this.state.file && (
+          <img
+            className="dashboard_picture"
+            src={this.state.file}
+            alt="Picked File"
+          />
+        )}
       </div>
     );
   }

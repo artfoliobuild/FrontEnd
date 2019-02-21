@@ -11,7 +11,6 @@ class ComposePost extends Component {
     this.state = {
       file: null,
       name: null,
-      lName: "",
       description: "",
       err: null
     };
@@ -19,32 +18,24 @@ class ComposePost extends Component {
   options = token => {
     return { headers: { Authorization: token } };
   };
-  handleChange = e => {
+  handleChange = e =>
     this.setState({
       [e.target.dataset.name]: e.target.value
     });
-  };
   fileSelectedHandler = e => {
     if (this.props.verifyUser(this.props.user)) {
       const reader = new FileReader();
       const name = e.target.files[0].name;
       reader.addEventListener(
         "load",
-        _ => {
-          this.setState({ file: reader.result, name });
-        },
+        _ => this.setState({ file: reader.result, name }),
         false
       );
-
-      if (e) {
-        reader.readAsDataURL(e.target.files[0]);
-      }
-    } else {
-      this.props.history.push("/login");
-    }
+      e && reader.readAsDataURL(e.target.files[0]);
+    } else this.props.history.push("/login");
   };
   fileUploadHandler = _ => {
-    if (this.state.description && this.state.file) {
+    if (this.state.description && this.state.file)
       axios
         .post(BACKEND + "/posts", {
           description: this.state.description,
@@ -63,9 +54,7 @@ class ComposePost extends Component {
             err: <div>There was an issue uploading your post</div>
           });
         });
-    } else {
-      this.setState({ err: <div>You did not add a photo/description</div> });
-    }
+    else this.setState({ err: <div>You did not add a photo/description</div> });
   };
   render() {
     return (
@@ -97,9 +86,13 @@ class ComposePost extends Component {
           {this.state.file ? (
             <form className="composePost_form">
               <span className="composePost_fileName">
-                {this.state.err ? this.state.err : null}
+                {this.state.err && this.state.err}
               </span>
-              <img className="composePost_picture" src={this.state.file} />
+              <img
+                className="composePost_picture"
+                src={this.state.file}
+                alt="picked file"
+              />
 
               <textarea
                 className="composePost_input"

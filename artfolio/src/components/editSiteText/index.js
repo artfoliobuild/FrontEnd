@@ -12,13 +12,7 @@ export default class EditSiteText extends React.Component {
     };
   }
   componentDidMount() {
-    const options = [
-      this.option1,
-      this.option2,
-      this.option3,
-      this.option4,
-      this.option5
-    ];
+    const options = [this.option1, this.option2, this.option3, this.option4];
     this.setState({
       options
     });
@@ -39,25 +33,33 @@ export default class EditSiteText extends React.Component {
             className="editSiteText_selections_option"
             data-name="bio"
             onClick={this.handleSelectOption}
-            ref={option => (this.option3 = option)}
+            ref={option => (this.option1 = option)}
           >
             Bio
           </div>
           <div
             className="editSiteText_selections_option"
-            data-name="bgColor"
+            data-name="firstName"
             onClick={this.handleSelectOption}
-            ref={option => (this.option4 = option)}
+            ref={option => (this.option2 = option)}
           >
-            Background Color
+            First Name
           </div>
           <div
             className="editSiteText_selections_option"
-            data-name="hlColor"
+            data-name="lastName"
             onClick={this.handleSelectOption}
-            ref={option => (this.option5 = option)}
+            ref={option => (this.option3 = option)}
           >
-            Highlight Color
+            Last Name
+          </div>
+          <div
+            className="editSiteText_selections_option"
+            data-name="displayName"
+            onClick={this.handleSelectOption}
+            ref={option => (this.option4 = option)}
+          >
+            Display Name
           </div>
         </div>
         <div>

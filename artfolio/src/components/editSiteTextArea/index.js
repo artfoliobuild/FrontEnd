@@ -7,9 +7,8 @@ export default class EditSiteTextArea extends React.Component {
     this.state = {};
   }
   render() {
-    if (!this.props.type) {
-      return null;
-    } else {
+    if (!this.props.type) return null;
+    else
       return (
         <form className="editSiteForm">
           {this.props.type === "bio" ? (
@@ -27,6 +26,5 @@ export default class EditSiteTextArea extends React.Component {
           <button className="editSiteForm_button">Submit</button>
         </form>
       );
-    }
   }
 }

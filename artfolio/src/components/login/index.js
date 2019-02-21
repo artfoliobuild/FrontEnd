@@ -13,21 +13,18 @@ export default class LogIn extends React.Component {
   componentDidMount() {
     this.setState({ err: this.props.err });
   }
-  handleChange = e => {
+  handleChange = e =>
     this.setState({
       [e.target.dataset.name]: e.target.value
     });
-  };
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.user && this.state.pass) {
+    if (this.state.user && this.state.pass)
       this.props.findUser({
         username: this.state.user,
         password: this.state.pass
       });
-    } else {
-      this.setState({ err: "Please fill out all forms" });
-    }
+    else this.setState({ err: "Please fill out all forms" });
   };
   render() {
     return (
