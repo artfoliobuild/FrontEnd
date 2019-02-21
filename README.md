@@ -13,21 +13,20 @@
  4. run yarn start in /artfolio
 
 ## MVP
- - [ ] Photo Grid
- - [ ] Login
- - [ ] Register
- - [ ] Add Photo
- - [ ] Edit Post
- - [ ] Comments
- - [ ] Comment names
- - [ ] Delete Photo
- - [ ] Edit Site Text
- - [ ] Routes
- - [ ] Integrate Backend
+ - [x ] Photo Grid
+ - [x ] Login
+ - [x ] Register
+ - [x ] Add Photo
+ - [x ] Edit Post
+ - [x ] Comments
+ - [x ] Comment names
+ - [x ] Delete Photo
+ - [x ] Routes
+ - [x ] Integrate Backend
 
 
 ## Stretch
- - [ ] Google Auth
- - [ ] Modal
- - [ ] Image Upload
- - [ ] Redux
+ - [x ] Google Auth
+ - [x ] Modal
+ - [x ] Image Upload
+ - [x ] Redux
