@@ -141,7 +141,6 @@ class App extends React.Component {
   };
   closeRefresh = id => {
     this.close();
-    console.log(this.state);
     this.checkScreenSize();
     axios.get(BACKEND + "/posts").then(res => {
       let newPosts = this.state.posts.filter(post => {

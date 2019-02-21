@@ -205,7 +205,6 @@ export default class Modal extends React.Component {
               {this.state.post
                 ? moment(this.state.post.created_at).fromNow()
                 : null}
-              {console.log(this.state.post && this.state.post.created_at)}
             </div>
             <form onSubmit={this.handleMessage}>
               <input
