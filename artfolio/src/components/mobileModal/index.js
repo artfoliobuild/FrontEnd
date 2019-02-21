@@ -192,7 +192,9 @@ export default class MobileModal extends React.Component {
               </div>
               <div className="mobile_modal_comments">
                 {this.state.post ? (
-                  <span>{this.state.post.description}</span>
+                  <span>
+                    <b>{this.props.artist}</b> {this.state.post.description}
+                  </span>
                 ) : null}
                 <Comments comments={this.state.comments} />
               </div>
