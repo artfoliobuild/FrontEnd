@@ -139,14 +139,21 @@ class App extends React.Component {
     });
     if (this.state.device !== "mobile") document.body.style.overflow = "auto";
   };
-  closeRefresh = e => {
+  closeRefresh = id => {
     this.close();
-    axios.get(BACKEND + "/posts").then(res => {
-      let user = localStorage.getItem("user");
-      this.setState({ posts: res.data, user });
-    });
+    console.log(this.state);
     this.checkScreenSize();
-    this.setState({ ready: true });
+    axios.get(BACKEND + "/posts").then(res => {
+      let newPosts = this.state.posts.filter(post => {
+        return post.id !== id;
+      });
+      this.setState({
+        posts: newPosts,
+        modalSrc: null,
+        post: null,
+        ready: true
+      });
+    });
   };
   signOut = _ => {
     localStorage.clear();

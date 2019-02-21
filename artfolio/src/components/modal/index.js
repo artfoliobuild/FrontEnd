@@ -23,10 +23,8 @@ export default class Modal extends React.Component {
   }
   componentDidMount() {
     axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-      console.log(res);
       this.setState({ post: res.data, comments: res.data.comments });
     });
-    console.log(this.props.post);
   }
   handleChange = e => {
     this.setState({
@@ -81,15 +79,20 @@ export default class Modal extends React.Component {
   };
   handleDelete = e => {
     e.preventDefault();
-    if (this.checkLoad())
+    if (this.checkLoad()) {
+      let error = false;
       axios
         .delete(BACKEND + "/posts/" + this.state.post.id, {
-          token: this.props.user
+          data: { token: this.props.user }
         })
-        .then(oRes => {
-          this.props.closeRefresh();
+        .then(oRes => {})
+        .catch(err => {
+          error = true;
         });
-    else this.props.history.push("/login");
+      if (error === false) {
+        this.props.closeRefresh(this.state.post.id);
+      }
+    } else this.props.history.push("/login");
   };
   editPost = _ => {
     this.setState(prevState => ({
