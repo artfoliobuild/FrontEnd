@@ -1,17 +1,33 @@
 # FrontEnd
 
+## Installation
+ 1. clone repo
+ 2. cd into /artfolio and run yarn
+ 3. include a .env file with the following data anything in brackets like this [] you have to put in that data (don't include the brackets)
+ 
+ ```
+ REACT_APP_BACKEND=["this is where the root url of the backend server goes"]
+ REACT_APP_SECRET=["this is where your secret from the backend server goes"]
+ ```
+ 
+ 4. run yarn start in /artfolio
+
 ## MVP
- - Photo Grid
- - Login
- - Register
- - Add Photo
- - Delete Photo
- - Edit Site Text
- - Routes
+ - [ ] Photo Grid
+ - [ ] Login
+ - [ ] Register
+ - [ ] Add Photo
+ - [ ] Edit Post
+ - [ ] Comments
+ - [ ] Comment names
+ - [ ] Delete Photo
+ - [ ] Edit Site Text
+ - [ ] Routes
+ - [ ] Integrate Backend
 
 
 ## Stretch
- - Google Auth
- - Modal
- - Image Upload
- - Redux
+ - [ ] Google Auth
+ - [ ] Modal
+ - [ ] Image Upload
+ - [ ] Redux
