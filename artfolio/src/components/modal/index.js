@@ -183,7 +183,7 @@ export default class Modal extends React.Component {
               {this.state.posts ? this.state.posts.likes : 0} likes
             </div>
             <div className="modal_date">
-              {this.state.posts ? this.state.posts.created_at : null}
+              {this.state.post ? this.state.post.created_at : null}
             </div>
             <form onSubmit={this.handleMessage}>
               <input

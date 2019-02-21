@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 
 import axios from "axios";
 
@@ -15,7 +16,9 @@ class ComposePost extends Component {
       err: null
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log();
+  }
   options = token => {
     return { headers: { Authorization: token } };
   };
@@ -52,7 +55,9 @@ class ComposePost extends Component {
           image: this.state.file,
           user_id: this.props.verifyUser(this.props.user).id,
           token: this.props.user,
-          created_at: Date.now()
+          created_at: moment()
+            .startOf(Date.now())
+            .fromNow()
         })
         .then(res => {
           this.props.history.push("/");
