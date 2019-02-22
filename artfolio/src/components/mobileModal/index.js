@@ -13,7 +13,6 @@ import Error404 from "../Error404";
 
 const override = css`
   display: block;
-  margin: 0 auto;
   border-color: red;
 `;
 
@@ -37,7 +36,11 @@ export default class MobileModal extends React.Component {
   componentDidMount() {
     this.props.post &&
       axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-        this.setState({ post: res.data, comments: res.data.comments });
+        this.setState({
+          post: res.data,
+          comments: res.data.comments,
+          loading: false
+        });
       });
   }
   handleChange = e =>
@@ -179,18 +182,8 @@ export default class MobileModal extends React.Component {
           {this.state.err ? (
             <span className="mobile_modal_error">{this.state.err}</span>
           ) : null}
-          <div
-            className="mobile_modal"
-            style={
-              this.state.editing || this.state.deleting
-                ? { filter: "brightness(50%)" }
-                : null
-            }
-            onClick={
-              this.state.editing || this.state.deleting ? this.close : null
-            }
-          >
-            {this.state.loading ? (
+          {this.state.loading ? (
+            <div className="mobile_modal_loading">
               <ClipLoader
                 css={override}
                 sizeUnit={"px"}
@@ -198,8 +191,20 @@ export default class MobileModal extends React.Component {
                 color={"#123abc"}
                 loading={this.state.loading}
               />
-            ) : (
-              <>
+            </div>
+          ) : (
+            <>
+              <div
+                className="mobile_modal"
+                style={
+                  this.state.editing || this.state.deleting
+                    ? { filter: "brightness(50%)" }
+                    : null
+                }
+                onClick={
+                  this.state.editing || this.state.deleting ? this.close : null
+                }
+              >
                 <div className="mobile_modal_artist">
                   <img
                     className="mobile_modal_artist_pic"
@@ -275,9 +280,9 @@ export default class MobileModal extends React.Component {
                     onChange={this.handleChange}
                   />
                 </form>
-              </>
-            )}
-          </div>
+              </div>
+            </>
+          )}
           {this.state.editing ? (
             <form className="mobile_modal_edit" onSubmit={this.handleEdit}>
               <h2>Edit description</h2>
