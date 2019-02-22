@@ -14,12 +14,10 @@ export default class Comments extends React.Component {
       return { comments: props.comments };
     else return null;
   }
-  handleChildUnmount = _ => {
-    this.props.refreshPost();
-  };
+  handleChildUnmount = _ => this.props.refreshPost();
   render() {
     return (
-      <div>
+      <>
         {this.state.comments.map(comment => {
           return (
             <Comment
@@ -31,7 +29,7 @@ export default class Comments extends React.Component {
             />
           );
         })}
-      </div>
+      </>
     );
   }
 }
