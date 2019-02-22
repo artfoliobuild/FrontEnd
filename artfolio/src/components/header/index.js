@@ -19,11 +19,13 @@ export default function Header(props) {
               Hello, {props.verifyUser(props.user).username}
             </span>
             <div className="header_login_buttons">
-              <div className="header_login_buttons_button">
-                <div onClick={redirectToDash}>
-                  <Settings className="header_login_button_icon" />
+              {props.verifyUser(props.user).admin ? (
+                <div className="header_login_buttons_button">
+                  <div onClick={redirectToDash}>
+                    <Settings className="header_login_button_icon" />
+                  </div>
                 </div>
-              </div>
+              ) : null}
               <div
                 className="header_login_buttons_button"
                 onClick={props.signOut}
