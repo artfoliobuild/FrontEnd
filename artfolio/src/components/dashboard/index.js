@@ -8,7 +8,7 @@ const Dashboard = props => {
   const history = _ => {
     props.history.push("/");
   };
-  if (props.verifyUser(props.user))
+  if (props.verifyUser(props.user) && props.verifyUser(props.user).admin)
     return (
       <section className="dashboard">
         <h1 className="dashboard_title">Dashboard</h1>

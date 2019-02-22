@@ -22,16 +22,44 @@ export default class SignUp extends React.Component {
     });
   handleSubmit = e => {
     e.preventDefault();
-    if (this.state.user && this.state.pass)
+    if (
+      !this.state.pass ||
+      !this.state.user ||
+      !this.state.email ||
+      !this.state.fName ||
+      !this.state.lName
+    ) {
+      this.setState({ err: "Please fill out all forms" });
+    } else if (this.state.pass.length < 8) {
+      this.setState({
+        err:
+          "Password must be 8 characters long, contain 1 special character, 1 lowercase letter , and 1 uppercase letter"
+      });
+    } else if (!/[a-z]/.test(this.state.pass)) {
+      this.setState({
+        err:
+          "Password must be 8 characters long, contain 1 special character, 1 lowercase letter , and 1 uppercase letter"
+      });
+    } else if (!/[A-Z]/.test(this.state.pass)) {
+      this.setState({
+        err:
+          "Password must be 8 characters long, contain 1 special character, 1 lowercase letter , and 1 uppercase letter"
+      });
+    } else if (!/\d/.test(this.state.pass)) {
+      this.setState({
+        err:
+          "Password must be 8 characters long, contain 1 special character, 1 lowercase letter , and 1 uppercase letter"
+      });
+    } else if (this.state.user && this.state.pass) {
       this.props.addUser({
         password: this.state.pass,
         username: this.state.user,
         Firstname: this.state.fName,
         Lastname: this.state.lName,
         email: this.state.email,
-        admin: true
+        admin: false
       });
-    else this.setState({ err: "Please fill out all forms" });
+    } else this.setState({ err: "The username or email has been taken." });
   };
   render() {
     return (

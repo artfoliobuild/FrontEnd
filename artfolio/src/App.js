@@ -217,8 +217,8 @@ class App extends React.Component {
           component={props => {
             return (
               <>
-                {this.state.modalSrc &&
-                  (this.state.device !== "mobile" && (
+                {this.state.modalSrc ? (
+                  this.state.device !== "mobile" ? (
                     <Modal
                       close={this.close}
                       closeRefresh={this.closeRefresh}
@@ -230,7 +230,8 @@ class App extends React.Component {
                       verifyUser={this.verifyUser}
                       getPosts={this.getPosts}
                     />
-                  ))}
+                  ) : null
+                ) : null}
                 <PhotoGrid
                   device={this.state.device}
                   checkScreenSize={this.checkScreenSize}
@@ -238,10 +239,11 @@ class App extends React.Component {
                   handleClick={this.handleClick}
                   dbImages={this.state.posts}
                 />
-                {this.verifyUser(this.state.user) &&
-                  (this.verifyUser(this.state.user).admin && (
+                {this.verifyUser(this.state.user) ? (
+                  this.verifyUser(this.state.user).admin ? (
                     <AddPhoto addPhoto={this.addPhoto} />
-                  ))}
+                  ) : null
+                ) : null}
               </>
             );
           }}

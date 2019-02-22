@@ -162,8 +162,7 @@ export default class Modal extends React.Component {
         .put(BACKEND + "/posts/" + this.state.post.id, {
           description: this.state.post.description,
           likes: this.state.post.likes + 1,
-          image: this.state.post.image,
-          token: this.props.user
+          image: this.state.post.image
         })
         .then(res => {
           let newPost = this.state.post;
@@ -183,9 +182,9 @@ export default class Modal extends React.Component {
   render() {
     return (
       <div className="scroll">
-        {this.state.err && (
+        {this.state.err ? (
           <span className="modal_error">{this.state.err}</span>
-        )}
+        ) : null}
         <div className="fullscreen" onClick={this.props.close}>
           <div onClick={this.props.close}>
             <FiX className="close" size="32px" color="white" />
@@ -234,9 +233,9 @@ export default class Modal extends React.Component {
                 </div>
                 <div className="modal_comments">
                   <b>{this.props.artist} </b>
-                  {this.state.post && (
+                  {this.state.post ? (
                     <span>{this.state.post.description}</span>
-                  )}
+                  ) : null}
                   <Comments
                     comments={this.state.comments}
                     user={this.props.user}
@@ -245,16 +244,16 @@ export default class Modal extends React.Component {
                   />
                 </div>
                 <div className="modal_icons">
-                  <span onClick={this.handleLike}>
+                  {/* <span onClick={this.handleLike}>
                     <FaRegHeart
                       className="modal_icons_icon"
                       fill={this.state.liked ? "red" : "black"}
                       size="24px"
                     />
-                  </span>
+                  </span> */}
                   {/* <FiShare className="modal_icons_icon" size="24px" /> */}
-                  {this.props.verifyUser(this.props.user) &&
-                    (this.props.verifyUser(this.props.user).admin && (
+                  {this.props.verifyUser(this.props.user) ? (
+                    this.props.verifyUser(this.props.user).admin ? (
                       <span className="modal_icons_right">
                         <Edit
                           className="modal_icons_icon"
@@ -267,14 +266,16 @@ export default class Modal extends React.Component {
                           onClick={this.deletePost}
                         />
                       </span>
-                    ))}
+                    ) : null
+                  ) : null}
                 </div>
                 <div className="modal_likes">
                   {this.state.post ? this.state.post.likes : 0} likes
                 </div>
                 <div className="modal_date">
-                  {this.state.post &&
-                    moment(this.state.post.created_at).fromNow()}
+                  {this.state.post
+                    ? moment(this.state.post.created_at).fromNow()
+                    : null}
                 </div>
                 <form onSubmit={this.handleMessage}>
                   <input
@@ -289,7 +290,7 @@ export default class Modal extends React.Component {
             </>
           )}
         </div>
-        {this.state.editing && (
+        {this.state.editing ? (
           <form className="modal_edit" onSubmit={this.handleEdit}>
             <h2>Edit description</h2>
             <textarea
@@ -300,8 +301,8 @@ export default class Modal extends React.Component {
             />
             <button className="modal_edit_button">Submit</button>
           </form>
-        )}
-        {this.state.deleting && (
+        ) : null}
+        {this.state.deleting ? (
           <form className="modal_delete" onSubmit={this.handleEdit}>
             <h2>Are you sure you want to delete this post?</h2>
             <button
@@ -314,7 +315,7 @@ export default class Modal extends React.Component {
               Cancel
             </div>
           </form>
-        )}
+        ) : null}
       </div>
     );
   }

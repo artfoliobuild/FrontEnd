@@ -17,11 +17,11 @@ const Comment = props => {
   };
   return (
     <div className="comment">
-      {props.verifyUser(props.user) && (
+      {props.verifyUser(props.user).admin ? (
         <span onClick={handleDelete}>
           <FiX className="comment_delete" size="10px" />
         </span>
-      )}
+      ) : null}
       <img
         className="comment_avatar"
         src={props.comment.avatar || defaultImg}

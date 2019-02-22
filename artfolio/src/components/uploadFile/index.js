@@ -63,13 +63,13 @@ export default class UploadFile extends React.Component {
             Upload File
           </button>
         </div>
-        {this.state.file && (
+        {this.state.file ? (
           <img
             className="dashboard_picture"
             src={this.state.file}
             alt="Picked File"
           />
-        )}
+        ) : null}
       </div>
     );
   }
