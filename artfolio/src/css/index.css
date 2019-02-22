@@ -239,6 +239,10 @@ a {
   text-align: center;
   width: 90%;
   transition: 250ms width ease-in-out, 250ms background ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 .login_input::placeholder,
 .signup_input::placeholder {
@@ -543,6 +547,10 @@ a {
   padding: 1rem 1rem;
   border: 1px solid rgba(255, 251, 245, 0.3);
   transition: 250ms width ease-in-out, 250ms background ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 .editSiteForm_textarea::placeholder,
 .editSiteForm_input::placeholder {
@@ -655,6 +663,10 @@ a {
   padding: 1rem 1rem;
   border: 1px solid rgba(255, 251, 245, 0.3);
   transition: 250ms width ease-in-out, 250ms background ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 .modal_edit_textarea::placeholder,
 .modal_delete_textarea::placeholder {
@@ -870,6 +882,10 @@ a {
   background: #fffbf5;
   background: rgba(0, 0, 0, 0);
   font-size: 0.95rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 @media (max-width: 1024px) {
   .modal input {
@@ -935,6 +951,10 @@ a {
   padding: 1rem 1rem;
   border: 1px solid rgba(255, 251, 245, 0.3);
   transition: 250ms width ease-in-out, 250ms background ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 .mobile_modal_edit_textarea::placeholder,
 .mobile_modal_delete_textarea::placeholder {
@@ -1099,6 +1119,10 @@ a {
   padding: 1rem 20px;
   background: #fffbf5;
   width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
 }
 .mobile_modal input:focus {
   outline: none;
