@@ -13,7 +13,11 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
+import Footer from "./components/footer";
 
+const defaultBio =
+  "🐾TXST 20' 🐾 Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍";
+const defaultAvatar = require("./images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
 
@@ -26,7 +30,7 @@ class App extends React.Component {
       firstName: "Jose",
       lastName: "Valenzuela",
       bio: "",
-      avatar: null,
+      avatar: defaultAvatar,
       posts: [],
       modalSrc: null,
       post: null,
@@ -254,6 +258,7 @@ class App extends React.Component {
             />
           )}
         />
+        <Route exact path="/" component={Footer} />
       </div>
     );
   }
