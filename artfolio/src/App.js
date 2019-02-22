@@ -13,6 +13,7 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import AddPhoto from "./components/addPhoto";
 import ComposePost from "./components/composePost";
+import Footer from "./components/footer";
 
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
@@ -254,6 +255,7 @@ class App extends React.Component {
             />
           )}
         />
+        <Route exact path="/" component={Footer} />
       </div>
     );
   }

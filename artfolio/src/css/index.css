@@ -1149,6 +1149,17 @@ a {
   user-select: none;
   cursor: pointer;
 }
+.footer {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 1rem;
+}
+.footer_icon {
+  cursor: pointer;
+  user-select: none;
+  margin: 0 1rem;
+}
 .error-404 {
   padding: 0 5%;
   color: #fffbf5;
