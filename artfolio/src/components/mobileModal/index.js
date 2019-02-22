@@ -61,25 +61,32 @@ export default class MobileModal extends React.Component {
   handleMessage = e => {
     e.preventDefault();
     if (this.checkLoad())
-      axios
-        .post(BACKEND + "/comments", {
-          content: this.state.comment,
-          user_id: this.props.verifyUser(this.props.user).id,
-          username: this.props.verifyUser(this.props.user).username,
-          avatar: this.props.verifyUser(this.props.user).avatar,
-          post_id: this.state.post.id,
-          token: this.props.user
-        })
-        .then(res =>
-          axios.get(BACKEND + "/posts/" + this.props.post.id).then(res => {
-            this.setState({ comments: res.data.comments, comment: "" });
+      if (this.state.comment)
+        axios
+          .post(BACKEND + "/comments", {
+            content: this.state.comment,
+            user_id: this.props.verifyUser(this.props.user).id,
+            username: this.props.verifyUser(this.props.user).username,
+            avatar: this.props.verifyUser(this.props.user).avatar,
+            post_id: this.state.post.id,
+            token: this.props.user
           })
-        )
-        .catch(err =>
-          this.setState({
-            err: <div>There was an issue uploading your comment</div>
-          })
-        );
+          .then(res =>
+            axios
+              .get(BACKEND + "/posts/" + this.props.post.id)
+              .then(res =>
+                this.setState({ comments: res.data.comments, comment: "" })
+              )
+          )
+          .catch(err =>
+            this.setState({
+              err: <div>There was an issue uploading your comment</div>
+            })
+          );
+      else
+        this.setState({
+          err: <div>There was an issue uploading your comment</div>
+        });
     else this.props.history.push("/login");
   };
   handleEdit = e => {
@@ -224,13 +231,13 @@ export default class MobileModal extends React.Component {
                 </div>
                 <div className="mobile_modal_post">
                   <div className="mobile_modal_icons">
-                    <span onClick={this.handleLike}>
+                    {/* <span onClick={this.handleLike}>
                       <FaRegHeart
                         className="modal_icons_icon"
                         fill={this.state.liked ? "red" : "black"}
                         size="24px"
                       />
-                    </span>
+                    </span> */}
                     {/* <FiShare size="24px" /> */}
                     {this.props.verifyUser(this.props.user) ? (
                       this.props.verifyUser(this.props.user).admin ? (
@@ -249,9 +256,9 @@ export default class MobileModal extends React.Component {
                       ) : null
                     ) : null}
                   </div>
-                  <div className="mobile_modal_likes">
+                  {/* <div className="mobile_modal_likes">
                     {this.state.post ? this.state.post.likes : 0} likes
-                  </div>
+                  </div> */}
                   <div className="mobile_modal_date">
                     {this.state.post
                       ? moment(this.state.post.created_at).fromNow()
