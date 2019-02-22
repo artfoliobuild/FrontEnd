@@ -521,11 +521,12 @@ a {
 }
 .editSiteForm_textarea,
 .editSiteForm_input {
+  font-family: 'Source Sans Pro', sans-serif;
   width: 90%;
   margin-bottom: 1rem;
   resize: none;
   font-size: 1.25rem;
-  color: #171c25;
+  color: #fffbf5;
   background: rgba(255, 251, 245, 0.1);
   border: none;
   border-radius: 3px;
@@ -544,6 +545,7 @@ a {
 }
 .editSiteForm_textarea:focus,
 .editSiteForm_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
@@ -729,6 +731,7 @@ a {
   }
 }
 .modal_post {
+  position: relative;
   background: #fffbf5;
   padding: 0 20px;
   display: flex;
@@ -850,7 +853,7 @@ a {
 .modal input {
   position: absolute;
   bottom: 0;
-  width: 101%;
+  width: 85%;
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
@@ -861,6 +864,7 @@ a {
 @media (max-width: 1024px) {
   .modal input {
     position: relative;
+    width: 100%;
   }
 }
 .modal input:focus {
