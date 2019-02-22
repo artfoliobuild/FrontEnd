@@ -61,27 +61,32 @@ export default class Modal extends React.Component {
   handleMessage = e => {
     e.preventDefault();
     if (this.checkLoad())
-      axios
-        .post(BACKEND + "/comments", {
-          content: this.state.comment,
-          user_id: this.props.verifyUser(this.props.user).id,
-          username: this.props.verifyUser(this.props.user).username,
-          avatar: this.props.verifyUser(this.props.user).avatar,
-          post_id: this.state.post.id,
-          token: this.props.user
-        })
-        .then(res =>
-          axios
-            .get(BACKEND + "/posts/" + this.props.post.id)
-            .then(res =>
-              this.setState({ comments: res.data.comments, comment: "" })
-            )
-        )
-        .catch(err =>
-          this.setState({
-            err: <div>There was an issue uploading your comment</div>
+      if (this.state.comment)
+        axios
+          .post(BACKEND + "/comments", {
+            content: this.state.comment,
+            user_id: this.props.verifyUser(this.props.user).id,
+            username: this.props.verifyUser(this.props.user).username,
+            avatar: this.props.verifyUser(this.props.user).avatar,
+            post_id: this.state.post.id,
+            token: this.props.user
           })
-        );
+          .then(res =>
+            axios
+              .get(BACKEND + "/posts/" + this.props.post.id)
+              .then(res =>
+                this.setState({ comments: res.data.comments, comment: "" })
+              )
+          )
+          .catch(err =>
+            this.setState({
+              err: <div>There was an issue uploading your comment</div>
+            })
+          );
+      else
+        this.setState({
+          err: <div>There was an issue uploading your comment</div>
+        });
     else this.props.history.push("/login");
   };
   handleEdit = e => {
@@ -269,9 +274,9 @@ export default class Modal extends React.Component {
                     ) : null
                   ) : null}
                 </div>
-                <div className="modal_likes">
+                {/* <div className="modal_likes">
                   {this.state.post ? this.state.post.likes : 0} likes
-                </div>
+                </div> */}
                 <div className="modal_date">
                   {this.state.post
                     ? moment(this.state.post.created_at).fromNow()
