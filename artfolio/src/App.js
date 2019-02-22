@@ -163,8 +163,9 @@ class App extends React.Component {
         <Route
           exact
           path="/"
-          component={_ => (
+          component={props => (
             <Header
+              history={props.history}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               avatar={this.state.avatar}
