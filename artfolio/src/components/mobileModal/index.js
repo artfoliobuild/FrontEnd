@@ -196,7 +196,11 @@ export default class MobileModal extends React.Component {
                     <b>{this.props.artist}</b> {this.state.post.description}
                   </span>
                 ) : null}
-                <Comments comments={this.state.comments} />
+                <Comments
+                  comments={this.state.comments}
+                  user={this.props.user}
+                  verifyUser={this.props.verifyUser}
+                />
               </div>
             </div>
             <form onSubmit={this.handleMessage}>

@@ -1092,8 +1092,17 @@ a {
   border-radius: 50%;
 }
 .comment_user {
-  font-weight: 700;
+  transform: translateY(-10%);
   margin: 0 0.25rem;
+  font-weight: 700;
+}
+.comment_content {
+  transform: translateY(-10%);
+  margin: 0 0.25rem 0 0;
+}
+.comment_delete {
+  user-select: none;
+  cursor: pointer;
 }
 .error-404 {
   padding: 0 5%;

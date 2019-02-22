@@ -172,7 +172,11 @@ export default class Modal extends React.Component {
             <div className="modal_comments">
               <b>{this.props.artist} </b>
               {this.state.post && <span>{this.state.post.description}</span>}
-              <Comments comments={this.state.comments} />
+              <Comments
+                comments={this.state.comments}
+                user={this.props.user}
+                verifyUser={this.props.verifyUser}
+              />
             </div>
             <div className="modal_icons">
               <FaRegHeart className="modal_icons_icon" size="24px" />
