@@ -12,7 +12,9 @@ export default class UploadFile extends React.Component {
     };
   }
   componentDidMount() {
-    axios.get(BACKEND + "/posts").then(res => this.setState({ all: res.data }));
+    axios
+      .get(BACKEND + "/config")
+      .then(res => this.setState({ all: res.data }));
   }
   fileSelectedHandler = e => {
     const reader = new FileReader();
@@ -24,12 +26,17 @@ export default class UploadFile extends React.Component {
     e && reader.readAsDataURL(e.target.files[0]);
   };
   fileUploadHandler = _ =>
-    axios.post(BACKEND + "/posts", {
-      description: "shrimpcx",
-      likes: 0,
-      image: this.state.file,
-      user_id: 3
-    });
+    axios
+      .put(BACKEND + "/config", {
+        firstname: this.state.all.firstname,
+        lastname: this.state.all.lastname,
+        username: this.state.all.username,
+        avatar: this.state.file
+      })
+      .then(res => {
+        this.props.getConfig();
+        this.props.history();
+      });
   render() {
     return (
       <div className="dashboard_uploadContainer">

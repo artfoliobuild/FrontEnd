@@ -5,12 +5,15 @@ import EditSiteText from "../editSiteText";
 import Error404 from "../Error404";
 
 const Dashboard = props => {
+  const history = _ => {
+    props.history.push("/");
+  };
   if (props.verifyUser(props.user))
     return (
       <section className="dashboard">
         <h1 className="dashboard_title">Dashboard</h1>
-        <UploadFile />
-        <EditSiteText />
+        <UploadFile history={_ => history()} getConfig={props.getConfig} />
+        <EditSiteText history={_ => history()} getConfig={props.getConfig} />
       </section>
     );
   else return <Error404 />;

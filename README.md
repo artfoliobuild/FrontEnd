@@ -1,5 +1,13 @@
 # FrontEnd
 
+## Tools and Dependencies Used
+
+- react-router-dom
+- axios
+- less-watch-compiler
+- dotenv
+- momentjs
+
 ## Routes
 
 /new to create a new post
@@ -35,7 +43,8 @@ REACT_APP_SECRET=["this is where your secret from the backend server goes"]
 
 ## Stretch
 
-- [ ] Google Auth
-- [ ] Redux
 - [x ] Image Upload
 - [x ] Modal
+- [x ] Refactor
+- [ ] Google Auth
+- [ ] Redux

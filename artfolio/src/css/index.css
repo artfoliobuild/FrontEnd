@@ -126,17 +126,27 @@ a {
   top: 0.35rem;
   right: 0.5rem;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   min-width: 40px;
   color: #fffbf5;
 }
-.header_login_button {
+.header_login .white {
+  color: #fffbf5;
+}
+.header_login_buttons {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+}
+.header_login_buttons_button {
   position: relative;
   top: 5px;
   display: inline-block;
   margin-left: 0.5rem;
 }
-.header_login_button_icon {
+.header_login_buttons_button_icon {
   cursor: pointer;
   user-select: none;
   width: 1.25rem;
@@ -521,11 +531,12 @@ a {
 }
 .editSiteForm_textarea,
 .editSiteForm_input {
+  font-family: 'Source Sans Pro', sans-serif;
   width: 90%;
   margin-bottom: 1rem;
   resize: none;
   font-size: 1.25rem;
-  color: #171c25;
+  color: #fffbf5;
   background: rgba(255, 251, 245, 0.1);
   border: none;
   border-radius: 3px;
@@ -544,6 +555,7 @@ a {
 }
 .editSiteForm_textarea:focus,
 .editSiteForm_input:focus {
+  color: #171c25;
   background: #fffbf5;
   outline: none;
   width: 100%;
@@ -729,6 +741,7 @@ a {
   }
 }
 .modal_post {
+  position: relative;
   background: #fffbf5;
   padding: 0 20px;
   display: flex;
@@ -850,7 +863,7 @@ a {
 .modal input {
   position: absolute;
   bottom: 0;
-  width: 101%;
+  width: 85%;
   padding: 1rem 0;
   border: none;
   border-top: 1px solid #eee;
@@ -861,6 +874,7 @@ a {
 @media (max-width: 1024px) {
   .modal input {
     position: relative;
+    width: 100%;
   }
 }
 .modal input:focus {
@@ -1092,8 +1106,17 @@ a {
   border-radius: 50%;
 }
 .comment_user {
-  font-weight: 700;
+  transform: translateY(-10%);
   margin: 0 0.25rem;
+  font-weight: 700;
+}
+.comment_content {
+  transform: translateY(-10%);
+  margin: 0 0.25rem 0 0;
+}
+.comment_delete {
+  user-select: none;
+  cursor: pointer;
 }
 .error-404 {
   padding: 0 5%;

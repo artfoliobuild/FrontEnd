@@ -17,21 +17,6 @@ import ComposePost from "./components/composePost";
 const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 const SECRET = process.env.REACT_APP_SECRET;
 
-function importAll(r) {
-  let images = {};
-  r.keys().map((item, index) => (images[item.replace("./", "")] = r(item)));
-  return images;
-}
-
-const bio = (
-  <>
-    <p>🐾TEXAS STATE UNIVERSITY 20&#39; 🐾</p>
-    <p>Portraits, Automotive, Advertisements, Design.🤘🏽 DM for inquiries 🔍</p>
-  </>
-);
-
-const images = importAll(require.context("./images", false));
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +25,8 @@ class App extends React.Component {
       artist: "Jose Valenzuela",
       firstName: "Jose",
       lastName: "Valenzuela",
-      bio: bio,
+      bio: "",
+      avatar: null,
       posts: [],
       modalSrc: null,
       post: null,
@@ -52,6 +38,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     // get all posts
+    this.getConfig();
     let user = localStorage.getItem("user");
     axios
       .get(BACKEND + "/posts")
@@ -105,6 +92,16 @@ class App extends React.Component {
       const newPosts = [...this.state.posts, res.data];
       this.setState({ posts: newPosts });
     });
+  getConfig = _ =>
+    axios.get(BACKEND + "/config").then(res =>
+      this.setState({
+        firstName: res.data.firstname,
+        lastName: res.data.lastname,
+        artist: res.data.firstname + " " + res.data.lastname,
+        bio: res.data.username,
+        avatar: res.data.avatar
+      })
+    );
   handleClick = image => {
     this.checkScreenSize();
     this.setState({
@@ -154,17 +151,24 @@ class App extends React.Component {
         <Route
           exact
           path="/dashboard"
-          component={_ => (
-            <Dashboard user={this.state.user} verifyUser={this.verifyUser} />
+          component={props => (
+            <Dashboard
+              user={this.state.user}
+              history={props.history}
+              verifyUser={this.verifyUser}
+              getConfig={this.getConfig}
+            />
           )}
         />
         <Route
           exact
           path="/"
-          component={_ => (
+          component={props => (
             <Header
+              history={props.history}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
+              avatar={this.state.avatar}
               bio={this.state.bio}
               user={this.state.user}
               verifyUser={this.verifyUser}
@@ -228,7 +232,6 @@ class App extends React.Component {
                   checkScreenSize={this.checkScreenSize}
                   history={props.history}
                   handleClick={this.handleClick}
-                  images={images}
                   dbImages={this.state.posts}
                 />
                 {this.verifyUser(this.state.user) &&

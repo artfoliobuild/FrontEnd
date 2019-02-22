@@ -12,7 +12,7 @@ export default class EditSiteText extends React.Component {
     };
   }
   componentDidMount() {
-    const options = [this.option1, this.option2, this.option3, this.option4];
+    const options = [this.option1, this.option2, this.option3];
     this.setState({
       options
     });
@@ -39,7 +39,7 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
-            data-name="firstName"
+            data-name="firstname"
             onClick={this.handleSelectOption}
             ref={option => (this.option2 = option)}
           >
@@ -47,23 +47,19 @@ export default class EditSiteText extends React.Component {
           </div>
           <div
             className="editSiteText_selections_option"
-            data-name="lastName"
+            data-name="lastname"
             onClick={this.handleSelectOption}
             ref={option => (this.option3 = option)}
           >
             Last Name
           </div>
-          <div
-            className="editSiteText_selections_option"
-            data-name="displayName"
-            onClick={this.handleSelectOption}
-            ref={option => (this.option4 = option)}
-          >
-            Display Name
-          </div>
         </div>
         <div>
-          <EditSiteTextArea type={this.state.active} />
+          <EditSiteTextArea
+            history={this.props.history}
+            type={this.state.active}
+            getConfig={this.props.getConfig}
+          />
         </div>
       </div>
     );

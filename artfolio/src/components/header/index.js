@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as LogOut } from "../../images/icons/log-out.svg";
-
-const image = require("../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
+import { ReactComponent as Settings } from "../../images/icons/settings.svg";
 
 export default function Header(props) {
+  const redirectToDash = _ => {
+    props.history.push("/dashboard");
+  };
   return (
     <div
       className="header"
@@ -12,12 +14,24 @@ export default function Header(props) {
     >
       <div className="header_login">
         {props.user && props.verifyUser(props.user) ? (
-          <div>
-            Hello, {props.verifyUser(props.user).username}
-            <div className="header_login_button" onClick={props.signOut}>
-              <LogOut className="header_login_button_icon" />
+          <>
+            <span className="header_login_text">
+              Hello, {props.verifyUser(props.user).username}
+            </span>
+            <div className="header_login_buttons">
+              <div className="header_login_buttons_button">
+                <div onClick={redirectToDash}>
+                  <Settings className="header_login_button_icon" />
+                </div>
+              </div>
+              <div
+                className="header_login_buttons_button"
+                onClick={props.signOut}
+              >
+                <LogOut className="header_login_button_icon" />
+              </div>
             </div>
-          </div>
+          </>
         ) : (
           <Link className="header_login" to="/login">
             log in
@@ -25,7 +39,7 @@ export default function Header(props) {
         )}
       </div>
       <div className="header_profile">
-        <img className="header_profile_img" src={image} alt="profile" />
+        <img className="header_profile_img" src={props.avatar} alt="profile" />
       </div>
       <div className="header_title">
         <h2 className="header_title_h2">
