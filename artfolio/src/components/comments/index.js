@@ -9,8 +9,10 @@ export default class Comments extends React.Component {
       comments: []
     };
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({ comments: nextProps.comments });
+  static getDerivedStateFromProps(props, current_state) {
+    if (current_state.comments !== props.comments)
+      return { comments: props.comments };
+    else return null;
   }
   handleChildUnmount = _ => {
     this.props.refreshPost();
