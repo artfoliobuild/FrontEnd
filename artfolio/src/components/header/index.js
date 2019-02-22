@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as LogOut } from "../../images/icons/log-out.svg";
 
-const image = require("../../images/profile/42696764_388532598354278_2259473674702684160_n.jpg");
-
 export default function Header(props) {
   return (
     <div
@@ -25,7 +23,7 @@ export default function Header(props) {
         )}
       </div>
       <div className="header_profile">
-        <img className="header_profile_img" src={image} alt="profile" />
+        <img className="header_profile_img" src={props.avatar} alt="profile" />
       </div>
       <div className="header_title">
         <h2 className="header_title_h2">
