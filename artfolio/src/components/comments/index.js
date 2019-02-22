@@ -6,20 +6,14 @@ export default class Comments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: [],
-      unrenderComments: []
+      comments: []
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ comments: nextProps.comments });
   }
-  handleChildUnmount = id => {
-    let newUnrenderComments = [...this.state.unrenderComments, id];
-    let newComments = this.state.comments.filter(comment => comment.id !== id);
-    this.setState({
-      comments: newComments,
-      renderComment: newUnrenderComments
-    });
+  handleChildUnmount = _ => {
+    this.props.refreshPost();
   };
   render() {
     return (

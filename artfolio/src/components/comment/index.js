@@ -9,10 +9,11 @@ const BACKEND = process.env.REACT_APP_BACKEND.replace(/"/g, "");
 
 const Comment = props => {
   const handleDelete = _ => {
-    axios.delete(BACKEND + "/comments/" + props.comment.id, {
-      data: { id: props.comment.id, token: props.user }
-    });
-    props.unmountMe(props.comment.id);
+    axios
+      .delete(BACKEND + "/comments/" + props.comment.id, {
+        data: { id: props.comment.id, token: props.user }
+      })
+      .then(res => props.unmountMe());
   };
   return (
     <div className="comment">

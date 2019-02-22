@@ -35,7 +35,16 @@ export default class Modal extends React.Component {
       [e.target.dataset.name]: e.target.value,
       err: null
     });
-  checkLoad = _ => this.props.user;
+  refreshPost = _ =>
+    this.props.post &&
+    axios
+      .get(BACKEND + "/posts/" + this.props.post.id)
+      .then(res =>
+        this.setState({ post: res.data, comments: res.data.comments })
+      );
+  checkLoad = _ =>
+    this.props.verifyUser(this.props.user) &&
+    this.props.verifyUser(this.props.user).id;
   handleMessage = e => {
     e.preventDefault();
     if (this.checkLoad())
@@ -176,6 +185,7 @@ export default class Modal extends React.Component {
                 comments={this.state.comments}
                 user={this.props.user}
                 verifyUser={this.props.verifyUser}
+                refreshPost={this.refreshPost}
               />
             </div>
             <div className="modal_icons">
