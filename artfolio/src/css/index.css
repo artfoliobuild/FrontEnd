@@ -64,6 +64,7 @@ a {
   width: 200px;
   min-width: 200px;
   height: 200px;
+  background: #171c25;
   box-shadow: 0 0 0 2px cyan, 0 0 0 4px red;
   border-radius: 50%;
   z-index: 4;
