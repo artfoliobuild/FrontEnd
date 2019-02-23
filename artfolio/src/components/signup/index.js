@@ -57,7 +57,7 @@ export default class SignUp extends React.Component {
         Firstname: this.state.fName,
         Lastname: this.state.lName,
         email: this.state.email,
-        admin: false
+        admin: true
       });
     } else this.setState({ err: "The username or email has been taken." });
   };

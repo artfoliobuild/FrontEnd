@@ -97,15 +97,17 @@ class App extends React.Component {
       this.setState({ posts: newPosts });
     });
   getConfig = _ =>
-    axios.get(BACKEND + "/config").then(res =>
-      this.setState({
-        firstName: res.data.firstname,
-        lastName: res.data.lastname,
-        artist: res.data.firstname + " " + res.data.lastname,
-        bio: res.data.username,
-        avatar: res.data.avatar
-      })
-    );
+    axios.get(BACKEND + "/config").then(res => {
+      if (res.data.avatar) {
+        this.setState({
+          firstName: res.data.firstname,
+          lastName: res.data.lastname,
+          artist: res.data.firstname + " " + res.data.lastname,
+          bio: res.data.username,
+          avatar: res.data.avatar
+        });
+      }
+    });
   handleClick = image => {
     this.checkScreenSize();
     this.setState({
