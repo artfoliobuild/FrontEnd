@@ -106,6 +106,13 @@ class App extends React.Component {
           bio: res.data.username,
           avatar: res.data.avatar
         });
+      } else {
+        this.setState({
+          firstName: res.data.firstname,
+          lastName: res.data.lastname,
+          artist: res.data.firstname + " " + res.data.lastname,
+          bio: res.data.username
+        });
       }
     });
   handleClick = image => {
